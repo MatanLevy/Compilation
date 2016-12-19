@@ -35,7 +35,7 @@ public class Main {
 		}
 		// program.print();
 		SemanticChecker.setProgram(program);
-		if (SemanticChecker.isBaseClassOf("A", "A"))
+		if (SemanticChecker.isBaseClassOf("A", "B"))
 			System.out.println("GOOD!!!");
 		else
 			System.out.println("Bad!!!");
