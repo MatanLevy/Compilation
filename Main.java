@@ -33,7 +33,7 @@ public class Main {
 			else
 				file_writer.write("FAIL");
 		}
-		// program.print();blabla
+		// program.print();what
 		SemanticChecker.setProgram(program);
 		if (SemanticChecker.isBaseClassOf("A", "B"))
 			System.out.println("GOOD!!!");
