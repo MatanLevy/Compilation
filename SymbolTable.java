@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -16,11 +17,13 @@ public class SymbolTable {
 	
 	private Hashtable<String, LinkedList<SymbolEntry>> table;
 	
-	// scopeCounter is the scope which we are now in it
+	// scopeCounter is the number of the scope which we are now in it.
 	private int scopeCounter;
 	
-	// currentScope save all the id we updated in the table, in the current scope.
-	private Set<String> currentScope;
+	// scopes save all the id we updated in the table, in the indexed scope.
+	// The index in the arrayList is refer to the scope number.
+	// The set in the index is refer to the id we saved in the table in this scope.
+	private ArrayList<Set<String>> scopes;
 	
 	/**
 	 * C'tor
@@ -28,7 +31,7 @@ public class SymbolTable {
 	public SymbolTable() {
 		table = new Hashtable<String, LinkedList<SymbolEntry>>();
 		scopeCounter = 0;
-		currentScope = new HashSet<String>();
+		scopes = new ArrayList<Set<String>>();
 
 	}
 
@@ -41,7 +44,10 @@ public class SymbolTable {
 	 * Create new scope
 	 */
 	public void pushScope () {
-		scopeCounter++;	
+		scopeCounter++;
+		//Initialize new set for the new scope.
+		Set<String> s = new HashSet<String>();
+		scopes.add(s);
 	}
 	
 	/**
@@ -49,9 +55,16 @@ public class SymbolTable {
 	 */
 	
 	public void popScope() {
-		for (String symEntry: currentScope) {
-			table.get(symEntry).removeFirst();
+		for (String symEntry: scopes.get(scopeCounter)) {
+			//remove the first of the linked list (like in stack data structure)
+			if (table.get(symEntry) != null) {
+				table.get(symEntry).removeFirst(); 
+			}
+			else {
+				return;  //should not happen never!
+			}
 		}
+		scopes.remove(scopeCounter);
 		scopeCounter--;
 	}
 	
@@ -67,8 +80,9 @@ public class SymbolTable {
 			table.put(id, symEntryList);
 		}
 		SymbolEntry sym = new SymbolEntry(id, type, scopeCounter);
+		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
 		table.get(id).addFirst(sym);
-		currentScope.add(id);
+		scopes.get(scopeCounter).add(id);
 
 	}
 	/**
@@ -82,6 +96,8 @@ public class SymbolTable {
 			AST_CLASSDECL classDec = (AST_CLASSDECL) node;
 			insert (classDec.classId, classDec.type);
 			pushScope();	
+			//******* TO - DO: How we can know when the class is finish and we want to do popScope() ??? *********
+			// ****** Maybe we should do 'pushScope()' and 'popScope()' when we go over the AST and we know when the class is finished. ******
 		}
 		else if (node instanceof AST_FIELD) {
 			AST_FIELD f = (AST_FIELD) node;
@@ -92,6 +108,7 @@ public class SymbolTable {
 				}
 			}
 		}
+		
 		
 
 	}
