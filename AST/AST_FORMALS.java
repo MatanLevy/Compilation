@@ -3,9 +3,9 @@ package AST;
 public class AST_FORMALS extends AST_Node {
 
 	
-	private AST_TYPE type;
-	private String _id;
-	private AST_FORMALS_LIST f_list; 
+	public AST_TYPE type;
+	public String _id;
+	public AST_FORMALS_LIST f_list; 
 	
 	public AST_FORMALS(AST_TYPE t, String id, AST_FORMALS_LIST fl) {
 		type = t;
