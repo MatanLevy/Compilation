@@ -27,7 +27,7 @@ public class Main {
 			program = (AST_PROGRAM) p.parse().value;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {  //blablablablab
+		} finally {  //cjsdkjckdscjsd
 			if (p.isFileLegal())
 				file_writer.write("OK");
 			else
