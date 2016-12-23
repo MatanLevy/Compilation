@@ -26,6 +26,11 @@ public class AST_BINOP extends AST_Node {
 		}
 	}
 
+	@Override
+	public String getName() {
+		return null;
+	}
+
 }
 //PLUS 0
 //MINUS	1

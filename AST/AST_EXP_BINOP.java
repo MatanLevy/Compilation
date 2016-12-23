@@ -19,6 +19,12 @@ public class AST_EXP_BINOP extends AST_EXP
 		OP.print();
 		right.print();
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 

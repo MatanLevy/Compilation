@@ -13,4 +13,10 @@ public class AST_TYPE_ARR extends AST_TYPE {
 		type.print();
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

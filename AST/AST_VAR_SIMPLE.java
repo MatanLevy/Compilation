@@ -13,4 +13,9 @@ public class AST_VAR_SIMPLE extends AST_VAR
 		System.out.println("var simple : " + name);
 		
 	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
 }

@@ -18,6 +18,11 @@ public class AST_STMT_WHILE extends AST_STMT
 		cond.print();
 		body.print();
 	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }

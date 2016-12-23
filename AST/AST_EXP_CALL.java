@@ -12,6 +12,12 @@ public class AST_EXP_CALL extends AST_EXP {
 		System.out.println("exp call : ");
 		call.print();
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

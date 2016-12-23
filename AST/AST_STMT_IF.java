@@ -22,4 +22,10 @@ public class AST_STMT_IF extends AST_STMT
 		System.out.println(" body =  ");
 		body.print();
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

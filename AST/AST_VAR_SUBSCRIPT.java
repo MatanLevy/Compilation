@@ -15,4 +15,10 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		var.print();
 		subscript.print();
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

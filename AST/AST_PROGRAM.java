@@ -1,6 +1,6 @@
 package AST;
 
-public class AST_PROGRAM {
+public class AST_PROGRAM extends AST_Node{
 	
 	public AST_CLASSDECL_LIST class_dec_list;
 	
@@ -16,6 +16,12 @@ public class AST_PROGRAM {
 	public void print() {
 		System.out.println("program : ");
 		class_dec_list.print();
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

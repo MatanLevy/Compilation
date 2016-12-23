@@ -13,4 +13,10 @@ public class AST_CALL extends AST_Node {
 		virtualCall.print(); 
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

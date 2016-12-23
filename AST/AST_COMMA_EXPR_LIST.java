@@ -17,5 +17,10 @@ public class AST_COMMA_EXPR_LIST extends AST_Node {
 		if ( exp != null) exp.print(); else System.out.println("no exp");
 		if (list != null) list.print(); else System.out.println("no list");
 	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

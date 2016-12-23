@@ -14,4 +14,10 @@ public class AST_EXP_PAREN extends AST_EXP {
 		exp.print();
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

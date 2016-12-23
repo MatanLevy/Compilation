@@ -13,5 +13,11 @@ public class AST_EXP_VAR extends AST_EXP
 		System.out.println("exp var : ");
 		var.print();
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

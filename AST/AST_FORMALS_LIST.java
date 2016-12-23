@@ -5,8 +5,8 @@ import java.util.List;
 
 public class AST_FORMALS_LIST {
 
-	List<String> formal_list;
-	List<AST_TYPE> type_list;
+	public List<String> formal_list;
+	public List<AST_TYPE> type_list;
 	
 	public AST_FORMALS_LIST() {
 		formal_list = new ArrayList<>();

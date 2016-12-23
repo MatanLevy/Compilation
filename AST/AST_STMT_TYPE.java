@@ -2,9 +2,9 @@ package AST;
 
 public class AST_STMT_TYPE extends AST_STMT {
 
-	private AST_TYPE type;
-	private String id;
-	private AST_EXP exp;
+	public AST_TYPE type;
+	public String id;
+	public AST_EXP exp;
 
 	public AST_STMT_TYPE(AST_TYPE t, String id) {
 		this.type = t;
@@ -22,6 +22,11 @@ public class AST_STMT_TYPE extends AST_STMT {
 		type.print();
 		System.out.println("id = " + id);
 		if (exp != null) exp.print(); else System.out.println("no exp");
+	}
+
+	@Override
+	public String getName() {
+		return id;
 	}
 
 }

@@ -14,4 +14,5 @@ public abstract class AST_Node
 	public static final String ANSI_WHITE = "\u001B[37m";
 
 	public abstract void print();
+	public abstract String getName();
 }

@@ -10,4 +10,10 @@ public class AST_STMT_RETURN extends AST_STMT {
 	public void print() {
 		System.out.println("return statament");
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
