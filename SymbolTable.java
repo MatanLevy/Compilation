@@ -139,7 +139,7 @@ public class SymbolTable {
 			insert(st.id, st.type);
 		}
 		
-		
+		//TODO AST_STMT_ASSIGN, but know the field is var (AST_VAR is abstract class...this is not good)
 		
 		
 
