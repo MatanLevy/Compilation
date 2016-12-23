@@ -16,6 +16,14 @@ public class AST_COMMA_EXPR_LIST_STAR extends AST_Node {
 		expList.add(e);
 	}
 	
+	List<AST_TYPE> getListOfTypes() {
+		List<AST_TYPE> listTypes = new ArrayList<>();
+		for (AST_EXP exp : expList) {
+			listTypes.add(exp.type);
+		}
+		return listTypes;
+	}
+	
 	public void print() {
 		System.out.println("comma exp list star :");
 		for (AST_EXP exp : expList) {

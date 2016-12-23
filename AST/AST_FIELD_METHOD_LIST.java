@@ -10,6 +10,23 @@ public class AST_FIELD_METHOD_LIST extends AST_Node {
 	public List<AST_METHOD> method_list;
 	
 	
+	public AST_METHOD getMethod(String methodName) {
+		for (AST_METHOD method : method_list) {
+			if (methodName.equals(method._id)) {
+				return method;
+			}
+		}
+		return null;
+	}
+	public AST_FIELD getField(String fieldName) {
+		for (AST_FIELD field : field_list) {
+			if (fieldName.equals(field._id)) {
+				return field;
+			}
+		}
+		return null;
+	}
+	
 	public AST_FIELD_METHOD_LIST() {
 		field_list = new ArrayList<>();
 		method_list = new ArrayList<>();

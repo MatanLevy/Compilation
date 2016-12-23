@@ -1,5 +1,8 @@
 package AST;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AST_FORMALS extends AST_Node {
 
 	
@@ -16,6 +19,15 @@ public class AST_FORMALS extends AST_Node {
 		type = null;
 		_id = null;
 		f_list = null;
+	}
+	List<AST_TYPE> getListOfArgumentsType() {
+		if (type == null) {
+			return new ArrayList<AST_TYPE>();
+		}
+		List<AST_TYPE> typeList = new ArrayList<>();
+		typeList.add(type);
+		typeList.addAll(f_list.type_list);
+		return typeList;
 	}
 	
 	public void print() {

@@ -5,7 +5,7 @@ public class AST_EXP_CALL extends AST_EXP {
 
 	public AST_EXP_CALL(AST_CALL c) {
 		this.call = c;
-		
+		this.type = call.calcType();
 	}
 	
 	public void print() {

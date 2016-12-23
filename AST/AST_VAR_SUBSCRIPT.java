@@ -10,6 +10,20 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		subscript = e2;
 	}
 	
+	public boolean assertType() {
+		return (subscript.type instanceof AST_TYPE_INT);
+	}
+	public void calcType() {
+		if (assertType()) {
+			type = var.type;
+		}
+		else {
+			type = null;
+		}
+	}
+	
+	
+	
 	public void print() {
 		System.out.println("var subscript : ");
 		var.print();

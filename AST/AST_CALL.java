@@ -8,6 +8,10 @@ public class AST_CALL extends AST_Node {
 		this.virtualCall = vc;
 	}
 	
+	public AST_TYPE calcType() {
+		return virtualCall.calcType();
+	}
+	
 	public void print() {
 		System.out.println("call : ");
 		virtualCall.print(); 

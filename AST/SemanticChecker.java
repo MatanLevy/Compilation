@@ -36,5 +36,13 @@ public class SemanticChecker {
 		}
 		return false;
 	}
+	
+	public static boolean canPassToFunction(AST_TYPE prototype,AST_TYPE dynamic) {
+		if (prototype instanceof AST_TYPE_CLASS && dynamic instanceof AST_TYPE_CLASS) {
+			return isBaseClassOf(((AST_TYPE_CLASS)prototype).description,
+							((AST_TYPE_CLASS)dynamic).description);
+		}
+		return prototype.equals(dynamic);
+	}
 
 }

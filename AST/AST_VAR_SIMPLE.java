@@ -9,6 +9,10 @@ public class AST_VAR_SIMPLE extends AST_VAR
 		this.name = name;
 	}
 	
+	public void calcType() {
+		//TO DO
+	}
+	
 	public void print() {
 		System.out.println("var simple : " + name);
 		
