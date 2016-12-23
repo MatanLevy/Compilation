@@ -113,11 +113,18 @@ public class SymbolTable {
 	
 	public SymbolEntry find_symbol (String id) {
 		
-		if (table.get(id).isEmpty()) {
+		if (table.get(id)==null || table.get(id).isEmpty()) {
 			return null;
 		}
 		return table.get(id).getFirst();
 		
+	}
+	
+	public void initalizeSymbolEntryInCurrScope (String id) {
+		SymbolEntry sym = table.get(id).getFirst();
+		table.get(id).removeFirst();
+		sym.initalize = true;
+		table.get(id).addFirst(sym);
 	}
 	
 	public void remove_symbol (String id) {
