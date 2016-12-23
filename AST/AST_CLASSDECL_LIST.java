@@ -8,11 +8,11 @@ public class AST_CLASSDECL_LIST extends AST_Node {
 	
 	public List<AST_CLASSDECL> class_decl_list; 
 	 
-	public AST_CLASSDECL_LIST() {
+	public AST_CLASSDECL_LIST() { 
 		class_decl_list = new ArrayList<>();
 	}
 	public void addClassDecl(AST_CLASSDECL cd) {
-		class_decl_list.add(cd);
+		class_decl_list.add(cd); 
 	}
 	public List<AST_CLASSDECL> getListOfClassDecl() {
 		return class_decl_list;
