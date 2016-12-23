@@ -18,4 +18,10 @@ public class AST_EXP_LITERAL extends AST_EXP {
 		return null;
 	}
 
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

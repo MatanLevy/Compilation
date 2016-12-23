@@ -19,5 +19,11 @@ public class AST_EXP_VAR extends AST_EXP
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

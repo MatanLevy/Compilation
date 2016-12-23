@@ -12,6 +12,12 @@ public class AST_TYPE_INT extends AST_RAW_TYPE {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }

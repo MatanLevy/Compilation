@@ -29,4 +29,15 @@ public class AST_CLASSDECL_LIST extends AST_Node {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		for (AST_CLASSDECL classdecl : class_decl_list) {
+			table.pushScope(true, classdecl.getName());
+			table.insertASTNode(classdecl);
+			if (!classdecl.checkSemantic(table))
+				return false;
+			table.popScope();
+		}
+		return true;
+	}
 }

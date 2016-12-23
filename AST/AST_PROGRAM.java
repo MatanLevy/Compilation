@@ -13,6 +13,7 @@ public class AST_PROGRAM extends AST_Node{
 	}
 	
 	
+	
 	public void print() {
 		System.out.println("program : ");
 		class_dec_list.print();
@@ -22,6 +23,11 @@ public class AST_PROGRAM extends AST_Node{
 	public String getName() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		return class_dec_list.checkSemantic(table);
 	}
 
 }

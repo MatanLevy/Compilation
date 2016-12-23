@@ -36,5 +36,10 @@ public class AST_COMMA_ID_LIST extends AST_Node {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

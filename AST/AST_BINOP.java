@@ -31,6 +31,12 @@ public class AST_BINOP extends AST_Node {
 		return null;
 	}
 
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
 //PLUS 0
 //MINUS	1

@@ -18,4 +18,10 @@ public class AST_LITERAL_STRING extends AST_LITERAL {
 		return str;
 	}
 
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

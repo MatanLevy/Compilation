@@ -29,4 +29,10 @@ public class AST_STMT_TYPE extends AST_STMT {
 		return id;
 	}
 
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

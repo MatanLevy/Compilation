@@ -14,4 +14,9 @@ public class AST_LITERAL_NULL extends AST_LITERAL {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

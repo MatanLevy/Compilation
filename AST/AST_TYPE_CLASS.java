@@ -13,5 +13,11 @@ public class AST_TYPE_CLASS extends AST_RAW_TYPE {
 		return classId;
 	}
 
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
    

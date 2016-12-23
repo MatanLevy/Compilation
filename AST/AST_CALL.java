@@ -19,4 +19,10 @@ public class AST_CALL extends AST_Node {
 		return null;
 	}
 
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

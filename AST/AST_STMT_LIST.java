@@ -27,5 +27,11 @@ public class AST_STMT_LIST extends AST_Node
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

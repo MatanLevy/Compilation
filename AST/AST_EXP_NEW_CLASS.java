@@ -14,5 +14,10 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 	public String getName() {
 		return _className;
 	}
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

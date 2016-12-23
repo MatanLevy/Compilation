@@ -19,4 +19,10 @@ public class AST_TYPE_ARR extends AST_TYPE {
 		return null;
 	}
 
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

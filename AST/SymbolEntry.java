@@ -1,6 +1,4 @@
-import AST.AST_TYPE;
-import AST.AST_TYPE_CLASS;
-
+package AST;
 public class SymbolEntry {
 	String id;
 	AST_TYPE type;

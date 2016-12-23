@@ -1,15 +1,7 @@
+package AST;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
-
-import AST.AST_CLASSDECL;
-import AST.AST_FIELD;
-import AST.AST_FORMALS;
-import AST.AST_FORMALS_LIST;
-import AST.AST_METHOD;
-import AST.AST_Node;
-import AST.AST_STMT_TYPE;
-import AST.AST_TYPE;
 
 public class SymbolTable {
 	

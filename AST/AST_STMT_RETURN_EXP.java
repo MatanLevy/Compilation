@@ -19,5 +19,11 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 		return null;
 	}
 
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
   

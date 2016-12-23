@@ -29,4 +29,10 @@ public class AST_COMMA_EXPR_LIST_STAR extends AST_Node {
 		return null;
 	}
 
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

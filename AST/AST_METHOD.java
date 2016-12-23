@@ -45,4 +45,10 @@ public class AST_METHOD extends AST_Node {
 		return _id;
 	}
 
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

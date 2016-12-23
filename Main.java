@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 
 import AST.AST_PROGRAM;
 import AST.SemanticChecker;
+import AST.SymbolTable;
 
 public class Main {
 	public static void main(String argv[]) {
@@ -27,18 +28,17 @@ public class Main {
 			program = (AST_PROGRAM) p.parse().value;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {  //cjsdkjckdscjsd
+		} 
+		finally {  
 			if (p.isFileLegal())
 				file_writer.write("OK");
 			else
 				file_writer.write("FAIL");
 		}
-		// program.print();what
-		SemanticChecker.setProgram(program);
-		if (SemanticChecker.isBaseClassOf("A", "B"))
-			System.out.println("GOOD!!!");
-		else
-			System.out.println("Bad!!!");
+		 program.print();
+		
+		SymbolTable table = new SymbolTable();
+		program.checkSemantic(table);
 		file_writer.close();
 		file_writer.close();
 	}

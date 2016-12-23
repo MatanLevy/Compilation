@@ -30,4 +30,10 @@ public class AST_VAR_FIELD extends AST_VAR
 		// TODO Auto-generated method stub
 		return fieldName;
 	}
+
+	@Override
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
