@@ -75,6 +75,17 @@ public class SymbolTable {
 		currentScopeHierarchy.removeFirst();
 	}
 	
+	public ScopeNode getClassScope (String className) {
+		ScopeNode scopeIter = null;
+		for (int i=0; i < classScopes.size(); i++) {
+			scopeIter = classScopes.get(i);
+			String classNameScopeIter = scopeIter.className;
+			if (classNameScopeIter.equals(className))
+				return scopeIter;
+		}
+		return scopeIter;
+	}
+	
 	
 	/**
 	 * insert new SymbolEntry to the table, according to it's id.
@@ -93,6 +104,13 @@ public class SymbolTable {
 		currentScopeHierarchy.getFirst().setSymbol(sym);;
 
 	}
+	public void addAllSymbols (ScopeNode scope) {
+		for (String id : scope.getSymbols().keySet()) {
+			SymbolEntry sym = scope.getSymbols().get(id);
+			add_symbol(sym.id, sym.type, sym.initalize);
+		}
+	}
+	
 	public SymbolEntry find_symbol (String id) {
 		
 		if (table.get(id).isEmpty()) {
@@ -190,6 +208,13 @@ public class SymbolTable {
 		String baseClassId = classDec.getBaseId();
 		if (baseClassId != null && !(table.containsKey(baseClassId))) {
 			return false;
+		}
+		// if the class extends other class, we put all the methods/fields that defined in the other class, in the current class's scope.
+		else if (baseClassId != null) {
+			ScopeNode baseClassScope = getClassScope(baseClassId);
+			if (baseClassScope == null)//error 
+				return false;
+			addAllSymbols(baseClassScope);
 		}
 		add_symbol(classId, classDec.type, true);
 		setCurrentClass (classDec.classId);
