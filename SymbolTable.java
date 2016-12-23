@@ -1,8 +1,6 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedList;
-import java.util.Set;
 
 import AST.AST_CLASSDECL;
 import AST.AST_FIELD;
@@ -17,25 +15,27 @@ public class SymbolTable {
 	
 	// This HashTable is the symbol table.
 	// It's key is a string (it's the name of the object)
-	// It's value is linkedList of SymbolEntry, The first SymbolEntry in every list is the appropriate define of the key to the relevant scope.
+	// It's value is linkedList of SymbolEntry, The first SymbolEntry in every list is the object in the nearest scope with the 'id' name. 
 	
 	private Hashtable<String, LinkedList<SymbolEntry>> table;
 	
-	// scopeCounter is the number of the scope which we are now in it.
-	private int scopeCounter;
+	// The name of the class we in it's scope (If we aren't in a scope of a class, the value in null).
+	private String _currentClass;
 	
-	// scopes save all the id we updated in the table, in the indexed scope.
-	// The index in the arrayList is refer to the scope number.
-	// The set in the index is refer to the id we saved in the table in this scope.
-	private ArrayList<Set<String>> scopes;
+	//List of the classes scopes. (In every scope of class it has fields and methods that defined in it)
+	private ArrayList<ScopeNode> classScopes;
+
+	//Where we are now in the hierarchy of scopes. 
+	private LinkedList<ScopeNode> currentScopeHierarchy;
 	
 	/**
 	 * C'tor
 	 */
 	public SymbolTable() {
 		table = new Hashtable<String, LinkedList<SymbolEntry>>();
-		scopeCounter = 0;
-		scopes = new ArrayList<Set<String>>();
+		classScopes = new ArrayList<ScopeNode>();
+		currentScopeHierarchy = new LinkedList<ScopeNode>();
+		_currentClass = null;
 
 	}
 
@@ -47,48 +47,35 @@ public class SymbolTable {
 	/**
 	 * Create new scope
 	 */
-	public void pushScope () {
-		scopeCounter++;
+	public void pushScope (boolean is_class_scope, String class_name) {
 		//Initialize new set for the new scope.
-		Set<String> s = new HashSet<String>();
-		scopes.add(s);
+		ScopeNode scope = new ScopeNode(is_class_scope, class_name);
+		currentScopeHierarchy.addFirst(scope);
 	}
+	
 	
 	/**
 	 * When we exit a scope, we want to delete from the symbolTable all the SymbolEntry that we added from this scope.
 	 */
 	
 	public void popScope() {
-		for (String symEntry: scopes.get(scopeCounter)) {
+		Hashtable<String, SymbolEntry> scopeSymbols = currentScopeHierarchy.getFirst().getSymbols();
+		for (String id : scopeSymbols.keySet()) {
 			//remove the first of the linked list (like in stack data structure)
+			SymbolEntry symEntry = scopeSymbols.get(id);
 			if (table.get(symEntry) != null) {
-				table.get(symEntry).removeFirst(); 
+				remove_symbol(symEntry.getId()); 
 			}
 			else {
 				return;  //should not happen never!
 			}
 		}
-		scopes.remove(scopeCounter);
-		scopeCounter--;
+		
+		insertClassScope();
+		currentScopeHierarchy.removeFirst();
 	}
 	
-	/**
-	 * insert new SymbolEntry to the table, according to it's id.
-	 * @param id
-	 * @param type
-	 */
-	
-	public void insert (String id, AST_TYPE type) {
-		if (table.get(id) == null || table.get(id).isEmpty()) {
-			LinkedList<SymbolEntry> symEntryList = new LinkedList<SymbolEntry>();
-			table.put(id, symEntryList);
-		}
-		SymbolEntry sym = new SymbolEntry(id, type, scopeCounter);
-		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
-		table.get(id).addFirst(sym);
-		scopes.get(scopeCounter).add(id);
 
-	}
 	/**
 	 * insert new SymbolEntry to the table according to it's AST_Node.
 	 * @param node
@@ -98,8 +85,9 @@ public class SymbolTable {
 		if (node instanceof AST_CLASSDECL)
 		{
 			AST_CLASSDECL classDec = (AST_CLASSDECL) node;
-			insert (classDec.classId, classDec.type);
-			pushScope();
+			add_symbol (classDec.classId, classDec.type);
+			setCurrentClass (classDec.classId);
+			pushScope(true, classDec.classId);
 			
 			//TODO
 			//******* TO - DO: How we can know when the class is finish and we want to do popScope() ??? *********
@@ -108,17 +96,17 @@ public class SymbolTable {
 		}
 		else if (node instanceof AST_FIELD) {
 			AST_FIELD f = (AST_FIELD) node;
-			insert (f._id, f._type);
+			add_symbol (f._id, f._type);
 			if (! (f._comma_list.isEmpty())){
 				for (int i=0; i < f._comma_list.size(); i++) {
-					insert (f._comma_list.get(i), f._type);
+					add_symbol (f._comma_list.get(i), f._type);
 				}
 			}
 		}
 		
 		else if (node instanceof AST_METHOD) {
 			AST_METHOD m = (AST_METHOD) node;
-			insert (m._id, m.type);
+			add_symbol (m._id, m.type);
 			//TODO 
 			//need to pushScope ();
 			
@@ -127,16 +115,16 @@ public class SymbolTable {
 		}
 		else if (node instanceof AST_FORMALS) {
 			AST_FORMALS f = (AST_FORMALS) node;
-			insert(f._id, f.type);
+			add_symbol(f._id, f.type);
 			AST_FORMALS_LIST fl = f.f_list;
 			for (int i=0; i < fl.formal_list.size(); i++) {
-				insert(fl.formal_list.get(i), fl.type_list.get(i));
+				add_symbol(fl.formal_list.get(i), fl.type_list.get(i));
 			}
 			
 		}
 		else if (node instanceof AST_STMT_TYPE) {
 			AST_STMT_TYPE st = (AST_STMT_TYPE) node;
-			insert(st.id, st.type);
+			add_symbol(st.id, st.type);
 		}
 		
 		//TODO AST_STMT_ASSIGN, but know the field is var (AST_VAR is abstract class...this is not good)
@@ -145,10 +133,53 @@ public class SymbolTable {
 
 	}
 	
+	/**
+	 * insert new SymbolEntry to the table, according to it's id.
+	 * @param id
+	 * @param type
+	 */
+	
+	public void add_symbol (String id, AST_TYPE type) {
+		if (table.get(id) == null) {
+			LinkedList<SymbolEntry> symEntryList = new LinkedList<SymbolEntry>();
+			table.put(id, symEntryList);
+		}
+		SymbolEntry sym = new SymbolEntry(id, type);
+		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
+		table.get(id).addFirst(sym);
+		currentScopeHierarchy.getFirst().setSymbol(sym);;
+
+	}
+	public SymbolEntry find_symbol (String id) {
+		
+		if (table.get(id).isEmpty()) {
+			return null;
+		}
+		return table.get(id).getFirst();
+		
+	}
+	
+	public void remove_symbol (String id) {
+		table.get(id).removeFirst();
+	}
+	
+	//true if x defined in current scope
+	public boolean check_scope (String x)
+	{
+		return currentScopeHierarchy.getFirst().getSymbols().containsKey(x);
+	}
 	
 
 
-
+	public void setCurrentClass (String classID) {
+		_currentClass = classID;
+	}
+	
+	public void insertClassScope () {
+		if (currentScopeHierarchy.getFirst().isClassScope)
+			classScopes.add(currentScopeHierarchy.getFirst());
+		
+	}
 
 	
 	
