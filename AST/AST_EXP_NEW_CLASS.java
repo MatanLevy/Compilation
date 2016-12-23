@@ -10,5 +10,9 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 	public void print() {
 		System.out.println("exp new class : " + _className);
 	}
+	@Override
+	public String getName() {
+		return _className;
+	}
 
 }

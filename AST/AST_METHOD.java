@@ -40,4 +40,9 @@ public class AST_METHOD extends AST_Node {
 		stmt_list.print();
 	}
 
+	@Override
+	public String getName() {
+		return _id;
+	}
+
 }

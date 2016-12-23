@@ -24,4 +24,10 @@ public class AST_VAR_FIELD extends AST_VAR
 		var.print();
 		System.out.println("field name = " + fieldName);
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return fieldName;
+	}
 }

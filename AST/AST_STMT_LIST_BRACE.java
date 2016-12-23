@@ -13,4 +13,10 @@ public class AST_STMT_LIST_BRACE extends AST_STMT {
 		stmtList.print();
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

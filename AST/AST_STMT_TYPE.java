@@ -24,4 +24,9 @@ public class AST_STMT_TYPE extends AST_STMT {
 		if (exp != null) exp.print(); else System.out.println("no exp");
 	}
 
+	@Override
+	public String getName() {
+		return id;
+	}
+
 }

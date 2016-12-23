@@ -13,5 +13,11 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 		exp.print();
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
   

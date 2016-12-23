@@ -19,4 +19,10 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		exp.print();
 		var.print();
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -23,4 +23,10 @@ public class AST_COMMA_EXPR_LIST_STAR extends AST_Node {
 		}
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

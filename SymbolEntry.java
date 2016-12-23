@@ -5,16 +5,26 @@ public class SymbolEntry {
 	String id;
 	AST_TYPE type;
 	boolean is_class;
+	boolean initalize;
 	
-	public SymbolEntry(String id, AST_TYPE type) {
+	public SymbolEntry(String id, AST_TYPE type ,boolean initalize) {
 		this.id = id;
 		this.type = type;
+		this.initalize = initalize;
 		if (type instanceof AST_TYPE_CLASS) {
 			is_class = true;
 		}
 		else {
 			is_class = false;
 		}
+	}
+
+	public boolean isInitalize() {
+		return initalize;
+	}
+
+	public void setInitalize(boolean initalize) {
+		this.initalize = initalize;
 	}
 
 	public boolean getIs_class() {

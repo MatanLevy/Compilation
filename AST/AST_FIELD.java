@@ -19,4 +19,9 @@ public class AST_FIELD extends AST_Node {
 		_comma_list.print();
 	}
 
+	@Override
+	public String getName() {
+		return _id;
+	}
+
 }

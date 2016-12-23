@@ -21,5 +21,11 @@ public class AST_STMT_LIST extends AST_Node
 			stmt.print();
 		}
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

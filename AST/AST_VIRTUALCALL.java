@@ -1,6 +1,6 @@
 package AST;
 
-public class AST_VIRTUALCALL {	
+public class AST_VIRTUALCALL extends AST_Node{	
 	AST_EXP exp;
 	String _id;
 	AST_COMMA_EXPR_LIST exp_list;
@@ -23,6 +23,11 @@ public class AST_VIRTUALCALL {
 		 if (exp != null ) exp.print(); else System.out.println("no exp");
 		exp_list.print();
 		
+	}
+
+	@Override
+	public String getName() {
+		return _id;
 	}
 
 }

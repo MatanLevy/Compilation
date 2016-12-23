@@ -24,5 +24,10 @@ public class AST_FORMALS extends AST_Node {
 		if (_id != null) System.out.println("id = "+_id); else System.out.println("no _id");
 		if (f_list != null) f_list.print(); else System.out.println("no f_list");
 	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return _id;
+	}
 
 }

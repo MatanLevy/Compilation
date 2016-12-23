@@ -12,4 +12,10 @@ public class AST_EXP_LITERAL extends AST_EXP {
 		literal.print();
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -31,5 +31,10 @@ public class AST_COMMA_ID_LIST extends AST_Node {
 	public String get(int i) {
 		return _id_list.get(i);
 	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

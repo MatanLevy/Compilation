@@ -30,5 +30,10 @@ public class AST_FIELD_METHOD_LIST extends AST_Node {
 			method.print();
 		}
 	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

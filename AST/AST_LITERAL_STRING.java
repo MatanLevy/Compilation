@@ -12,4 +12,10 @@ public class AST_LITERAL_STRING extends AST_LITERAL {
 		System.out.println(str);
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return str;
+	}
+
 }

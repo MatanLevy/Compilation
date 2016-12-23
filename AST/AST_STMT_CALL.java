@@ -14,4 +14,11 @@ public class AST_STMT_CALL extends AST_STMT {
 		System.out.println("call = ");
 		call.print();
 	}
+
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

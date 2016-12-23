@@ -12,4 +12,10 @@ public class AST_LITERAL_INT extends AST_LITERAL {
 		System.out.println(_i);
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

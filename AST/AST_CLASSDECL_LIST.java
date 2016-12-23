@@ -24,4 +24,9 @@ public class AST_CLASSDECL_LIST extends AST_Node {
 			classdecl.print();
 		}
 	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

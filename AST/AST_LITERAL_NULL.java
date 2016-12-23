@@ -9,4 +9,9 @@ public class AST_LITERAL_NULL extends AST_LITERAL {
 		System.out.println("literal :");
 		System.out.println("null literal");
 	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
