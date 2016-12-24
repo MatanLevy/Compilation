@@ -45,7 +45,7 @@ public class AST_FIELD_METHOD_LIST extends AST_Node {
 		}
 		for (AST_METHOD method : method_list) {
 			table.insertASTNode(method);
-			table.pushScope(false, null);
+//			table.pushScope(false, null, method._id);
 			if (!method.checkSemantic(table))
 				return false;
 			table.popScope();

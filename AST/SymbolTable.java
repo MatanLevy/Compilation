@@ -1,5 +1,6 @@
 package AST;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -46,7 +47,11 @@ public class SymbolTable {
 		currentScopeHierarchy.addFirst(scope);
 	}
 	
-	
+	public void pushScope (boolean is_class_scope, String class_name, String method_name) {
+		//Initialize new set for the new scope.
+		ScopeNode scope = new ScopeNode(is_class_scope, class_name, method_name);
+		currentScopeHierarchy.addFirst(scope);
+	}
 	/**
 	 * When we exit a scope, we want to delete from the symbolTable all the SymbolEntry that we added from this scope.
 	 */
@@ -295,14 +300,20 @@ public class SymbolTable {
 				error(true, false, methodName);
 		}
 		add_symbol (methodName, method.type, true);
+		pushScope(false, null, method._id);
+
 		AST_FORMALS formal = method.formals;
 		if (formal._id != null){
 			add_symbol(formal._id, formal.type, true);
+			HashSet <String> formalsId = new HashSet<String>();
+			formalsId.add(formal._id);
 			AST_FORMALS_LIST fl = formal.f_list;
 			for (int i=0; i < fl.formal_list.size(); i++) {
-				if (check_scope(fl.formal_list.get(i)))
-					error(true, false, fl.formal_list.get(i));
-				add_symbol(fl.formal_list.get(i), fl.type_list.get(i), true);
+				String f_id = fl.formal_list.get(i);
+				if (formalsId.contains(f_id)) //if there is formal with the same name of other formal, it's an error
+					error(true, false, f_id);
+				formalsId.add(f_id);
+				add_symbol(f_id, fl.type_list.get(i), true);
 			}
 		}
 		return true;

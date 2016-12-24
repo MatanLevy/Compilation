@@ -4,7 +4,7 @@ public class SymbolEntry {
 	AST_TYPE type;
 	boolean is_class;
 	boolean initalize;
-	String inWhichClassDefined;
+	String inWhichClassDefined; //this should be name of method or class.
 	
 	public SymbolEntry(String id, AST_TYPE type ,boolean initalize) {
 		this.id = id;

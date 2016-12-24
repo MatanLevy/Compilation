@@ -1,16 +1,25 @@
 package AST;
-import java.util.HashSet;
 import java.util.Hashtable;
 
 public class ScopeNode {
 	Hashtable<String, SymbolEntry> symbols;
 	boolean isClassScope;
 	String className;
+	String methodName; //if it's a method scope, the methodName is not empty;
 	
 	public ScopeNode(boolean is_class_scope, String className) {
 		this.symbols = new Hashtable<String, SymbolEntry> ();
 		this.isClassScope = is_class_scope;
 		this.className = className;
+		this.methodName = "";
+	}
+	
+	public ScopeNode(boolean is_class_scope, String className, String methodName) {
+		this.symbols = new Hashtable<String, SymbolEntry> ();
+		this.isClassScope = is_class_scope;
+		this.className = className;
+		this.methodName = methodName;
+
 	}
 	public Hashtable<String, SymbolEntry> getSymbols() {
 		return symbols;
