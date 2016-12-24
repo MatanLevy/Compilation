@@ -126,6 +126,14 @@ public class SymbolTable {
 	//true if x defined in current scope
 	public boolean check_scope (String x)
 	{
+		/*System.out.println("NEW CHECK");
+		int i = 0;
+		for (ScopeNode node : currentScopeHierarchy) {
+			System.out.println(i++);
+			for (String key : node.getSymbols().keySet()) {
+			    System.out.println(key + ":" + node.getSymbols().get(key));
+			}
+		} */  //prints I've made to understand might help you  
 		if (x == null) 
 			return false;
 		return currentScopeHierarchy.getFirst().getSymbols().containsKey(x);
@@ -201,12 +209,13 @@ public class SymbolTable {
 		// if we defined object with the same id in the same scope. it's multiple define error
 		String classId = classDec.getClassId();
 		if (check_scope(classId)){
-			return false;
+			throw new RuntimeException("duplicate defined Class : " + classId);
 		}
 		// if the class extends other class but the other class is undefined it's an error
 		String baseClassId = classDec.getBaseId();
 		if (baseClassId != null && !(table.containsKey(baseClassId))) {
-			return false;
+			throw new RuntimeException("Class " + classId + " extends class that "
+					+ "hasn't been defined yet (" + baseClassId + ")");
 		}
 		// if the class extends other class, we put all the methods/fields that defined in the other class, in the current class's scope.
 		else if (baseClassId != null) {
@@ -224,7 +233,8 @@ public class SymbolTable {
 	public boolean insertField (AST_FIELD field) {
 		// if we defined object with the same id in the same scope. it's multiple define error
 		if (check_scope(field.getName()))
-			return false;
+			throw new RuntimeException("multipile defintion of : " + 
+						field.getName());
 		// we don't need to initialize fields before we use them.
 		add_symbol (field._id, field._type, true);
 		if (! (field._comma_list.isEmpty())){

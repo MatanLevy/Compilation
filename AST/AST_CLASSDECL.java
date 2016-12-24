@@ -69,12 +69,6 @@ public class AST_CLASSDECL extends AST_Node{
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		if (classId.equals(baseId))
-			throw new RuntimeException("Cant extends from the same class : " + "class name : " +
-		classId);
-		//Here I want to check if this class extends from other class that hasnt
-		//been defined yet and to throw an error.I dont understands how to use your
-		//code please write here the syntax.
 		return fm_list.checkSemantic(table);
 	}
 

@@ -35,7 +35,7 @@ public class Main {
 			else
 				file_writer.write("FAIL");
 		}
-		 program.print();
+		 //program.print();
 		
 		SymbolTable table = new SymbolTable();
 		program.checkSemantic(table);
