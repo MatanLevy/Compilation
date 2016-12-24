@@ -26,4 +26,9 @@ public class AST_FORMALS_LIST {
 		}
 	}
 
+	public boolean checkSemantic(SymbolTable table) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

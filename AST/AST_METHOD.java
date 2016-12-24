@@ -47,8 +47,11 @@ public class AST_METHOD extends AST_Node {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!formals.checkSemantic(table))
+			return false;
+		if (!stmt_list.checkSemantic(table))
+			return false;
+		return true;
 	}
 
 }

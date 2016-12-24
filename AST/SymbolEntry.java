@@ -4,6 +4,7 @@ public class SymbolEntry {
 	AST_TYPE type;
 	boolean is_class;
 	boolean initalize;
+	String inWhichClassDefined;
 	
 	public SymbolEntry(String id, AST_TYPE type ,boolean initalize) {
 		this.id = id;
@@ -11,10 +12,20 @@ public class SymbolEntry {
 		this.initalize = initalize;
 		if (type instanceof AST_TYPE_CLASS) {
 			is_class = true;
+			inWhichClassDefined = "";
 		}
 		else {
 			is_class = false;
+			inWhichClassDefined = null;
 		}
+	}
+
+	public String getInWhichClassDefined() {
+		return inWhichClassDefined;
+	}
+
+	public void setInWhichClassDefined(String inWhichClassDefined) {
+		this.inWhichClassDefined = inWhichClassDefined;
 	}
 
 	public boolean isInitalize() {

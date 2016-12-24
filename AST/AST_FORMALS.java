@@ -31,8 +31,7 @@ public class AST_FORMALS extends AST_Node {
 	}
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

@@ -91,17 +91,33 @@ public class SymbolTable {
 			tableOfSymbols.put(id, symEntryList);
 		}
 		SymbolEntry sym = new SymbolEntry(id, type, isInit);
+		sym.setInWhichClassDefined(_currentClass);
 		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
 		tableOfSymbols.get(id).addFirst(sym);
 		
 
-		currentScopeHierarchy.getFirst().setSymbol(sym);;
+		currentScopeHierarchy.getFirst().setSymbol(sym);
 
 	}
+	
+	public void add_symbol (SymbolEntry symbol) {
+		String id = symbol.id;
+		if (tableOfSymbols.get(id) == null) {
+			LinkedList<SymbolEntry> symEntryList = new LinkedList<SymbolEntry>();
+			tableOfSymbols.put(id, symEntryList);
+		}
+		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
+		tableOfSymbols.get(id).addFirst(symbol);
+		
+
+		currentScopeHierarchy.getFirst().setSymbol(symbol);
+
+	}
+	
 	public void addAllSymbols (ScopeNode scope) {
 		for (String id : scope.getSymbols().keySet()) {
 			SymbolEntry sym = scope.getSymbols().get(id);
-			add_symbol(sym.id, sym.type, sym.initalize);
+			add_symbol(sym);
 		}
 	}
 	
@@ -164,10 +180,15 @@ public class SymbolTable {
 	}
 	
 	public void insertClassScope () {
-		if (currentScopeHierarchy.getFirst().getIsClassScope())
-			classScopes.add(currentScopeHierarchy.getFirst());
+		if (currentScopeHierarchy.getFirst().getIsClassScope()){
+			ScopeNode scope = currentScopeHierarchy.getFirst();
+			for (String str : scope.symbols.keySet()) {
+				scope.symbols.get(str).setInWhichClassDefined(_currentClass);
+
+			}
+			classScopes.add(scope);
 		
-	}
+	}}
 
 	
 
@@ -248,8 +269,7 @@ public class SymbolTable {
 	public boolean insertField (AST_FIELD field) {
 		// if we defined object with the same id in the same scope. it's multiple define error
 		if (check_scope(field.getName()))
-			throw new RuntimeException("multipile defintion of : " + 
-						field.getName());
+			error(true, false, field.getName());
 		// we don't need to initialize fields before we use them.
 		add_symbol (field._id, field._type, true);
 		if (! (field._comma_list.isEmpty())){
@@ -257,8 +277,7 @@ public class SymbolTable {
 				String fieldId = field._comma_list.get(i);
 				// if we defined object with the same id in the same scope. it's multiple define error
 				if (check_scope(fieldId))
-					throw new RuntimeException("multipile defintion of : " + 
-							fieldId);
+					error(true, false, fieldId);
 				add_symbol (fieldId, field._type, true);
 			}
 		}
@@ -267,16 +286,25 @@ public class SymbolTable {
 	}
 	
 	public boolean insertMethod (AST_METHOD method) {
+		String methodName = method.getName();
 		// if we defined object with the same id in the same scope. it's multiple define error
-		if (check_scope(method.getName()))
-			return false;
-		add_symbol (method._id, method.type, true);
+		if (check_scope(methodName))
+		{
+			SymbolEntry symbol = find_symbol (methodName);
+			if (symbol.getInWhichClassDefined().equals(_currentClass))
+				error(true, false, methodName);
+		}
+		add_symbol (methodName, method.type, true);
 		AST_FORMALS formal = method.formals;
-		add_symbol(formal._id, formal.type, true);
-		AST_FORMALS_LIST fl = formal.f_list;
-		for (int i=0; i < fl.formal_list.size(); i++) {
-			add_symbol(fl.formal_list.get(i), fl.type_list.get(i), true);
-		}	
+		if (formal._id != null){
+			add_symbol(formal._id, formal.type, true);
+			AST_FORMALS_LIST fl = formal.f_list;
+			for (int i=0; i < fl.formal_list.size(); i++) {
+				if (check_scope(fl.formal_list.get(i)))
+					error(true, false, fl.formal_list.get(i));
+				add_symbol(fl.formal_list.get(i), fl.type_list.get(i), true);
+			}
+		}
 		return true;
 	}
 	
@@ -292,6 +320,20 @@ public class SymbolTable {
 
 		
 		return true;
+	}
+	
+	
+	public void error (boolean multiDefine, boolean undefinded, String id) {
+		if (multiDefine)
+			throw new RuntimeException("multipile defintion of : " + id);
+		if (undefinded)
+			throw new RuntimeException("undefined: " + id);
+		if (!multiDefine && !undefinded) 
+		{
+			throw new RuntimeException(id);
+
+		}
+
 	}
 	
 	
