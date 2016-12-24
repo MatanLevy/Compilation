@@ -40,6 +40,5 @@ public class Main {
 		SymbolTable table = new SymbolTable();
 		program.checkSemantic(table);
 		file_writer.close();
-		file_writer.close();
 	}
 }

@@ -32,8 +32,8 @@ public class AST_CLASSDECL_LIST extends AST_Node {
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
 		for (AST_CLASSDECL classdecl : class_decl_list) {
-			table.pushScope(true, classdecl.getName());
 			table.insertASTNode(classdecl);
+			//table.pushScope(true, classdecl.getName());
 			if (!classdecl.checkSemantic(table))
 				return false;
 			table.popScope();

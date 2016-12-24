@@ -13,6 +13,13 @@ public class AST_CLASSDECL extends AST_Node{
 		fm_list = fml;
 		type = new AST_TYPE_CLASS(classId);
 	}
+	public AST_CLASSDECL(String c1, String c2, AST_FIELD_METHOD_LIST fml) {
+		baseId = c2;
+		classId = c1;
+		fm_list = fml;
+		type = new AST_TYPE_CLASS(classId);
+
+	}   
 
 	public String getClassId() {
 		return classId;
@@ -46,13 +53,7 @@ public class AST_CLASSDECL extends AST_Node{
 		this.type = type;
 	}
 
-	public AST_CLASSDECL(String c1, String c2, AST_FIELD_METHOD_LIST fml) {
-		baseId = c2;
-		classId = c1;
-		fm_list = fml;
-		type = new AST_TYPE_CLASS(classId);
 
-	}  
 	
 	public void print() {
 		System.out.println("classdecl : ");

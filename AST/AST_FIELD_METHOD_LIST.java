@@ -38,27 +38,33 @@ public class AST_FIELD_METHOD_LIST extends AST_Node {
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
 		for (AST_FIELD field : field_list) {
-			table.pushScope(false, null);
+			//table.pushScope(false, null);
 			table.insertASTNode(field);
-		}
-		for (AST_METHOD method : method_list) {
-			table.pushScope(false, null);
-			table.insertASTNode(method);
-		}
-		for (AST_FIELD field : field_list) {
 			if (!field.checkSemantic(table))
 				return false;
 		}
 		for (AST_METHOD method : method_list) {
+			table.insertASTNode(method);
+			table.pushScope(false, null);
 			if (!method.checkSemantic(table))
 				return false;
-		}
-		for (AST_FIELD field : field_list) {
 			table.popScope();
+
 		}
-		for (AST_METHOD method : method_list) {
-			table.popScope();
-		}
+//		for (AST_FIELD field : field_list) {
+//			if (!field.checkSemantic(table))
+//				return false;
+//		}
+//		for (AST_METHOD method : method_list) {
+//			if (!method.checkSemantic(table))
+//				return false;
+//		}
+//		for (AST_FIELD field : field_list) {
+//			table.popScope();
+//		}
+//		for (AST_METHOD method : method_list) {
+//			table.popScope();
+//		}
 		return true;
 	}
 

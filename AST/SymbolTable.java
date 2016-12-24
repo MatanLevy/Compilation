@@ -9,7 +9,7 @@ public class SymbolTable {
 	// It's key is a string (it's the name of the object)
 	// It's value is linkedList of SymbolEntry, The first SymbolEntry in every list is the object in the nearest scope with the 'id' name. 
 	
-	private Hashtable<String, LinkedList<SymbolEntry>> table;
+	private Hashtable<String, LinkedList<SymbolEntry>> tableOfSymbols;
 	
 	// The name of the class we in it's scope (If we aren't in a scope of a class, the value in null).
 	private String _currentClass;
@@ -24,15 +24,16 @@ public class SymbolTable {
 	 * C'tor
 	 */
 	public SymbolTable() {
-		table = new Hashtable<String, LinkedList<SymbolEntry>>();
+		tableOfSymbols = new Hashtable<String, LinkedList<SymbolEntry>>();
 		classScopes = new ArrayList<ScopeNode>();
 		currentScopeHierarchy = new LinkedList<ScopeNode>();
 		_currentClass = "";
+		pushScope(false, _currentClass);
 
 	}
 
 	public Hashtable<String, LinkedList<SymbolEntry>> getTable() {
-		return table;
+		return tableOfSymbols;
 	}
 
 
@@ -54,9 +55,8 @@ public class SymbolTable {
 		Hashtable<String, SymbolEntry> scopeSymbols = currentScopeHierarchy.getFirst().getSymbols();
 		for (String id : scopeSymbols.keySet()) {
 			//remove the first of the linked list (like in stack data structure)
-			SymbolEntry symEntry = scopeSymbols.get(id);
-			if (table.get(symEntry) != null) {
-				remove_symbol(symEntry.getId()); 
+			if (tableOfSymbols.get(id) != null) {
+				remove_symbol(id); 
 			}
 			else {
 				return;  //should not happen never!
@@ -86,13 +86,15 @@ public class SymbolTable {
 	 */
 	
 	public void add_symbol (String id, AST_TYPE type, boolean isInit) {
-		if (table.get(id) == null) {
+		if (tableOfSymbols.get(id) == null) {
 			LinkedList<SymbolEntry> symEntryList = new LinkedList<SymbolEntry>();
-			table.put(id, symEntryList);
+			tableOfSymbols.put(id, symEntryList);
 		}
 		SymbolEntry sym = new SymbolEntry(id, type, isInit);
 		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
-		table.get(id).addFirst(sym);
+		tableOfSymbols.get(id).addFirst(sym);
+		
+
 		currentScopeHierarchy.getFirst().setSymbol(sym);;
 
 	}
@@ -105,22 +107,22 @@ public class SymbolTable {
 	
 	public SymbolEntry find_symbol (String id) {
 		
-		if (table.get(id)==null || table.get(id).isEmpty()) {
+		if (tableOfSymbols.get(id)==null || tableOfSymbols.get(id).isEmpty()) {
 			return null;
 		}
-		return table.get(id).getFirst();
+		return tableOfSymbols.get(id).getFirst();
 		
 	}
 	
 	public void initalizeSymbolEntryInCurrScope (String id) {
-		SymbolEntry sym = table.get(id).getFirst();
-		table.get(id).removeFirst();
+		SymbolEntry sym = tableOfSymbols.get(id).getFirst();
+		tableOfSymbols.get(id).removeFirst();
 		sym.initalize = true;
-		table.get(id).addFirst(sym);
+		tableOfSymbols.get(id).addFirst(sym);
 	}
 	
 	public void remove_symbol (String id) {
-		table.get(id).removeFirst();
+		tableOfSymbols.get(id).removeFirst();
 	}
 	
 	//true if x defined in current scope
@@ -139,6 +141,16 @@ public class SymbolTable {
 		return currentScopeHierarchy.getFirst().getSymbols().containsKey(x);
 	}
 	
+	//check if defined class with classID name.
+	public boolean check_classScopes (String classID) {
+		if (classID == null)
+			return false;
+		for (int i=0 ; i < classScopes.size(); i++) {
+			if (classScopes.get(i).className.equals(classID))
+				return true;
+		}
+		return false;
+	}
 	
 	public boolean isSymbolInitalize (String id) {
 		SymbolEntry sym = find_symbol(id);
@@ -208,24 +220,27 @@ public class SymbolTable {
 	public boolean insertClassDecl (AST_CLASSDECL classDec) {
 		// if we defined object with the same id in the same scope. it's multiple define error
 		String classId = classDec.getClassId();
-		if (check_scope(classId)){
+		if (check_classScopes(classId)){
 			throw new RuntimeException("duplicate defined Class : " + classId);
 		}
 		// if the class extends other class but the other class is undefined it's an error
 		String baseClassId = classDec.getBaseId();
-		if (baseClassId != null && !(table.containsKey(baseClassId))) {
+		if (baseClassId != null && !(check_classScopes(baseClassId))) {
 			throw new RuntimeException("Class " + classId + " extends class that "
 					+ "hasn't been defined yet (" + baseClassId + ")");
 		}
+
+		add_symbol(classId, classDec.type, true);
+		setCurrentClass (classDec.classId);
+		pushScope(true, classId);
 		// if the class extends other class, we put all the methods/fields that defined in the other class, in the current class's scope.
-		else if (baseClassId != null) {
+		if (baseClassId != null) {
 			ScopeNode baseClassScope = getClassScope(baseClassId);
 			if (baseClassScope == null)//error 
 				return false;
 			addAllSymbols(baseClassScope);
 		}
-		add_symbol(classId, classDec.type, true);
-		setCurrentClass (classDec.classId);
+
 
 		return true;
 	}
@@ -242,7 +257,8 @@ public class SymbolTable {
 				String fieldId = field._comma_list.get(i);
 				// if we defined object with the same id in the same scope. it's multiple define error
 				if (check_scope(fieldId))
-					return false;
+					throw new RuntimeException("multipile defintion of : " + 
+							fieldId);
 				add_symbol (fieldId, field._type, true);
 			}
 		}
