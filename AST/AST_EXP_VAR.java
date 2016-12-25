@@ -25,5 +25,14 @@ public class AST_EXP_VAR extends AST_EXP
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public AST_TYPE calcType(SymbolTable table) {
+		if (!typeUptoDate) { 
+			type = var.calcType(table);
+			typeUptoDate = true;
+		}
+		return type;
+	}
 	
 }

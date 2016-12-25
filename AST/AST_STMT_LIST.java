@@ -30,7 +30,10 @@ public class AST_STMT_LIST extends AST_Node
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
+		for (AST_STMT stmt : list) {
+			if (!stmt.checkSemantic(table))
+				return false;
+		}
 		return true;
 	}
 	

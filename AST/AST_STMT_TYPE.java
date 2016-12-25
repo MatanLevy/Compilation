@@ -31,8 +31,17 @@ public class AST_STMT_TYPE extends AST_STMT {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return false;
+		if (table.check_scope(id))
+			throw new RuntimeException("symbol " + id + "exist already in this"
+					+ " scope");
+		if (exp != null) {
+			if (! SemanticChecker.isBaseClassOf(type.getName(), 
+					exp.calcType(table).getName()))
+				throw new RuntimeException("in compitable type assign");
+		}
+		table.insertASTNode(this);
+		return true;
+		
 	}
 
 }

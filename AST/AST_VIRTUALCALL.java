@@ -1,10 +1,13 @@
 package AST;
 
-public class AST_VIRTUALCALL extends AST_Node{	
+import java.util.Hashtable;
+import java.util.List;
+
+public class AST_VIRTUALCALL extends AST_Node {
 	AST_EXP exp;
 	String _id;
 	AST_COMMA_EXPR_LIST exp_list;
-	
+
 	public AST_VIRTUALCALL(AST_EXP e, String id, AST_COMMA_EXPR_LIST l) {
 		exp = e;
 		_id = id;
@@ -14,15 +17,47 @@ public class AST_VIRTUALCALL extends AST_Node{
 	public AST_VIRTUALCALL(String id, AST_COMMA_EXPR_LIST l) {
 		exp = null;
 		_id = id;
-		exp_list = l; 
+		exp_list = l;
 	}
-	
+
+	public AST_TYPE calcType(SymbolTable table) {
+		if ((exp != null) && !(exp.calcType(table) instanceof AST_TYPE_CLASS))
+			throw new RuntimeException("can't invoke method on not a class elem");
+		String className = (exp == null) ? table.get_currentClass() : exp.calcType(table).getName();
+		// ScopeNode node = table.getClassScope(className);
+		// Hashtable<String, SymbolEntry> hash = node.getSymbols();
+		// if (!hash.containsKey(_id))
+		// throw new RuntimeException("no such method : " +
+		// _id + "in class " + className);
+		// SymbolEntry methodentry = hash.get(_id);
+		SymbolEntry methodentry = table.find_symbol(_id);
+		if (methodentry == null)
+			throw new RuntimeException("no such method : " + _id + "in class " + className);
+		if (!methodentry.isIs_method())
+			throw new RuntimeException(_id + " exist but not a method");
+		List<AST_TYPE> argumentList = methodentry.getListTypeForMethod();
+		List<AST_EXP> expList = SemanticChecker.generateExpList(exp_list);
+		int numberOfArguments = argumentList.size();
+		int numberOfParamInCall = expList.size();
+		if (numberOfArguments != numberOfParamInCall)
+			throw new RuntimeException(
+					"method " + _id + " expect " + numberOfArguments + " parametrs.called with " + numberOfParamInCall);
+		for (int i = 0; i < numberOfArguments; i++) {
+			if (!SemanticChecker.isBaseClassOf(argumentList.get(i).getName(), expList.get(i).calcType(table).getName()))
+				throw new RuntimeException("error with argument number " + i);
+		}
+		return methodentry.getType();
+	}
+
 	public void print() {
 		System.out.println("virtual call : ");
 		System.out.println("id = " + _id);
-		 if (exp != null ) exp.print(); else System.out.println("no exp");
+		if (exp != null)
+			exp.print();
+		else
+			System.out.println("no exp");
 		exp_list.print();
-		
+
 	}
 
 	@Override
@@ -32,8 +67,8 @@ public class AST_VIRTUALCALL extends AST_Node{
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return false;
+		calcType(table);
+		return true;
 	}
 
 }

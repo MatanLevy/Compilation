@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.List;
 
 public class SymbolTable {
 	
@@ -15,6 +16,15 @@ public class SymbolTable {
 	// The name of the class we in it's scope (If we aren't in a scope of a class, the value in null).
 	private String _currentClass;
 	
+	public String get_currentClass() {
+		return _currentClass;
+	}
+
+	public void set_currentClass(String _currentClass) {
+		this._currentClass = _currentClass;
+	}
+
+
 	//List of the classes scopes. (In every scope of class it has fields and methods that defined in it)
 	private ArrayList<ScopeNode> classScopes;
 
@@ -90,12 +100,13 @@ public class SymbolTable {
 	 * @param type
 	 */
 	
-	public void add_symbol (String id, AST_TYPE type, boolean isInit) {
+	public void add_symbol (String id, AST_TYPE type, boolean isInit,
+			boolean ismethod,List<AST_TYPE> listmethod) {
 		if (tableOfSymbols.get(id) == null) {
 			LinkedList<SymbolEntry> symEntryList = new LinkedList<SymbolEntry>();
 			tableOfSymbols.put(id, symEntryList);
 		}
-		SymbolEntry sym = new SymbolEntry(id, type, isInit);
+		SymbolEntry sym = new SymbolEntry(id, type, isInit,ismethod,listmethod);
 		sym.setInWhichClassDefined(_currentClass);
 		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
 		tableOfSymbols.get(id).addFirst(sym);
@@ -252,7 +263,7 @@ public class SymbolTable {
 					+ "hasn't been defined yet (" + baseClassId + ")");
 		}
 
-		add_symbol(classId, classDec.type, true);
+		add_symbol(classId, classDec.type, true,false,null);
 		setCurrentClass (classDec.classId);
 		pushScope(true, classId);
 		// if the class extends other class, we put all the methods/fields that defined in the other class, in the current class's scope.
@@ -272,14 +283,14 @@ public class SymbolTable {
 		if (check_scope(field.getName()))
 			error(true, false, field.getName());
 		// we don't need to initialize fields before we use them.
-		add_symbol (field._id, field._type, true);
+		add_symbol (field._id, field._type, true,false,null);
 		if (! (field._comma_list.isEmpty())){
 			for (int i=0; i < field._comma_list.size(); i++) {
 				String fieldId = field._comma_list.get(i);
 				// if we defined object with the same id in the same scope. it's multiple define error
 				if (check_scope(fieldId))
 					error(true, false, fieldId);
-				add_symbol (fieldId, field._type, true);
+				add_symbol (fieldId, field._type, true,false,null);
 			}
 		}
 		
@@ -295,12 +306,13 @@ public class SymbolTable {
 			if (symbol.getInWhichClassDefined().equals(_currentClass))
 				error(true, false, methodName);
 		}
-		add_symbol (methodName, method.type, true);
+		add_symbol (methodName, method.type, true,true,
+				SemanticChecker.generateFormalsList(method));
 		pushScope(false, null, method._id);
 
 		AST_FORMALS formal = method.formals;
 		if (formal._id != null){
-			add_symbol(formal._id, formal.type, true);
+			add_symbol(formal._id, formal.type, true,false,null);
 			HashSet <String> formalsId = new HashSet<String>();
 			formalsId.add(formal._id);
 			AST_FORMALS_LIST fl = formal.f_list;
@@ -309,7 +321,7 @@ public class SymbolTable {
 				if (formalsId.contains(f_id)) //if there is formal with the same name of other formal, it's an error
 					error(true, false, f_id);
 				formalsId.add(f_id);
-				add_symbol(f_id, fl.type_list.get(i), true);
+				add_symbol(f_id, fl.type_list.get(i), true,false,null);
 			}
 		}
 		return true;
@@ -323,7 +335,7 @@ public class SymbolTable {
 		if (stmtType.exp != null) {
 			initalize = true;
 		}
-		add_symbol(stmtType.id, stmtType.type, initalize);
+		add_symbol(stmtType.id, stmtType.type, initalize,false,null);
 
 		
 		return true;

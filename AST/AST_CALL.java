@@ -21,8 +21,7 @@ public class AST_CALL extends AST_Node {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return false;
+		return virtualCall.checkSemantic(table);
 	}
 
 }

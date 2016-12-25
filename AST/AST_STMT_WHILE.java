@@ -20,14 +20,14 @@ public class AST_STMT_WHILE extends AST_STMT
 	}
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		if (!(cond.calcType(table) instanceof AST_TYPE_INT))
+			throw new RuntimeException("while condition not boolean");
+		return body.checkSemantic(table);
+	} 
 
 
 }

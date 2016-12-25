@@ -8,8 +8,7 @@ public class AST_TYPE_STRING extends AST_RAW_TYPE {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "string";
 	}
 
 	@Override

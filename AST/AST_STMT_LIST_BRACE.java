@@ -21,8 +21,10 @@ public class AST_STMT_LIST_BRACE extends AST_STMT {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return false;
+		table.pushScope(false, null);
+		boolean bodyreturned = stmtList.checkSemantic(table);
+		table.popScope();
+		return bodyreturned;
 	}
 
 }

@@ -26,8 +26,7 @@ public class AST_FIELD extends AST_Node {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return true;
+		return SemanticChecker.isTypeDefinedAlready(table, _type);
 	}
 
 }

@@ -24,6 +24,15 @@ public class AST_EXP_CALL extends AST_EXP {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public AST_TYPE calcType(SymbolTable table) {
+		if (!typeUptoDate) {
+			type = call.virtualCall.calcType(table);
+			typeUptoDate = true;
+		}
+		return type;
+	}
 	
 
 }
