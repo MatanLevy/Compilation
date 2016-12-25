@@ -1,5 +1,7 @@
 package AST;
 
+import javax.management.RuntimeErrorException;
+
 public class AST_STMT_WHILE extends AST_STMT
 {
 	public AST_EXP cond;
@@ -20,14 +22,14 @@ public class AST_STMT_WHILE extends AST_STMT
 	}
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		if (!(cond.type instanceof AST_TYPE_INT))
+			throw new RuntimeException("if stmt not boolean");
+		return body.checkSemantic(table);
+	} 
 
 
 }

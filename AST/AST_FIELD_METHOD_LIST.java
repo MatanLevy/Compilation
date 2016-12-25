@@ -49,22 +49,7 @@ public class AST_FIELD_METHOD_LIST extends AST_Node {
 			if (!method.checkSemantic(table))
 				return false;
 			table.popScope();
-
 		}
-//		for (AST_FIELD field : field_list) {
-//			if (!field.checkSemantic(table))
-//				return false;
-//		}
-//		for (AST_METHOD method : method_list) {
-//			if (!method.checkSemantic(table))
-//				return false;
-//		}
-//		for (AST_FIELD field : field_list) {
-//			table.popScope();
-//		}
-//		for (AST_METHOD method : method_list) {
-//			table.popScope();
-//		}
 		return true;
 	}
 

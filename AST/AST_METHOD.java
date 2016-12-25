@@ -21,12 +21,6 @@ public class AST_METHOD extends AST_Node {
 		stmt_list = l;
 		_id = id;
 	}
-	
-	
-	
-	
-	
-	
 	public void print() {
 		System.out.println("method : ");
 		if (type != null) {
@@ -52,6 +46,7 @@ public class AST_METHOD extends AST_Node {
 		if (!stmt_list.checkSemantic(table))
 			return false;
 		return true;
+
 	}
 
 }
