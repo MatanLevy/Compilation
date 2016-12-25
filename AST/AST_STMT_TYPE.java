@@ -31,7 +31,6 @@ public class AST_STMT_TYPE extends AST_STMT {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

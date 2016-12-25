@@ -21,12 +21,6 @@ public class AST_METHOD extends AST_Node {
 		stmt_list = l;
 		_id = id;
 	}
-	
-	
-	
-	
-	
-	
 	public void print() {
 		System.out.println("method : ");
 		if (type != null) {
@@ -47,8 +41,7 @@ public class AST_METHOD extends AST_Node {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return false;
+		return stmt_list.checkSemantic(table);
 	}
 
 }
