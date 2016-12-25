@@ -6,6 +6,7 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 	public AST_EXP_NEW_CLASS(String className) {
 		this._className = className;
 		this.type = new AST_TYPE_CLASS(className);
+		this.typeUptoDate = true;
 	}
 	public void print() {
 		System.out.println("exp new class : " + _className);
@@ -18,6 +19,14 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 	public boolean checkSemantic(SymbolTable table) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	@Override
+	public AST_TYPE calcType(SymbolTable table) {
+		if (!typeUptoDate) {
+			type = new AST_TYPE_CLASS(_className);
+			typeUptoDate = true;
+		}
+		return type;
 	}
 
 }

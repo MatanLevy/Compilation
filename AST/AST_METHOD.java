@@ -41,6 +41,8 @@ public class AST_METHOD extends AST_Node {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
+		if (!SemanticChecker.isTypeDefinedAlready(table, type))
+			return false;
 		if (!formals.checkSemantic(table))
 			return false;
 		if (!stmt_list.checkSemantic(table))

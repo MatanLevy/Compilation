@@ -27,4 +27,16 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public AST_TYPE calcType(SymbolTable table) {
+		AST_TYPE subtype = (subscript.typeUptoDate) ? subscript.type : 
+			subscript.calcType(table);
+		if (!(subtype instanceof AST_TYPE_INT))
+			throw new RuntimeException("array index is not integer");
+		AST_TYPE arrtype = (var.typeUptoDate) ? var.type : var.calcType(table);
+		if (!(arrtype instanceof AST_TYPE_BRACK))
+			throw new RuntimeException("cant invoke [ ] on raw type");
+		return ((AST_TYPE_BRACK)arrtype).getType();
+	}
 }

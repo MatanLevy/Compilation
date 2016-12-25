@@ -34,6 +34,7 @@ public class AST_STMT_LIST extends AST_Node
 			if (!stmt.checkSemantic(table))
 				return false;
 		}
+		return true;
 	}
 	
 }

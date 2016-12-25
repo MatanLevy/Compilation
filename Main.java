@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 
 import AST.AST_PROGRAM;
-import AST.SemanticChecker;
+import AST.SemanticChecker; 
 import AST.SymbolTable;
 
 public class Main {
@@ -36,7 +36,7 @@ public class Main {
 				file_writer.write("FAIL");
 		}
 		 //program.print();
-		
+		SemanticChecker.setProgram(program);
 		SymbolTable table = new SymbolTable();
 		program.checkSemantic(table);
 		file_writer.close();

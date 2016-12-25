@@ -19,7 +19,7 @@ public class AST_STMT_RETURN extends AST_STMT {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new RuntimeException("WE MUST IMPLEMENT RETURN!!!!");
+
 	}
 }

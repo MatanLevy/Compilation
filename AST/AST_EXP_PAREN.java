@@ -6,7 +6,6 @@ public class AST_EXP_PAREN extends AST_EXP {
 
 	public AST_EXP_PAREN(AST_EXP e) {
 		this.exp = e;
-		this.type = e.type;
 	}
 	
 	public void print() {
@@ -24,6 +23,15 @@ public class AST_EXP_PAREN extends AST_EXP {
 	public boolean checkSemantic(SymbolTable table) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public AST_TYPE calcType(SymbolTable table) {
+		if (!typeUptoDate) {
+			type = exp.calcType(table);
+			typeUptoDate = true;
+		}
+		return type;
 	}
 
 }

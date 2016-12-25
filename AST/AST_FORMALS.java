@@ -31,7 +31,13 @@ public class AST_FORMALS extends AST_Node {
 	}
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		return true;
+		if (type == null)
+			return true;
+		boolean firstcheck = SemanticChecker.isTypeDefinedAlready(table, type);
+		for (AST_TYPE type1 : f_list.type_list)
+			if (!SemanticChecker.isTypeDefinedAlready(table, type1))
+				return false;
+		return firstcheck;
 	}
 
 }

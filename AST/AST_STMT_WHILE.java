@@ -1,7 +1,5 @@
 package AST;
 
-import javax.management.RuntimeErrorException;
-
 public class AST_STMT_WHILE extends AST_STMT
 {
 	public AST_EXP cond;
@@ -26,8 +24,8 @@ public class AST_STMT_WHILE extends AST_STMT
 	}
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		if (!(cond.type instanceof AST_TYPE_INT))
-			throw new RuntimeException("if stmt not boolean");
+		if (!(cond.calcType(table) instanceof AST_TYPE_INT))
+			throw new RuntimeException("while condition not boolean");
 		return body.checkSemantic(table);
 	} 
 
