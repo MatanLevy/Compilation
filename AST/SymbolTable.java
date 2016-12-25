@@ -99,8 +99,6 @@ public class SymbolTable {
 		sym.setInWhichClassDefined(_currentClass);
 		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
 		tableOfSymbols.get(id).addFirst(sym);
-		
-
 		currentScopeHierarchy.getFirst().setSymbol(sym);
 
 	}
@@ -113,8 +111,6 @@ public class SymbolTable {
 		}
 		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
 		tableOfSymbols.get(id).addFirst(symbol);
-		
-
 		currentScopeHierarchy.getFirst().setSymbol(symbol);
 
 	}
