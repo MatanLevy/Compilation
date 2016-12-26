@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 public class SymbolTable {
 	
 	// This HashTable is the symbol table.
@@ -102,11 +104,18 @@ public class SymbolTable {
 	
 	public void add_symbol (String id, AST_TYPE type, boolean isInit,
 			boolean ismethod,List<AST_TYPE> listmethod) {
-		if (tableOfSymbols.get(id) == null) {
-			LinkedList<SymbolEntry> symEntryList = new LinkedList<SymbolEntry>();
-			tableOfSymbols.put(id, symEntryList);
-		}
+		initEntryOfIdInTableOfSymbols(id);
 		SymbolEntry sym = new SymbolEntry(id, type, isInit,ismethod,listmethod);
+		sym.setInWhichClassDefined(_currentClass);
+		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
+		tableOfSymbols.get(id).addFirst(sym);
+		currentScopeHierarchy.getFirst().setSymbol(sym);
+
+	}
+	
+	public void add_symbol_method (String id, AST_TYPE returnType, List<AST_TYPE> listmethod) {
+		initEntryOfIdInTableOfSymbols(id);
+		SymbolEntryMethod sym = new SymbolEntryMethod(id, returnType, listmethod);
 		sym.setInWhichClassDefined(_currentClass);
 		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
 		tableOfSymbols.get(id).addFirst(sym);
@@ -116,14 +125,18 @@ public class SymbolTable {
 	
 	public void add_symbol (SymbolEntry symbol) {
 		String id = symbol.id;
-		if (tableOfSymbols.get(id) == null) {
-			LinkedList<SymbolEntry> symEntryList = new LinkedList<SymbolEntry>();
-			tableOfSymbols.put(id, symEntryList);
-		}
+		initEntryOfIdInTableOfSymbols(id);
 		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
 		tableOfSymbols.get(id).addFirst(symbol);
 		currentScopeHierarchy.getFirst().setSymbol(symbol);
 
+	}
+	
+	public void initEntryOfIdInTableOfSymbols (String id) {
+		if (tableOfSymbols.get(id) == null) {
+			LinkedList<SymbolEntry> symEntryList = new LinkedList<SymbolEntry>();
+			tableOfSymbols.put(id, symEntryList);
+		}
 	}
 	
 	public void addAllSymbols (ScopeNode scope) {
@@ -306,8 +319,8 @@ public class SymbolTable {
 			if (symbol.getInWhichClassDefined().equals(_currentClass))
 				error(true, false, methodName);
 		}
-		add_symbol (methodName, method.type, true,true,
-				SemanticChecker.generateFormalsList(method));
+		add_symbol_method(methodName, method.type, 
+				generateFormalsList(method));
 		pushScope(false, null, method._id);
 
 		AST_FORMALS formal = method.formals;
@@ -339,6 +352,32 @@ public class SymbolTable {
 
 		
 		return true;
+	}
+	
+	
+	
+	
+	public static List<AST_TYPE> generateFormalsList(AST_METHOD method) {
+		List<AST_TYPE> argumentsList = new ArrayList<>();
+		AST_FORMALS formals = method.formals;
+		if (formals.type == null)
+			return argumentsList;
+		argumentsList.add(formals.type);
+		argumentsList.addAll(formals.f_list.type_list);
+		return argumentsList;
+	}
+	
+	public AST_TYPE returnTypeCurrentMethod () {
+		String method_name = currentScopeHierarchy.getFirst().methodName;
+		if (method_name==null || method_name.equals("")) { //it's not a scope of method.
+			throw new RuntimeException("We are not in method scope");
+		}
+		SymbolEntry symbolMethod = find_symbol(method_name);
+		if (!(symbolMethod instanceof SymbolEntryMethod))
+			throw new RuntimeException(method_name + " is not a method");
+		return symbolMethod.getType();
+		
+		
 	}
 	
 	

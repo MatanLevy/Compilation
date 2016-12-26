@@ -25,15 +25,7 @@ public class SemanticChecker {
 		return null;
 	}
 
-	public static List<AST_TYPE> generateFormalsList(AST_METHOD method) {
-		List<AST_TYPE> argumentsList = new ArrayList<>();
-		AST_FORMALS formals = method.formals;
-		if (formals.type == null)
-			return argumentsList;
-		argumentsList.add(formals.type);
-		argumentsList.addAll(formals.f_list.type_list);
-		return argumentsList;
-	}
+
 
 	public static List<AST_EXP> generateExpList(AST_COMMA_EXPR_LIST explist) {
 		List<AST_EXP> list = new ArrayList<>();
