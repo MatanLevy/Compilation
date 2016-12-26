@@ -18,7 +18,7 @@ public class SemanticChecker {
 	public static AST_CLASSDECL getClass(String className) {
 		List<AST_CLASSDECL> classList = program.getClassDeclList().getListOfClassDecl();
 		for (AST_CLASSDECL classDecl : classList) {
-			if (className.equals(classDecl.classId)) {
+			if (classDecl.classId.equals(className)) {
 				return classDecl;
 			}
 		}
@@ -47,6 +47,8 @@ public class SemanticChecker {
 	public static boolean isBaseClassOf(String base, String derived) {
 		System.out.println(base + "   " + derived);
 		if (base.equals(derived))
+			return true;
+		if (derived.equals("NULL")) 
 			return true;
 		AST_CLASSDECL deriveClass = SemanticChecker.getClass(derived);
 		AST_CLASSDECL baseClass = SemanticChecker.getClass(base);

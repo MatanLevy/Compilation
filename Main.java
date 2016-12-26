@@ -39,6 +39,7 @@ public class Main {
 		SemanticChecker.setProgram(program);
 		SymbolTable table = new SymbolTable();
 		program.checkSemantic(table);
+		
 		file_writer.close();
 	}
 }

@@ -43,8 +43,11 @@ public class AST_VIRTUALCALL extends AST_Node {
 			throw new RuntimeException(
 					"method " + _id + " expect " + numberOfArguments + " parametrs.called with " + numberOfParamInCall);
 		for (int i = 0; i < numberOfArguments; i++) {
-			if (!SemanticChecker.isBaseClassOf(argumentList.get(i).getName(), expList.get(i).calcType(table).getName()))
-				throw new RuntimeException("error with argument number " + i);
+			if (expList.get(i).calcType(table) == null) //VOID
+				throw new RuntimeException("argument number " + i + " can't be void");
+			if (!SemanticChecker.isBaseClassOf(argumentList.get(i).getName(), 
+					expList.get(i).calcType(table).getName()))
+				throw new RuntimeException("Error with argument number " + i+1);
 		}
 		return methodentry.getType();
 	}

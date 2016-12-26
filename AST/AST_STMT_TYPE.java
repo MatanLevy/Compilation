@@ -31,6 +31,9 @@ public class AST_STMT_TYPE extends AST_STMT {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
+		if (!SemanticChecker.isTypeDefinedAlready(table, type))
+			throw new RuntimeException("class " + type.getName() + " hasn't "
+					+" been defined");
 		if (table.check_scope(id))
 			throw new RuntimeException("symbol " + id + "exist already in this"
 					+ " scope");

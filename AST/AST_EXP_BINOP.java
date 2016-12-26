@@ -36,7 +36,12 @@ public class AST_EXP_BINOP extends AST_EXP
 	public AST_TYPE calcType(SymbolTable table) {
 		AST_TYPE leftType = left.calcType(table); 
 		AST_TYPE rightType = right.calcType(table);
-		if (!leftType.equals(rightType)) {
+		if (leftType == null || rightType == null) {
+			throw new RuntimeException("Cant make op on void exp");
+		}
+		if (!SemanticChecker.isBaseClassOf(leftType.getName(), rightType.getName())
+				&& !SemanticChecker.isBaseClassOf(rightType.getName(), 
+						leftType.getName())) {
 			throw new RuntimeException("Incomparble types");
 		}
 		if (OP.getOp() == "EQUAL" || OP.getOp() == "NON EQUAL") {
