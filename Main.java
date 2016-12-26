@@ -3,13 +3,15 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 
 import AST.AST_PROGRAM;
-import AST.SemanticChecker; 
+import AST.SemanticChecker;
 import AST.SymbolTable;
 
 public class Main {
 	public static void main(String argv[]) {
 		Lexer l;
 		parser p = null;
+		boolean syntexCheck = false;
+		boolean semanticCheck = false;
 		FileReader file_reader = null;
 		PrintWriter file_writer = null;
 		String inputFilename = argv[0];
@@ -22,24 +24,29 @@ public class Main {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		@SuppressWarnings("unused")
 		AST_PROGRAM program = null;
 		try {
 			program = (AST_PROGRAM) p.parse().value;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-		finally {  
+		} finally {
 			if (p.isFileLegal())
-				file_writer.write("OK");
+				syntexCheck = true;
 			else
 				file_writer.write("FAIL");
 		}
-		 //program.print();
-		SemanticChecker.setProgram(program);
-		SymbolTable table = new SymbolTable();
-		program.checkSemantic(table);
-		
+		if (syntexCheck) {
+			SemanticChecker.setProgram(program);
+			SymbolTable table = new SymbolTable();
+			try {
+				semanticCheck = program.checkSemantic(table);
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+				file_writer.write("FAIL");
+			}
+			if (semanticCheck)
+				file_writer.write("OK");
+		}
 		file_writer.close();
 	}
 }

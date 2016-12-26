@@ -1,6 +1,6 @@
 package AST;
 
-import java.util.Hashtable;
+
 
 public class AST_VAR_FIELD extends AST_VAR
 {
