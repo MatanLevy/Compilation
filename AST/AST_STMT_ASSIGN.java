@@ -28,7 +28,8 @@ public class AST_STMT_ASSIGN extends AST_STMT
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		AST_TYPE leftSide = var.calcType(table);
+
+		AST_TYPE leftSide = var.calcType(table, false);
 		AST_TYPE rightSide = exp.calcType(table);
 		if (!SemanticChecker.isBaseClassOf(leftSide.getName(), 
 				rightSide.getName()))

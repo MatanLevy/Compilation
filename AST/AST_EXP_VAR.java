@@ -29,7 +29,7 @@ public class AST_EXP_VAR extends AST_EXP
 	@Override
 	public AST_TYPE calcType(SymbolTable table) {
 		if (!typeUptoDate) { 
-			type = var.calcType(table);
+			type = var.calcType(table, true);
 			typeUptoDate = true;
 		}
 		return type;
