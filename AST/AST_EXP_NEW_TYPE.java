@@ -20,7 +20,7 @@ public class AST_EXP_NEW_TYPE extends AST_EXP {
 			if (!(expType instanceof AST_TYPE_INT))
 				throw new RuntimeException("Cant initalized array without integer"
 						+ " type");
-			type = new AST_TYPE_BRACK(expType);
+			type = new AST_TYPE_BRACK(typeleft);
 			typeUptoDate = true;
 		}
 		return type;
