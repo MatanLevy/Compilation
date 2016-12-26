@@ -21,8 +21,16 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		throw new RuntimeException("WE MUST IMPLEMENT RETURN_exp!!!!");
-		//return false;
+		AST_TYPE evlType = exp.calcType(table);
+		AST_TYPE returnType= table.returnTypeCurrentMethod();
+		if (returnType == null) //void
+			throw new RuntimeException("void method mustn't return value");
+		if (!(SemanticChecker.isBaseClassOf(returnType.getName(), 
+				evlType.getName())))
+			throw new RuntimeException("method should return " + returnType.getName()
+			+ " and not " + evlType.getName());
+		return true;
+			
 	}
 
 }

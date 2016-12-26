@@ -19,7 +19,10 @@ public class AST_STMT_RETURN extends AST_STMT {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		throw new RuntimeException("WE MUST IMPLEMENT RETURN!!!!");
+		AST_TYPE returnType= table.returnTypeCurrentMethod();
+		if (returnType != null)
+			throw new RuntimeException("method must return " + returnType.getName());
+		return true;
 
 	}
 }
