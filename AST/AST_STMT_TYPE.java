@@ -31,6 +31,8 @@ public class AST_STMT_TYPE extends AST_STMT {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
+		if (type == null || exp.calcType(table) == null)
+			throw new RuntimeException("can't assign from/to void type");
 		if (!SemanticChecker.isTypeDefinedAlready(table, type))
 			throw new RuntimeException("class " + type.getName() + " hasn't "
 					+" been defined");
