@@ -29,7 +29,7 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 	}
 
 	@Override
-	public AST_TYPE calcType(SymbolTable table) {
+	public AST_TYPE calcType(SymbolTable table, boolean needCheckInitialize) {
 		AST_TYPE subtype = (subscript.typeUptoDate) ? subscript.type : 
 			subscript.calcType(table);
 		if (!(subtype instanceof AST_TYPE_INT))

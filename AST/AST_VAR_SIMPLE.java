@@ -26,11 +26,15 @@ public class AST_VAR_SIMPLE extends AST_VAR
 	}
 
 	@Override
-	public AST_TYPE calcType(SymbolTable table) {
+	public AST_TYPE calcType(SymbolTable table, boolean needCheckInitialize) {
 		if (table.find_symbol(name) == null) 
 			throw new RuntimeException(name + " is not defined in this scope");
-		if (!table.isSymbolInitalize(name))
+		if (!table.isSymbolInitalize(name) && needCheckInitialize)
 			throw new RuntimeException(name + " is not initalized");
+		if (!needCheckInitialize) { //it's false only if we get here from AST_STMT_ASSING
+			table.find_symbol(name).setInitalize(true);
+		}
+		
 		return table.getTable().get(name).getFirst().getType();
 	}
 }

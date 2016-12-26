@@ -31,7 +31,7 @@ public class AST_VAR_FIELD extends AST_VAR
 	}
 
 	@Override
-	public AST_TYPE calcType(SymbolTable table) {
+	public AST_TYPE calcType(SymbolTable table, boolean needCheckInitialize) {
 		AST_TYPE classType = (var.typeUptoDate)? var.type : var.calcType(table);
 		if (!(classType instanceof AST_TYPE_CLASS)) 
 			throw new RuntimeException("cannt access field of type not class");
