@@ -8,24 +8,6 @@ public class SymbolEntry {
 	boolean is_class;
 	boolean is_method;
 	List<AST_TYPE> listTypeForMethod;
-	public boolean isIs_method() {
-		return is_method;
-	}
-
-	public void setIs_method(boolean is_method) {
-		this.is_method = is_method;
-	}
-
-	public List<AST_TYPE> getListTypeForMethod() {
-		return listTypeForMethod;
-	}
-
-	public void setListTypeForMethod(List<AST_TYPE> listTypeForMethod) {
-		this.listTypeForMethod = listTypeForMethod;
-	}
-
-	boolean initalize;
-	String inWhichClassDefined; //this should be name of method or class.
 	
 	public SymbolEntry(String id, AST_TYPE type ,boolean initalize,
 			boolean ismethod,List<AST_TYPE> listmethod) {
@@ -49,6 +31,28 @@ public class SymbolEntry {
 			listTypeForMethod = null;
 		}
 	}
+	
+	
+	public boolean isIs_method() {
+		return is_method;
+	}
+
+	public void setIs_method(boolean is_method) {
+		this.is_method = is_method;
+	}
+
+	public List<AST_TYPE> getListTypeForMethod() {
+		return listTypeForMethod;
+	}
+
+	public void setListTypeForMethod(List<AST_TYPE> listTypeForMethod) {
+		this.listTypeForMethod = listTypeForMethod;
+	}
+
+	boolean initalize;
+	String inWhichClassDefined; //this should be name of method or class.
+	
+
 
 	public String getInWhichClassDefined() {
 		return inWhichClassDefined;
