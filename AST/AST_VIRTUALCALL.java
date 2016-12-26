@@ -1,6 +1,6 @@
 package AST;
 
-import java.util.Hashtable;
+
 import java.util.List;
 
 public class AST_VIRTUALCALL extends AST_Node {
