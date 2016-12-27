@@ -17,20 +17,15 @@ public class SymbolTable {
 	// The name of the class we in it's scope (If we aren't in a scope of a class, the value in null).
 	private String _currentClass;
 	
-	public String get_currentClass() {
-		return _currentClass;
-	}
-
-	public void set_currentClass(String _currentClass) {
-		this._currentClass = _currentClass;
-	}
-
 
 	//List of the classes scopes. (In every scope of class it has fields and methods that defined in it)
 	private ArrayList<ScopeNode> classScopes;
 
 	//Where we are now in the hierarchy of scopes. 
 	private LinkedList<ScopeNode> currentScopeHierarchy;
+	
+	//true if main defined in the program. else, false.
+	private boolean isMainDefined;
 	
 	/**
 	 * C'tor
@@ -40,8 +35,17 @@ public class SymbolTable {
 		classScopes = new ArrayList<ScopeNode>();
 		currentScopeHierarchy = new LinkedList<ScopeNode>();
 		_currentClass = "";
+		isMainDefined = false;
 		pushScope(false, _currentClass);
 
+	}
+
+	public boolean isMainDefined() {
+		return isMainDefined;
+	}
+
+	public void setMainDefined(boolean isMainDefined) {
+		this.isMainDefined = isMainDefined;
 	}
 
 	public Hashtable<String, LinkedList<SymbolEntry>> getTable() {
@@ -311,6 +315,9 @@ public class SymbolTable {
 	
 	public boolean insertMethod (AST_METHOD method) {
 		String methodName = method.getName();
+		
+		checkIfMethodIsMain(method);
+		
 		// if we defined object with the same id in the same scope. it's multiple define error
 		if (check_scope(methodName))
 		{
@@ -377,6 +384,44 @@ public class SymbolTable {
 		return symbolMethod.getType();
 		
 		
+	}
+	
+	public String get_currentClass() {
+		return _currentClass;
+	}
+
+	public void set_currentClass(String _currentClass) {
+		this._currentClass = _currentClass;
+	}
+
+	
+	public void checkIfMethodIsMain(AST_METHOD method) {
+		String methodName = method.getName();
+		
+		//check if it's main method.
+		if (methodName.equals("main")) {
+			if (isMainDefined)
+				error(true, false, methodName);
+			else {
+				List<AST_TYPE> formalsListType = generateFormalsList(method);
+				if (method.type != null || formalsListType.size() != 1) {
+					throw new RuntimeException("wrong main signature");
+				}
+				if (!(formalsListType.get(0) instanceof AST_TYPE_BRACK))
+				{
+					throw new RuntimeException("wrong main signature");
+				}
+				AST_TYPE_BRACK formal = (AST_TYPE_BRACK) formalsListType.get(0);
+				AST_TYPE formalType = formal.getType();
+				if(formalType instanceof AST_TYPE_STRING){
+					setMainDefined(true);
+				}
+				else {
+					throw new RuntimeException("wrong main signature");
+
+				}
+				}
+		}
 	}
 	
 	

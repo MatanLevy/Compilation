@@ -27,7 +27,11 @@ public class AST_PROGRAM extends AST_Node{
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		return class_dec_list.checkSemantic(table);
+		boolean returnVal = class_dec_list.checkSemantic(table);
+		if (!(table.isMainDefined())) {
+			throw new RuntimeException("main did not defined in this program");
+		}
+		return returnVal;
 	}
 
 }
