@@ -25,7 +25,7 @@ public class SymbolTable {
 	private LinkedList<ScopeNode> currentScopeHierarchy;
 	
 	//true if main defined in the program. else, false.
-	private boolean isMainDefined;
+	private boolean isMainDefined;  
 	
 	/**
 	 * C'tor
