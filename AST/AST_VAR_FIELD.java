@@ -38,7 +38,9 @@ public class AST_VAR_FIELD extends AST_VAR
 		String className = classType.getName();
 		//ScopeNode node = table.getClassScope(className);
 		//Hashtable<String, SymbolEntry> hash = node.getSymbols();
-		SymbolEntry entry = table.find_symbol(fieldName);
+		SymbolEntry entry = (table.get_currentClass().equals(className)) ? 
+				table.find_symbol(fieldName) : table.getClassScope(className).
+				getSymbols().get(fieldName);
 		if (entry == null)
 			throw new RuntimeException("no such field : " + fieldName +
 					" in class " + className);

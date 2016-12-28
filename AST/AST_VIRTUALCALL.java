@@ -30,7 +30,9 @@ public class AST_VIRTUALCALL extends AST_Node {
 		// throw new RuntimeException("no such method : " +
 		// _id + "in class " + className);
 		// SymbolEntry methodentry = hash.get(_id);
-		SymbolEntry methodentry = table.find_symbol(_id);
+		SymbolEntry methodentry =  (table.get_currentClass().equals(className)) ? 
+				table.find_symbol(_id) : table.getClassScope(className)
+				.getSymbols().get(_id);
 		if (methodentry == null)
 			throw new RuntimeException("no such method : " + _id + "in class " + className);
 		if (!methodentry.isIs_method())
