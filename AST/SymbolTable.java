@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedList; 
 import java.util.List;
+import java.util.ListIterator;
 
 
 public class SymbolTable {
@@ -372,10 +373,22 @@ public class SymbolTable {
 		argumentsList.addAll(formals.f_list.type_list);
 		return argumentsList;
 	}
+	public String checkIfWeAreInMethodScope() {
+		String method_name = null;
+		for (ScopeNode scope : currentScopeHierarchy) {
+			method_name = scope.methodName;
+			if (method_name != null && method_name !="") {
+				return method_name;
+			}
+		}
+		return null;
+	}
+	
 	
 	public AST_TYPE returnTypeCurrentMethod () {
-		String method_name = currentScopeHierarchy.getFirst().methodName;
-		if (method_name==null || method_name.equals("")) { //it's not a scope of method.
+		String method_name = checkIfWeAreInMethodScope();
+		//if (method_name==null || method_name.equals("")) { //it's not a scope of method.
+		if (method_name==null){
 			throw new RuntimeException("We are not in method scope");
 		}
 		SymbolEntry symbolMethod = find_symbol(method_name);
@@ -397,7 +410,7 @@ public class SymbolTable {
 	
 	public void checkIfMethodIsMain(AST_METHOD method) {
 		String methodName = method.getName();
-		
+		String wrongMainSignature = "wrong main signature";
 		//check if it's main method.
 		if (methodName.equals("main")) {
 			if (isMainDefined)
@@ -405,19 +418,19 @@ public class SymbolTable {
 			else {
 				List<AST_TYPE> formalsListType = generateFormalsList(method);
 				if (method.type != null || formalsListType.size() != 1) {
-					throw new RuntimeException("wrong main signature");
+					throw new RuntimeException(wrongMainSignature);
 				}
 				if (!(formalsListType.get(0) instanceof AST_TYPE_BRACK))
 				{
-					throw new RuntimeException("wrong main signature");
+					throw new RuntimeException(wrongMainSignature);
 				}
 				AST_TYPE_BRACK formal = (AST_TYPE_BRACK) formalsListType.get(0);
 				AST_TYPE formalType = formal.getType();
-				if(formalType instanceof AST_TYPE_STRING){
+				if (formalType instanceof AST_TYPE_STRING){
 					setMainDefined(true);
 				}
 				else {
-					throw new RuntimeException("wrong main signature");
+					throw new RuntimeException(wrongMainSignature);
 
 				}
 				}
