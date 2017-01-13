@@ -22,13 +22,13 @@ public class Main {
 			l = new Lexer(file_reader);
 			p = new parser(l);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		AST_PROGRAM program = null;
 		try {
 			program = (AST_PROGRAM) p.parse().value;
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} finally {
 			if (p.isFileLegal())
 				syntexCheck = true;
@@ -41,7 +41,7 @@ public class Main {
 			try {
 				semanticCheck = program.checkSemantic(table);
 			} catch (RuntimeException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				file_writer.write("FAIL");
 			}
 			if (semanticCheck)
