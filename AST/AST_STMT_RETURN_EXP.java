@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_STMT;
+
 public class AST_STMT_RETURN_EXP extends AST_STMT {
 
 	private AST_EXP exp;
@@ -31,6 +33,12 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 			+ " and not " + evlType.getName());
 		return true;
 			
+	}
+
+	@Override
+	public IR_STMT createIR() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

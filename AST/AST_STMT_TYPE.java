@@ -1,6 +1,6 @@
 package AST;
 
-import IR.IR_Node;
+import IR.IR_STMT;
 
 public class AST_STMT_TYPE extends AST_STMT {
 
@@ -51,9 +51,12 @@ public class AST_STMT_TYPE extends AST_STMT {
 		
 	}
 
-//	@Override
-//	public void updateIRNode(IR_Node node) {
-//		
-//	}
+	@Override
+	public IR_STMT createIR() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

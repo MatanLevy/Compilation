@@ -1,6 +1,10 @@
 package AST;
 
+import IR.IR_EXP;
+import IR.IR_EXP_BINOP;
 import IR.IR_Node;
+import IR.IR_STMT;
+import IR.IR_STMT_MOVE;
 import IR.IR_TEMP;
 
 public class AST_STMT_ASSIGN extends AST_STMT
@@ -40,8 +44,12 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		return true;
 	}
 
-//	@Override
-//	public void updateIRNode(IR_Node node) {
-//
-//	}
+	@Override
+	public IR_STMT createIR() {
+		IR_EXP_BINOP dst = var.createIR();
+		IR_EXP src = exp.createIR();
+		return new IR_STMT_MOVE(dst, src);
+	}
+
+
 }

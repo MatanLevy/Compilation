@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_STMT;
+
 public class AST_STMT_IF extends AST_STMT
 {
 	public AST_EXP cond;
@@ -34,5 +36,11 @@ public class AST_STMT_IF extends AST_STMT
 		if (!(cond.calcType(table) instanceof AST_TYPE_INT))
 			throw new RuntimeException("if condition not boolean");
 		return body.checkSemantic(table);
+	}
+
+	@Override
+	public IR_STMT createIR() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
