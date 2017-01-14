@@ -15,7 +15,7 @@ public class SymbolTable {
 	
 	private Hashtable<String, LinkedList<SymbolEntry>> tableOfSymbols;
 	
-	// The name of the class we in it's scope (If we aren't in a scope of a class, the value in null).
+	// The name of the class we in it's scope (If we aren't in a scope of a class, the value in "").
 	private String _currentClass;
 	
 
@@ -106,10 +106,9 @@ public class SymbolTable {
 	 * @param type
 	 */
 	
-	public void add_symbol (String id, AST_TYPE type, boolean isInit,
-			boolean ismethod,List<AST_TYPE> listmethod) {
+	public void add_symbol (String id, AST_TYPE type, boolean isInit, boolean ismethod, List<AST_TYPE> listmethod) {
 		initEntryOfIdInTableOfSymbols(id);
-		SymbolEntry sym = new SymbolEntry(id, type, isInit,ismethod,listmethod);
+		SymbolEntry sym = new SymbolEntry(id, type, isInit, ismethod, listmethod);
 		sym.setInWhichClassDefined(_currentClass);
 		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
 		tableOfSymbols.get(id).addFirst(sym);
@@ -159,28 +158,13 @@ public class SymbolTable {
 		
 	}
 	
-	public void initalizeSymbolEntryInCurrScope (String id) {
-		SymbolEntry sym = tableOfSymbols.get(id).getFirst();
-		tableOfSymbols.get(id).removeFirst();
-		sym.initalize = true;
-		tableOfSymbols.get(id).addFirst(sym);
-	}
-	
 	public void remove_symbol (String id) {
 		tableOfSymbols.get(id).removeFirst();
 	}
 	
 	//true if x defined in current scope
 	public boolean check_scope (String x)
-	{
-		/*System.out.println("NEW CHECK");
-		int i = 0;
-		for (ScopeNode node : currentScopeHierarchy) {
-			System.out.println(i++);
-			for (String key : node.getSymbols().keySet()) {
-			    System.out.println(key + ":" + node.getSymbols().get(key));
-			}
-		} */  //prints I've made to understand might help you  
+	{		
 		if (x == null) 
 			return false;
 		return currentScopeHierarchy.getFirst().getSymbols().containsKey(x);
@@ -280,7 +264,7 @@ public class SymbolTable {
 					+ "hasn't been defined yet (" + baseClassId + ")");
 		}
 
-		add_symbol(classId, classDec.type, true,false,null);
+		add_symbol(classId, classDec.type, true, false, null);
 		setCurrentClass (classDec.classId);
 		pushScope(true, classId);
 		// if the class extends other class, we put all the methods/fields that defined in the other class, in the current class's scope.
@@ -326,13 +310,12 @@ public class SymbolTable {
 			if (symbol.getInWhichClassDefined().equals(_currentClass))
 				error(true, false, methodName);
 		}
-		add_symbol_method(methodName, method.type, 
-				generateFormalsList(method));
+		add_symbol_method(methodName, method.type, generateFormalsList(method));
 		pushScope(false, null, method._id);
 
 		AST_FORMALS formal = method.formals;
 		if (formal._id != null){
-			add_symbol(formal._id, formal.type, true,false,null);
+			add_symbol(formal._id, formal.type, true, false, null);
 			HashSet <String> formalsId = new HashSet<String>();
 			formalsId.add(formal._id);
 			AST_FORMALS_LIST fl = formal.f_list;
@@ -341,7 +324,7 @@ public class SymbolTable {
 				if (formalsId.contains(f_id)) //if there is formal with the same name of other formal, it's an error
 					error(true, false, f_id);
 				formalsId.add(f_id);
-				add_symbol(f_id, fl.type_list.get(i), true,false,null);
+				add_symbol(f_id, fl.type_list.get(i), true, false, null);
 			}
 		}
 		return true;
@@ -355,7 +338,7 @@ public class SymbolTable {
 		if (stmtType.exp != null) {
 			initalize = true;
 		}
-		add_symbol(stmtType.id, stmtType.type, initalize,false,null);
+		add_symbol(stmtType.id, stmtType.type, initalize, false, null);
 
 		
 		return true;
@@ -377,7 +360,7 @@ public class SymbolTable {
 		String method_name = null;
 		for (ScopeNode scope : currentScopeHierarchy) {
 			method_name = scope.methodName;
-			if (method_name != null && method_name !="") {
+			if (method_name != null && method_name != "") {
 				return method_name;
 			}
 		}
@@ -385,18 +368,15 @@ public class SymbolTable {
 	}
 	
 	
-	public AST_TYPE returnTypeCurrentMethod () {
+	public AST_TYPE returnTypeCurrentMethod() {
 		String method_name = checkIfWeAreInMethodScope();
-		//if (method_name==null || method_name.equals("")) { //it's not a scope of method.
-		if (method_name==null){
+		if (method_name == null) {
 			throw new RuntimeException("We are not in method scope");
 		}
 		SymbolEntry symbolMethod = find_symbol(method_name);
 		if (!(symbolMethod instanceof SymbolEntryMethod))
 			throw new RuntimeException(method_name + " is not a method");
 		return symbolMethod.getType();
-		
-		
 	}
 	
 	public String get_currentClass() {

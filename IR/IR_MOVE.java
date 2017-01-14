@@ -1,9 +1,9 @@
 package IR;
 
-public class IR_MOVE extends IR_EXP {
-	public IR_EXP dst;
-	public IR_EXP src;
-	public IR_MOVE(IR_EXP dst, IR_EXP src) {
+public class IR_MOVE extends IR_Node {
+	public IR_Node dst;
+	public IR_Node src;
+	public IR_MOVE(IR_Node dst, IR_Node src) {
 		super();
 		this.dst = dst;
 		this.src = src;
