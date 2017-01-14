@@ -1,5 +1,8 @@
 package AST;
 
+import IR.IR_Node;
+import IR.IR_TEMP;
+
 public class AST_STMT_ASSIGN extends AST_STMT
 {
 	public AST_EXP exp;
@@ -36,4 +39,9 @@ public class AST_STMT_ASSIGN extends AST_STMT
 			throw new RuntimeException("Incompitable types for assign");
 		return true;
 	}
+
+//	@Override
+//	public void updateIRNode(IR_Node node) {
+//
+//	}
 }

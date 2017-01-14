@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_Node;
+
 public class AST_STMT_TYPE extends AST_STMT {
 
 	public AST_TYPE type;
@@ -48,5 +50,10 @@ public class AST_STMT_TYPE extends AST_STMT {
 		return true;
 		
 	}
+
+//	@Override
+//	public void updateIRNode(IR_Node node) {
+//		
+//	}
 
 }
