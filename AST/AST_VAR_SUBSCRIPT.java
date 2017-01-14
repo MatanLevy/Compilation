@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_EXP_BINOP;
+
 public class AST_VAR_SUBSCRIPT extends AST_VAR
 {
 	public AST_EXP var;
@@ -38,5 +40,11 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		if (!(arrtype instanceof AST_TYPE_BRACK))
 			throw new RuntimeException("cant invoke [ ] on raw type");
 		return ((AST_TYPE_BRACK)arrtype).getType();
+	}
+
+	@Override
+	public IR_EXP_BINOP createIR() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

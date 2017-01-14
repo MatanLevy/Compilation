@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_EXP;
+
 public class AST_EXP_PAREN extends AST_EXP {
 
 	AST_EXP exp;
@@ -32,6 +34,12 @@ public class AST_EXP_PAREN extends AST_EXP {
 			typeUptoDate = true;
 		}
 		return type;
+	}
+
+	@Override
+	public IR_EXP createIR() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_EXP_BINOP;
+
 public class AST_VAR_SIMPLE extends AST_VAR
 {
 	public String name;
@@ -36,5 +38,11 @@ public class AST_VAR_SIMPLE extends AST_VAR
 		}
 		
 		return table.getTable().get(name).getFirst().getType();
+	}
+
+	@Override
+	public IR_EXP_BINOP createIR() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
