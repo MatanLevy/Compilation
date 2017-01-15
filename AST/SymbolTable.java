@@ -28,6 +28,8 @@ public class SymbolTable {
 	//true if main defined in the program. else, false.
 	private boolean isMainDefined;
 	
+	private int NumberOfSymbolEntryDefinedInCurrentScope;
+	
 	/**
 	 * C'tor
 	 */
@@ -38,6 +40,7 @@ public class SymbolTable {
 		_currentClass = "";
 		isMainDefined = false;
 		pushScope(false, _currentClass);
+		NumberOfSymbolEntryDefinedInCurrentScope = 0;
 
 	}
 
@@ -74,6 +77,7 @@ public class SymbolTable {
 	
 	public void popScope() {
 		Hashtable<String, SymbolEntry> scopeSymbols = currentScopeHierarchy.getFirst().getSymbols();
+		NumberOfSymbolEntryDefinedInCurrentScope = scopeSymbols.size();
 		for (String id : scopeSymbols.keySet()) {
 			//remove the first of the linked list (like in stack data structure)
 			if (tableOfSymbols.get(id) != null) {
@@ -88,6 +92,23 @@ public class SymbolTable {
 		currentScopeHierarchy.removeFirst();
 	}
 	
+	//Called only after popScope and if the scope we pop is from type { stmt*}. 
+	//This function decrease the counter of the local variables by the number of the local variables we defined in this scope. 
+	public void decreaseOffsetOfLocalVars() {
+
+		SymbolEntry.decreaseCounerOffsetOfLocalVarCurrentMethodByNum(NumberOfSymbolEntryDefinedInCurrentScope);
+
+	}
+	
+	public void initCounterOffsetWhenPopScopeOfClass () {
+		SymbolEntry.initcounterOffsetOfFieldsCurrentClass();
+		SymbolEntry.initCounterOffsetMethodsCurrentClass();
+	}
+	
+	public void initConterOffsetWhenPopScopeOfMethod () {
+		SymbolEntry.initCounterOffsetOfLocalVarCurrentMethod();
+	}
+	
 	public ScopeNode getClassScope (String className) {
 		ScopeNode scopeIter = null;
 		for (int i=0; i < classScopes.size(); i++) {
@@ -100,29 +121,56 @@ public class SymbolTable {
 	}
 	
 	
+	//return the amount of fields defined in specific class Scope.
+	public int returnNumberOfFieldsDefinedInGivenClassScope (ScopeNode classScope) {
+		int result = 0;
+		for (String id : classScope.getSymbols().keySet()) {
+			SymbolEntry sym = classScope.getSymbols().get(id);
+			if (!(sym instanceof SymbolEntryMethod))
+				result++;
+		}			
+		return result;
+		
+	}
+	
+	
+	//return the amount of methods defined in specific class Scope.
+	public int returnNumberOfMethodsDefinedInGivenClassScope (ScopeNode classScope) {
+		int result = 0;
+		for (String id : classScope.getSymbols().keySet()) {
+			SymbolEntry sym = classScope.getSymbols().get(id);
+			if (sym instanceof SymbolEntryMethod)
+				result++;
+		}			
+		return result;
+		
+	}
+	
 	/**
 	 * insert new SymbolEntry to the table, according to it's id.
 	 * @param id
 	 * @param type
 	 */
 	
-	public void add_symbol (String id, AST_TYPE type, boolean isInit, boolean ismethod, List<AST_TYPE> listmethod) {
+	public SymbolEntry add_symbol (String id, AST_TYPE type, boolean isInit, boolean ismethod, List<AST_TYPE> listmethod) {
 		initEntryOfIdInTableOfSymbols(id);
 		SymbolEntry sym = new SymbolEntry(id, type, isInit, ismethod, listmethod);
 		sym.setInWhichClassDefined(_currentClass);
 		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
 		tableOfSymbols.get(id).addFirst(sym);
 		currentScopeHierarchy.getFirst().setSymbol(sym);
+		return sym;
 
 	}
 	
-	public void add_symbol_method (String id, AST_TYPE returnType, List<AST_TYPE> listmethod) {
+	public SymbolEntryMethod add_symbol_method (String id, AST_TYPE returnType, List<AST_TYPE> listmethod) {
 		initEntryOfIdInTableOfSymbols(id);
 		SymbolEntryMethod sym = new SymbolEntryMethod(id, returnType, listmethod);
 		sym.setInWhichClassDefined(_currentClass);
 		//insert the SymbolEntry to the start of the linked list. (like in stack data structure)
 		tableOfSymbols.get(id).addFirst(sym);
 		currentScopeHierarchy.getFirst().setSymbol(sym);
+		return sym;
 
 	}
 	
@@ -273,25 +321,31 @@ public class SymbolTable {
 			if (baseClassScope == null)//error 
 				return false;
 			addAllSymbols(baseClassScope);
+			int addToOffsetField = returnNumberOfFieldsDefinedInGivenClassScope(baseClassScope);
+			SymbolEntry.updateOffsetField(addToOffsetField);
+			int addToOffsetMethod = returnNumberOfMethodsDefinedInGivenClassScope(baseClassScope);
+			SymbolEntry.updateOffsetMethod(addToOffsetMethod);
 		}
 
 
 		return true;
 	}
 	
+	
+	
 	public boolean insertField (AST_FIELD field) {
 		// if we defined object with the same id in the same scope. it's multiple define error
 		if (check_scope(field.getName()))
 			error(true, false, field.getName());
 		// we don't need to initialize fields before we use them.
-		add_symbol (field._id, field._type, true,false,null);
+		add_symbol(field._id, field._type, true, false, null).setOffsetField();
 		if (! (field._comma_list.isEmpty())){
 			for (int i=0; i < field._comma_list.size(); i++) {
 				String fieldId = field._comma_list.get(i);
 				// if we defined object with the same id in the same scope. it's multiple define error
 				if (check_scope(fieldId))
 					error(true, false, fieldId);
-				add_symbol (fieldId, field._type, true,false,null);
+				add_symbol(fieldId, field._type, true, false, null).setOffsetField();
 			}
 		}
 		
@@ -310,7 +364,7 @@ public class SymbolTable {
 			if (symbol.getInWhichClassDefined().equals(_currentClass))
 				error(true, false, methodName);
 		}
-		add_symbol_method(methodName, method.type, generateFormalsList(method));
+		add_symbol_method(methodName, method.type, generateFormalsList(method)).setOffsetMethod();
 		pushScope(false, null, method._id);
 
 		AST_FORMALS formal = method.formals;
@@ -338,7 +392,7 @@ public class SymbolTable {
 		if (stmtType.exp != null) {
 			initalize = true;
 		}
-		add_symbol(stmtType.id, stmtType.type, initalize, false, null);
+		add_symbol(stmtType.id, stmtType.type, initalize, false, null).setOffsetLocalVar();
 
 		
 		return true;
