@@ -37,6 +37,7 @@ public class AST_CLASSDECL_LIST extends AST_Node {
 			if (!classdecl.checkSemantic(table))
 				return false;
 			table.popScope();
+			table.initCounterOffsetWhenPopScopeOfClass();
 		}
 		return true;
 	}

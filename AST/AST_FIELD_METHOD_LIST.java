@@ -49,6 +49,7 @@ public class AST_FIELD_METHOD_LIST extends AST_Node {
 			if (!method.checkSemantic(table))
 				return false;
 			table.popScope();
+			table.initConterOffsetWhenPopScopeOfMethod();
 		}
 		return true;
 	}

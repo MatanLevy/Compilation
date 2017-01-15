@@ -29,6 +29,7 @@ public class AST_STMT_LIST_BRACE extends AST_STMT {
 		table.pushScope(false, null);
 		boolean bodyreturned = stmtList.checkSemantic(table);
 		table.popScope();
+		table.decreaseOffsetOfLocalVars();
 		return bodyreturned;
 	}
 

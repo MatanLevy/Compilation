@@ -8,6 +8,16 @@ public class SymbolEntry {
 	boolean is_class;
 	boolean is_method;
 	List<AST_TYPE> listTypeForMethod;
+	int offset;
+	boolean initalize;
+	String inWhichClassDefined; //this should be name of method or class.
+	
+	//give offset to fields inside current class which help for the IR
+	static int counterOffsetOfFieldsCurrentClass = 0;
+	//give offset to local variables inside method
+	static int counerOffsetOfLocalVarCurrentMethod = 0;
+	//give offset to methods inside current class
+	static int counterOffsetMethodsCurrentClass = 0;
 	
 	public SymbolEntry(String id, AST_TYPE type ,boolean initalize,
 			boolean ismethod,List<AST_TYPE> listmethod) {
@@ -30,8 +40,47 @@ public class SymbolEntry {
 			is_method = false;
 			listTypeForMethod = null;
 		}
+		
 	}
 	
+	public void setOffsetField () {
+		offset = counterOffsetOfFieldsCurrentClass;
+		counterOffsetOfFieldsCurrentClass++;
+	}
+	
+	static public void initcounterOffsetOfFieldsCurrentClass() {
+		counterOffsetOfFieldsCurrentClass = 0;
+	}
+	static public void updateOffsetField (int num) {
+		counterOffsetOfFieldsCurrentClass = num;
+	}
+	
+	public void setOffsetLocalVar () {
+		offset = counerOffsetOfLocalVarCurrentMethod;
+		counerOffsetOfLocalVarCurrentMethod++;
+	}
+	static public void initCounterOffsetOfLocalVarCurrentMethod() {
+		counerOffsetOfLocalVarCurrentMethod = 0;
+	}
+	
+	static public void decreaseCounerOffsetOfLocalVarCurrentMethodByNum(int toDecreaseBy) {
+		counerOffsetOfLocalVarCurrentMethod -= (toDecreaseBy - 1);
+		if (counerOffsetOfLocalVarCurrentMethod < 0) {
+			throw new RuntimeException("Something isn't good with the offset counter of local vars inside method scope");
+		}
+	}
+	
+	public void setOffsetMethod () {
+		offset = counterOffsetMethodsCurrentClass;
+		counterOffsetMethodsCurrentClass++;
+	}
+	static public void initCounterOffsetMethodsCurrentClass() {
+		counterOffsetMethodsCurrentClass = 0;
+	}
+	
+	static public void updateOffsetMethod (int num) {
+		counterOffsetMethodsCurrentClass = num;
+	}
 	
 	public boolean isIs_method() {
 		return is_method;
@@ -49,8 +98,6 @@ public class SymbolEntry {
 		this.listTypeForMethod = listTypeForMethod;
 	}
 
-	boolean initalize;
-	String inWhichClassDefined; //this should be name of method or class.
 	
 
 
