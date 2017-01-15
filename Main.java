@@ -30,7 +30,7 @@ public class Main {
 		} catch (Exception e) {
 			//e.printStackTrace();
 		} finally {
-			if (p.isFileLegal())
+			if (p.isFileLegal()) 
 				syntexCheck = true;
 			else
 				file_writer.write("FAIL");
@@ -41,10 +41,11 @@ public class Main {
 			try {
 				semanticCheck = program.checkSemantic(table);
 			} catch (RuntimeException e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 				file_writer.write("FAIL");
 			}
 			if (semanticCheck)
+				System.out.println("OK");
 				file_writer.write("OK");
 		}
 		file_writer.close();

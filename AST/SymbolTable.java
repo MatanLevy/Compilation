@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedList; 
 import java.util.List;
-import java.util.ListIterator;
 
 
 public class SymbolTable {
@@ -14,7 +13,7 @@ public class SymbolTable {
 	// It's value is linkedList of SymbolEntry, The first SymbolEntry in every list is the object in the nearest scope with the 'id' name. 
 	
 	private Hashtable<String, LinkedList<SymbolEntry>> tableOfSymbols;
-	
+	 
 	// The name of the class we in it's scope (If we aren't in a scope of a class, the value in null).
 	private String _currentClass;
 	
@@ -391,7 +390,7 @@ public class SymbolTable {
 		if (method_name==null){
 			throw new RuntimeException("We are not in method scope");
 		}
-		SymbolEntry symbolMethod = find_symbol(method_name);
+		SymbolEntry symbolMethod = find_symbol(method_name); 
 		if (!(symbolMethod instanceof SymbolEntryMethod))
 			throw new RuntimeException(method_name + " is not a method");
 		return symbolMethod.getType();
