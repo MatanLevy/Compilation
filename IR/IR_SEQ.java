@@ -1,9 +1,9 @@
 package IR;
 
-public class IR_SEQ extends IR_EXP {
-	public IR_EXP left;
-	public IR_EXP right;
-	public IR_SEQ(IR_EXP left, IR_EXP right) {
+public class IR_SEQ extends IR_Node {
+	public IR_Node left;
+	public IR_Node right;
+	public IR_SEQ(IR_Node left, IR_Node right) {
 		super();
 		this.left = left;
 		this.right = right;

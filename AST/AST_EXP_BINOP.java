@@ -1,5 +1,9 @@
 package AST;
 
+import IR.BIN_OP;
+import IR.IR_EXP_BINOP;
+import IR.IR_EXP;
+
 public class AST_EXP_BINOP extends AST_EXP
 {
 	AST_BINOP OP;
@@ -56,6 +60,14 @@ public class AST_EXP_BINOP extends AST_EXP
 			}
 		}
 		throw new RuntimeException("can't invoke binary operation here " );
+	}
+
+	@Override
+	public IR_EXP_BINOP createIR() {
+		IR_EXP IR_left = left.createIR();
+		IR_EXP IR_right = right.createIR();
+		BIN_OP binOp = OP.createIR();
+		return new IR_EXP_BINOP(binOp, IR_left, IR_right);
 	}
 	
 

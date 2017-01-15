@@ -1,6 +1,6 @@
 package AST;
 
-
+import IR.IR_EXP_BINOP;
 
 public class AST_VAR_FIELD extends AST_VAR
 {
@@ -47,5 +47,11 @@ public class AST_VAR_FIELD extends AST_VAR
 		if (entry.isIs_method())
 			throw new RuntimeException(fieldName + " is method,not field");
 		return entry.getType();
+	}
+
+	@Override
+	public IR_EXP_BINOP createIR() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

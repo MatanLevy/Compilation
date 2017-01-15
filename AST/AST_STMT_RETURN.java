@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_STMT_RETURN;
+
 public class AST_STMT_RETURN extends AST_STMT {
 
 
@@ -24,5 +26,10 @@ public class AST_STMT_RETURN extends AST_STMT {
 			throw new RuntimeException("method must return " + returnType.getName());
 		return true;
 
+	}
+
+	@Override
+	public IR_STMT_RETURN createIR() {
+		return new IR_STMT_RETURN();
 	}
 }

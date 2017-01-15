@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_EXP_LITERAL;
+
 public class AST_EXP_LITERAL extends AST_EXP {
 	AST_LITERAL literal;
 	public AST_EXP_LITERAL(AST_LITERAL l) {
@@ -32,6 +34,11 @@ public class AST_EXP_LITERAL extends AST_EXP {
 			typeUptoDate = true;
 		}
 		return type;
+	}
+
+	@Override
+	public IR_EXP_LITERAL createIR() {
+		return new IR_EXP_LITERAL(literal);
 	}
 
 }

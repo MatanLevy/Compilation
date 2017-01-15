@@ -1,5 +1,7 @@
 package AST;
 
+import IR.BIN_OP;
+
 public class AST_BINOP extends AST_Node {
 	int op;
 	public AST_BINOP(int i) {
@@ -35,6 +37,10 @@ public class AST_BINOP extends AST_Node {
 	public boolean checkSemantic(SymbolTable table) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public BIN_OP createIR() {
+		return BIN_OP.valueOf(getOp());
 	}
 
 }

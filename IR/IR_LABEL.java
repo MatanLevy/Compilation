@@ -1,6 +1,6 @@
 package IR;
 
-public class IR_LABEL extends IR_EXP {
+public class IR_LABEL extends IR_Node {
 	public LABEL label;
 
 	public IR_LABEL(LABEL label) {

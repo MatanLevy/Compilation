@@ -1,5 +1,10 @@
 package AST;
 
+import java.util.ArrayList;
+
+import IR.IR_STMT;
+import IR.IR_STMT_LIST_BRACE;
+
 public class AST_STMT_LIST_BRACE extends AST_STMT {
 
 	private AST_STMT_LIST stmtList;
@@ -25,6 +30,15 @@ public class AST_STMT_LIST_BRACE extends AST_STMT {
 		boolean bodyreturned = stmtList.checkSemantic(table);
 		table.popScope();
 		return bodyreturned;
+	}
+
+	@Override
+	public IR_STMT_LIST_BRACE createIR() {
+		ArrayList<IR_STMT> IRStmtList = new ArrayList<>();
+		for (AST_STMT stmt : stmtList.list) {
+			IRStmtList.add(stmt.createIR());
+		}
+		return new IR_STMT_LIST_BRACE(IRStmtList);
 	}
 
 }

@@ -1,6 +1,5 @@
 package IR;
 
-public class IR_EXP {
-	
-	
+public class IR_EXP extends IR_Node {
+
 }

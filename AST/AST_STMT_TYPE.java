@@ -1,5 +1,9 @@
 package AST;
 
+
+import IR.IR_EXP;
+import IR.IR_STMT_TYPE;
+
 public class AST_STMT_TYPE extends AST_STMT {
 
 	public AST_TYPE type;
@@ -48,5 +52,15 @@ public class AST_STMT_TYPE extends AST_STMT {
 		return true;
 		
 	}
+
+	@Override
+	public IR_STMT_TYPE createIR() {
+		if (exp != null) { 
+			//return IR_STMT_MOVE(,exp.createIR());
+		}
+		return new IR_STMT_TYPE();
+	}
+
+
 
 }
