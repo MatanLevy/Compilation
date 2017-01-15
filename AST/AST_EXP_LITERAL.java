@@ -37,7 +37,7 @@ public class AST_EXP_LITERAL extends AST_EXP {
 	}
 
 	@Override
-	public IR_EXP_LITERAL createIR() {
+	public IR_EXP_LITERAL IRGenerator() {
 		return new IR_EXP_LITERAL(literal);
 	}
 

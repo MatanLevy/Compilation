@@ -41,8 +41,8 @@ public class AST_EXP_NEW_TYPE extends AST_EXP {
 	}
 
 	@Override
-	public IR_EXP_NEW_TYPE createIR() {
-		return new IR_EXP_NEW_TYPE(exp.createIR());
+	public IR_EXP_NEW_TYPE IRGenerator() {
+		return new IR_EXP_NEW_TYPE(exp.IRGenerator());
 	}
 
 }

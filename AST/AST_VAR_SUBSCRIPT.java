@@ -43,7 +43,7 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 	}
 
 	@Override
-	public IR_EXP_BINOP createIR() {
+	public IR_EXP_BINOP IRGenerator() {
 		// TODO Auto-generated method stub
 		return null;
 	}

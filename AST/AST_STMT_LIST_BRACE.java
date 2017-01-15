@@ -34,10 +34,10 @@ public class AST_STMT_LIST_BRACE extends AST_STMT {
 	}
 
 	@Override
-	public IR_STMT_LIST_BRACE createIR() {
+	public IR_STMT_LIST_BRACE IRGenerator() {
 		ArrayList<IR_STMT> IRStmtList = new ArrayList<>();
 		for (AST_STMT stmt : stmtList.list) {
-			IRStmtList.add(stmt.createIR());
+			IRStmtList.add(stmt.IRGenerator());
 		}
 		return new IR_STMT_LIST_BRACE(IRStmtList);
 	}

@@ -45,9 +45,9 @@ public class AST_STMT_ASSIGN extends AST_STMT
 	}
 
 	@Override
-	public IR_STMT createIR() {
-		IR_EXP_BINOP dst = var.createIR();
-		IR_EXP src = exp.createIR();
+	public IR_STMT_MOVE IRGenerator() {
+		IR_EXP_BINOP dst = var.IRGenerator();
+		IR_EXP src = exp.IRGenerator();
 		return new IR_STMT_MOVE(dst, src);
 	}
 

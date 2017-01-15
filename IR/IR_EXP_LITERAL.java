@@ -4,9 +4,9 @@ import AST.AST_LITERAL;
 
 public class IR_EXP_LITERAL extends IR_EXP {
 	
-	AST_LITERAL litreal;
+	IR_CONST litreal;
 	
-	public IR_EXP_LITERAL(AST_LITERAL _literal) {
+	public IR_EXP_LITERAL(IR_CONST _literal) {
 		litreal = _literal;
 	}
 

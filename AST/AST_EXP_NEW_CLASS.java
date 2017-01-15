@@ -31,7 +31,7 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 		return type;
 	}
 	@Override
-	public IR_EXP_NEW_CLASS createIR() {
+	public IR_EXP_NEW_CLASS IRGenerator() {
 		return new IR_EXP_NEW_CLASS(_className);
 	}
 

@@ -36,9 +36,9 @@ public class AST_STMT_WHILE extends AST_STMT {
 	}
 
 	@Override
-	public IR_STMT_WHILE createIR() {
+	public IR_STMT_WHILE IRGenerator() {
 		return new IR_STMT_WHILE(new IR_LABEL(new LABEL("while")), 
-				cond.createIR(), body.createIR());
+				cond.IRGenerator(), body.IRGenerator());
 	}
 
 }

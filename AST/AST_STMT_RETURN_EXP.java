@@ -37,8 +37,8 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 	}
 
 	@Override
-	public IR_STMT_RETURN_EXP createIR() {
-		return new IR_STMT_RETURN_EXP(exp.createIR());
+	public IR_STMT_RETURN_EXP IRGenerator() {
+		return new IR_STMT_RETURN_EXP(exp.IRGenerator());
 	}
 
 }

@@ -54,7 +54,7 @@ public class AST_STMT_TYPE extends AST_STMT {
 	}
 
 	@Override
-	public IR_STMT_TYPE createIR() {
+	public IR_STMT_TYPE IRGenerator() {
 		if (exp != null) { 
 			//return IR_STMT_MOVE(,exp.createIR());
 		}

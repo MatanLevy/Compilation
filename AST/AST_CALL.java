@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_CALL;
+
 public class AST_CALL extends AST_Node {
 	
 	AST_VIRTUALCALL virtualCall;
@@ -22,6 +24,11 @@ public class AST_CALL extends AST_Node {
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
 		return virtualCall.checkSemantic(table);
+	}
+
+	public IR_CALL IRGenerator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

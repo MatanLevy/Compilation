@@ -29,7 +29,7 @@ public class AST_STMT_RETURN extends AST_STMT {
 	}
 
 	@Override
-	public IR_STMT_RETURN createIR() {
+	public IR_STMT_RETURN IRGenerator() {
 		return new IR_STMT_RETURN();
 	}
 }
