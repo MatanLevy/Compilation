@@ -52,6 +52,14 @@ public class CodeGenarator {
 	public static void printLACommand(String rt, String address) {
 		System.out.format("%s %s %s ", MIPS_COMMANDS.LA, rt, address);
 	}
-	
+
+	// A word is loaded into a register from the specified address.
+	public static void printLWCommand(String rt, String rs, int offset) {
+		System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.LW, rt, offset, rs);
+	}
+	// The contents of $t is stored at the specified address.
+	public static void printSWCommand(String rt, String rs, int offset) {
+		System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
+	}
 	
 }

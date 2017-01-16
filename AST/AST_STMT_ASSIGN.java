@@ -3,6 +3,7 @@ package AST;
 import IR.IR_EXP;
 import IR.IR_EXP_BINOP;
 import IR.IR_STMT_MOVE;
+import IR.TEMP;
 
 public class AST_STMT_ASSIGN extends AST_STMT
 {
@@ -38,10 +39,19 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		return true;
 	}
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
+	public void mipsTranslate(SymbolTable table, String fileName, CodeGenarator genarator) {
+		TEMP varTemp = var.calcAddress(table, genarator, fileName);
+		TEMP expTemp = exp.calcAddress(table, genarator, fileName);
+		TEMP temp = new TEMP();
+		CodeGenarator.printLWCommand(temp.name, expTemp.name, 0);
+		CodeGenarator.printSWCommand(temp.name, varTemp.name, 0);
 		
 	}
+	//count = base
+//	la $t0, base     // load the address of "base"
+//	la $t1, count    // load the address of "count"
+//	lw $t2, 0($t0)   // load the data at location "base"
+//	sw $t2, 0($t1)   // store that data at location "count"
 	
 	@Override
 	public IR_STMT_MOVE IRGenerator() {

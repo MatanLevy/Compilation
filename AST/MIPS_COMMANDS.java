@@ -10,5 +10,7 @@ public class MIPS_COMMANDS {
 	public static final String SUB = "sub";
 	public static final String LA = "la";
 	public static final String LI = "li";
+	public static final String SW = "sw";
+	public static final String LW = "lw";
 
 }
