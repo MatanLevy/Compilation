@@ -1,6 +1,7 @@
 package AST;
 
 import IR.IR_EXP_BINOP;
+import IR.TEMP;
 
 public class AST_VAR_FIELD extends AST_VAR
 {
@@ -36,8 +37,6 @@ public class AST_VAR_FIELD extends AST_VAR
 		if (!(classType instanceof AST_TYPE_CLASS)) 
 			throw new RuntimeException("cannt access field of type not class");
 		String className = classType.getName();
-		//ScopeNode node = table.getClassScope(className);
-		//Hashtable<String, SymbolEntry> hash = node.getSymbols();
 		SymbolEntry entry = (table.get_currentClass().equals(className)) ? 
 				table.find_symbol(fieldName) : table.getClassScope(className).
 				getSymbols().get(fieldName);
@@ -52,6 +51,19 @@ public class AST_VAR_FIELD extends AST_VAR
 	@Override
 	public IR_EXP_BINOP createIR() {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public TEMP calcAdress(SymbolTable table,CodeGenartor genrator,String fileName) {
+		TEMP objectAdress = (var == null) ? genrator.thisAdress : var.calcAdrress();
+		int offSetOfFieldInHeap = 0; //TODO change according to symbol table
 		return null;
 	}
 }

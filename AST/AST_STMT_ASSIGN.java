@@ -12,9 +12,6 @@ public class AST_STMT_ASSIGN extends AST_STMT
 	public AST_EXP exp;
 	public AST_VAR var;
 
-	/*******************/
-	/*  CONSTRUCTOR(S) */
-	/*******************/
 	public AST_STMT_ASSIGN(AST_VAR var,AST_EXP exp)
 	{
 		this.var = var;
@@ -43,7 +40,12 @@ public class AST_STMT_ASSIGN extends AST_STMT
 			throw new RuntimeException("Incompitable types for assign");
 		return true;
 	}
-
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public IR_STMT createIR() {
 		IR_EXP_BINOP dst = var.createIR();

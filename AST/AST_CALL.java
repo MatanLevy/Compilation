@@ -15,13 +15,19 @@ public class AST_CALL extends AST_Node {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
 		return virtualCall.checkSemantic(table);
+	}
+
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

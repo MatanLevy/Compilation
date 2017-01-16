@@ -34,4 +34,9 @@ public class AST_PROGRAM extends AST_Node{
 		return returnVal;
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		class_dec_list.mipsTranslate(table, assemblyFileName, genartor);
+	}
+
 }

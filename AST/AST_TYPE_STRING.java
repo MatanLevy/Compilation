@@ -17,6 +17,12 @@ public class AST_TYPE_STRING extends AST_RAW_TYPE {
 		return false;
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 

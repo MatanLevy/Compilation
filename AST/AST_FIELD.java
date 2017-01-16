@@ -29,4 +29,10 @@ public class AST_FIELD extends AST_Node {
 		return SemanticChecker.isTypeDefinedAlready(table, _type);
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		//Should we add are something???
+		
+	}
+
 }

@@ -41,5 +41,11 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 		return new IR_STMT_RETURN_EXP(exp.createIR());
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
   

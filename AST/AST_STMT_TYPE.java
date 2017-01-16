@@ -61,6 +61,12 @@ public class AST_STMT_TYPE extends AST_STMT {
 		return new IR_STMT_TYPE();
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

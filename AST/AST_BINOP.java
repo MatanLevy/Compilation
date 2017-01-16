@@ -35,12 +35,15 @@ public class AST_BINOP extends AST_Node {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public BIN_OP createIR() {
 		return BIN_OP.valueOf(getOp());
+	}
+
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {		
 	}
 
 }

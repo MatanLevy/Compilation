@@ -40,4 +40,10 @@ public class AST_STMT_IF extends AST_STMT
 		return new IR_STMT_IF(cond.createIR(),body.createIR(),
 				new IR_LABEL(new LABEL("if")));
 	}
+
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -42,4 +42,10 @@ public class AST_STMT_LIST_BRACE extends AST_STMT {
 		return new IR_STMT_LIST_BRACE(IRStmtList);
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

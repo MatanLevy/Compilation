@@ -63,4 +63,10 @@ public class AST_TYPE_BRACK extends AST_TYPE {
 		return true;
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

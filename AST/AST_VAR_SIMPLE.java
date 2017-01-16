@@ -1,6 +1,7 @@
 package AST;
 
 import IR.IR_EXP_BINOP;
+import IR.TEMP;
 
 public class AST_VAR_SIMPLE extends AST_VAR
 {
@@ -44,5 +45,20 @@ public class AST_VAR_SIMPLE extends AST_VAR
 	public IR_EXP_BINOP createIR() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public TEMP calcAdress(SymbolTable table,CodeGenartor genrator,String fileName) {
+		int offSetVar = 0; // TODO change according to symbol table
+		TEMP offSetAdress = new TEMP();
+		System.out.format("%s %s %s %d ",CodeGenartor.ADDI,
+				offSetAdress.name,CodeGenartor.FRAME_PTR,offSetVar);
+		return offSetAdress;
 	}
 }

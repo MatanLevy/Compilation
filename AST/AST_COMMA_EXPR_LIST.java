@@ -19,13 +19,18 @@ public class AST_COMMA_EXPR_LIST extends AST_Node {
 	}
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
+		
 		return false;
+	}
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -36,4 +36,11 @@ public class AST_STMT_CALL extends AST_STMT {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
 }

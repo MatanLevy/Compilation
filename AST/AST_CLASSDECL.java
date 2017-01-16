@@ -72,5 +72,10 @@ public class AST_CLASSDECL extends AST_Node{
 	public boolean checkSemantic(SymbolTable table) {
 		return fm_list.checkSemantic(table);
 	}
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		fm_list.mipsTranslate(table, assemblyFileName, genartor);
+		
+	}
 
 }

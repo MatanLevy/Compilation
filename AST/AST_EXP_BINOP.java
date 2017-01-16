@@ -2,6 +2,7 @@ package AST;
 
 import IR.BIN_OP;
 import IR.IR_EXP_BINOP;
+import IR.TEMP;
 import IR.IR_EXP;
 
 public class AST_EXP_BINOP extends AST_EXP
@@ -68,6 +69,18 @@ public class AST_EXP_BINOP extends AST_EXP
 		IR_EXP IR_right = right.createIR();
 		BIN_OP binOp = OP.createIR();
 		return new IR_EXP_BINOP(binOp, IR_left, IR_right);
+	}
+
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public TEMP calcAdrress() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

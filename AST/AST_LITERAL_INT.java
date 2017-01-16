@@ -24,4 +24,10 @@ public class AST_LITERAL_INT extends AST_LITERAL {
 		return false;
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -1,6 +1,7 @@
 package AST;
 
 import IR.IR_EXP_BINOP;
+import IR.TEMP;
 
 public class AST_VAR_SUBSCRIPT extends AST_VAR
 {
@@ -45,6 +46,17 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 	@Override
 	public IR_EXP_BINOP createIR() {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public TEMP calcAdress(SymbolTable symbol,CodeGenartor genrator,String fileName) {
 		return null;
 	}
 }

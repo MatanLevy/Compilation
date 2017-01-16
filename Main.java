@@ -43,7 +43,7 @@ public class Main {
 			try {
 				semanticCheck = program.checkSemantic(table);
 			} catch (RuntimeException e) {
-				e.printStackTrace();
+				System.out.println("Error : " + e.getMessage());
 				file_writer.write("FAIL");
 			}
 			if (semanticCheck)

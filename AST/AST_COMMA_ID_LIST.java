@@ -41,5 +41,10 @@ public class AST_COMMA_ID_LIST extends AST_Node {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

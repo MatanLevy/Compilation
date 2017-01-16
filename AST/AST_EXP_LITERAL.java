@@ -1,6 +1,7 @@
 package AST;
 
 import IR.IR_EXP_LITERAL;
+import IR.TEMP;
 
 public class AST_EXP_LITERAL extends AST_EXP {
 	AST_LITERAL literal;
@@ -39,6 +40,18 @@ public class AST_EXP_LITERAL extends AST_EXP {
 	@Override
 	public IR_EXP_LITERAL createIR() {
 		return new IR_EXP_LITERAL(literal);
+	}
+
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public TEMP calcAdrress() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

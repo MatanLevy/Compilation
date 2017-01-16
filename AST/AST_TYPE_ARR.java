@@ -25,4 +25,10 @@ public class AST_TYPE_ARR extends AST_TYPE {
 		return false;
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

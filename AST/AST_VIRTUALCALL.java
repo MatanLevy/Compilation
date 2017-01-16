@@ -76,4 +76,10 @@ public class AST_VIRTUALCALL extends AST_Node {
 		return true;
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

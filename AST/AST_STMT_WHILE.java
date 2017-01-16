@@ -41,4 +41,10 @@ public class AST_STMT_WHILE extends AST_STMT {
 				cond.createIR(), body.createIR());
 	}
 
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

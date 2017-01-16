@@ -32,4 +32,10 @@ public class AST_STMT_RETURN extends AST_STMT {
 	public IR_STMT_RETURN createIR() {
 		return new IR_STMT_RETURN();
 	}
+
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -39,5 +39,10 @@ public class AST_FORMALS extends AST_Node {
 				return false;
 		return firstcheck;
 	}
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

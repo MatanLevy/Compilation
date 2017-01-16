@@ -26,7 +26,7 @@ public class AST_CLASSDECL_LIST extends AST_Node {
 	}
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	@Override
@@ -40,5 +40,15 @@ public class AST_CLASSDECL_LIST extends AST_Node {
 			table.initCounterOffsetWhenPopScopeOfClass();
 		}
 		return true;
+	}
+	@Override
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+		for (AST_CLASSDECL classdecl : class_decl_list) {
+			table.insertASTNode(classdecl);
+			classdecl.mipsTranslate(table, assemblyFileName, genartor);
+			table.popScope();
+			table.initCounterOffsetWhenPopScopeOfClass();
+		}
+		
 	}
 }
