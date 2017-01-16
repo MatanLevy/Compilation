@@ -11,9 +11,12 @@ public abstract class AST_EXP extends AST_Node
 
 	/**
 	 * 
+	 * @param fileName 
+	 * @param genarator 
+	 * @param table 
 	 * @return
 	 */
-	public abstract TEMP calcAdrress();
+	public abstract TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName);
 
 	public abstract IR_EXP IRGenerator();
 }

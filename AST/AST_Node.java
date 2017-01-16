@@ -7,7 +7,7 @@ public abstract class AST_Node
 	public abstract void print();
 	public abstract String getName();
 	
-	public abstract void mipsTranslate(SymbolTable table,String assemblyFileName,CodeGenartor
+	public abstract void mipsTranslate(SymbolTable table,String assemblyFileName,CodeGenarator
 			genartor);
 
 }

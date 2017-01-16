@@ -38,7 +38,7 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		return true;
 	}
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
 	}

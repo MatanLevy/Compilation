@@ -54,7 +54,7 @@ public class AST_FIELD_METHOD_LIST extends AST_Node {
 		return true;
 	}
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		for (AST_FIELD field : field_list) {
 			table.insertASTNode(field);
 			field.mipsTranslate(table, assemblyFileName, genartor);

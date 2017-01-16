@@ -36,12 +36,12 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 		return new IR_EXP_NEW_CLASS(_className);
 	}
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	public TEMP calcAdrress() {
+	public TEMP calcAddress() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -42,7 +42,7 @@ public class AST_CLASSDECL_LIST extends AST_Node {
 		return true;
 	}
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		for (AST_CLASSDECL classdecl : class_decl_list) {
 			table.insertASTNode(classdecl);
 			classdecl.mipsTranslate(table, assemblyFileName, genartor);

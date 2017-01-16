@@ -20,7 +20,7 @@ public class AST_TYPE_CLASS extends AST_RAW_TYPE {
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
 	}

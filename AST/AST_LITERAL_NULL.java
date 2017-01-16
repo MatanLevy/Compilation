@@ -20,7 +20,7 @@ public class AST_LITERAL_NULL extends AST_LITERAL {
 		return false;
 	}
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
 	}

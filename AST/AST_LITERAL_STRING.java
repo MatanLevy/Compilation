@@ -25,7 +25,7 @@ public class AST_LITERAL_STRING extends AST_LITERAL {
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
 	}

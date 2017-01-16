@@ -12,7 +12,7 @@ public abstract class AST_VAR extends AST_Node
 	 * 
 	 * @return temporary register containing the address of the lvalue 
 	 */
-	public abstract TEMP calcAdress(SymbolTable table,CodeGenartor genrator,
+	public abstract TEMP calcAddress(SymbolTable table,CodeGenarator genrator,
 			String fileName);
 
 	public abstract IR_EXP_BINOP IRGenerator();

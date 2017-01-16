@@ -36,7 +36,7 @@ public class AST_COMMA_EXPR_LIST_STAR extends AST_Node {
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
 	}

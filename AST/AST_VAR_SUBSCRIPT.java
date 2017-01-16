@@ -50,13 +50,38 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public TEMP calcAdress(SymbolTable symbol,CodeGenartor genrator,String fileName) {
-		return null;
+	public TEMP calcAddress(SymbolTable table,CodeGenarator genarator,String fileName) {
+		TEMP arrayAddressTemp = var.calcAddress(table, genarator, fileName);
+		CodeGenarator.printLACommand(arrayAddressTemp.name, var.getName());
+	
+		//TODO if index isn't int it's an error!!!
+		//TODO check that the index is <= array length - 1
+		TEMP indexTemp = subscript.calcAddress(table, genarator, fileName);
+		int index = 0; //TODO calc index
+		CodeGenarator.printLICommand(indexTemp.name, index);
+		//Double the index twice so we will get the address of the index*4. 
+		//This is the address of index*4
+		CodeGenarator.printADDCommand(indexTemp.name, indexTemp.name, indexTemp.name);
+		CodeGenarator.printADDCommand(indexTemp.name, indexTemp.name, indexTemp.name);
+
+		TEMP addressTemp = new TEMP();
+		// add the register of the array address with the register of the indexTemp.
+		// we get the address of list[index]
+		CodeGenarator.printADDCommand(addressTemp.name, indexTemp.name, arrayAddressTemp.name);
+		return addressTemp;
 	}
 }
+
+//Example of access to an array in specific index:
+
+//la $t3, list         # put address of list into $t3
+//li $t2, 6            # put the index into $t2
+//add $t2, $t2, $t2    # double the index
+//add $t2, $t2, $t2    # double the index again (now 4x)
+//add $t1, $t2, $t3    # combine the two components of the address

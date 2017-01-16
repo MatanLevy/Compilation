@@ -48,17 +48,21 @@ public class AST_VAR_SIMPLE extends AST_VAR
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public TEMP calcAdress(SymbolTable table,CodeGenartor genrator,String fileName) {
-		int offSetVar = 0; // TODO change according to symbol table
-		TEMP offSetAdress = new TEMP();
-		System.out.format("%s %s %s %d ",CodeGenartor.ADDI,
-				offSetAdress.name,CodeGenartor.FRAME_PTR,offSetVar);
-		return offSetAdress;
+	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
+		
+		//calculate the offset of the variable in the stack
+		SymbolEntry symbolEntryField = table.find_symbol(name);
+		int offsetOfVar = symbolEntryField.offset * (-4); 
+		
+		TEMP offsetAddress = new TEMP();
+		CodeGenarator.printADDICommand(offsetAddress.name, MIPS_COMMANDS.FRAME_PTR, offsetOfVar);
+		
+		return offsetAddress;
 	}
 }

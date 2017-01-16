@@ -52,7 +52,7 @@ public class AST_METHOD extends AST_Node {
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		System.out.println(genartor.LabelGenerate(_id));
 		formals.mipsTranslate(table, assemblyFileName, genartor);
 		stmt_list.mipsTranslate(table, assemblyFileName, genartor);

@@ -30,7 +30,7 @@ public class AST_FIELD extends AST_Node {
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		//Should we add are something???
 		
 	}

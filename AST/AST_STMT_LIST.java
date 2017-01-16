@@ -38,7 +38,7 @@ public class AST_STMT_LIST extends AST_Node
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		for (AST_STMT stmt : list)
 			stmt.mipsTranslate(table, assemblyFileName, genartor);
 	}

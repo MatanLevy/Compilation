@@ -43,13 +43,13 @@ public class AST_EXP_PAREN extends AST_EXP {
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public TEMP calcAdrress() {
+	public TEMP calcAddress() {
 		// TODO Auto-generated method stub
 		return null;
 	}

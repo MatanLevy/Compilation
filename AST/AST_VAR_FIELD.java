@@ -63,18 +63,21 @@ public class AST_VAR_FIELD extends AST_VAR
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public TEMP calcAdress(SymbolTable table,CodeGenartor genrator,String fileName) {
-		TEMP objectAdress = (var == null) ? genrator.thisAdress : var.calcAdrress();
-		int offSetOfFieldInHeap = 0; //TODO change according to symbol table
-		TEMP offSetAdress = new TEMP();
-		System.out.format("%s %s %s %d ",CodeGenartor.ADDI,
-				offSetAdress.name,objectAdress,offSetOfFieldInHeap);
-		return offSetAdress;
+	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
+		
+		//calculate the offset of this field in heap
+		TEMP objectAddress = (var == null) ? genarator.thisAddress : var.calcAddress(table, genarator, fileName);
+		SymbolEntry symbolEntryField = table.find_symbol(fieldName);
+		
+		int offsetOfFieldInHeap = symbolEntryField.offset * 4; 
+		TEMP offsetAddress = new TEMP();
+		CodeGenarator.printADDICommand(offsetAddress.name, objectAddress.name, offsetOfFieldInHeap);
+		return offsetAddress;
 	}
 }
