@@ -3,6 +3,8 @@ package AST;
 
 import java.util.List;
 
+import IR.IR_EXP_BINOP;
+
 public class AST_VIRTUALCALL extends AST_Node {
 	AST_EXP exp;
 	String _id;
@@ -24,12 +26,6 @@ public class AST_VIRTUALCALL extends AST_Node {
 		if ((exp != null) && !(exp.calcType(table) instanceof AST_TYPE_CLASS))
 			throw new RuntimeException("can't invoke method on not a class elem");
 		String className = (exp == null) ? table.get_currentClass() : exp.calcType(table).getName();
-		// ScopeNode node = table.getClassScope(className);
-		// Hashtable<String, SymbolEntry> hash = node.getSymbols();
-		// if (!hash.containsKey(_id))
-		// throw new RuntimeException("no such method : " +
-		// _id + "in class " + className);
-		// SymbolEntry methodentry = hash.get(_id);
 		SymbolEntry methodentry =  (table.get_currentClass().equals(className)) ? 
 				table.find_symbol(_id) : table.getClassScope(className)
 				.getSymbols().get(_id);
@@ -76,10 +72,18 @@ public class AST_VIRTUALCALL extends AST_Node {
 		return true;
 	}
 
+
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	public IR_EXP_BINOP IRGenerator() {
+		return null;
+		
+	}
+ 
 
 }

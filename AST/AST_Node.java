@@ -1,7 +1,5 @@
 package AST;
 
-import IR.IR_Node;
-
 public abstract class AST_Node
 {
 	

@@ -64,9 +64,9 @@ public class AST_EXP_BINOP extends AST_EXP
 	}
 
 	@Override
-	public IR_EXP_BINOP createIR() {
-		IR_EXP IR_left = left.createIR();
-		IR_EXP IR_right = right.createIR();
+	public IR_EXP_BINOP IRGenerator() {
+		IR_EXP IR_left = left.IRGenerator();
+		IR_EXP IR_right = right.IRGenerator();
 		BIN_OP binOp = OP.createIR();
 		return new IR_EXP_BINOP(binOp, IR_left, IR_right);
 	}

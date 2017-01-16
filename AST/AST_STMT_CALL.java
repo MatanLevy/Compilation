@@ -32,9 +32,9 @@ public class AST_STMT_CALL extends AST_STMT {
 
 
 	@Override
-	public IR_STMT_CALL createIR() {
+	public IR_STMT_CALL IRGenerator() {
 		// TODO Auto-generated method stub
-		return null;
+		return new IR_STMT_CALL(call.IRGenerator());
 	}
 
 

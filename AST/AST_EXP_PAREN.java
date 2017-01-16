@@ -38,8 +38,8 @@ public class AST_EXP_PAREN extends AST_EXP {
 	}
 
 	@Override
-	public IR_EXP_PAREN createIR() {		
-		return new IR_EXP_PAREN(exp.createIR());
+	public IR_EXP_PAREN IRGenerator() {		
+		return new IR_EXP_PAREN(exp.IRGenerator());
 	}
 
 	@Override

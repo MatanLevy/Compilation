@@ -38,8 +38,8 @@ public class AST_EXP_LITERAL extends AST_EXP {
 	}
 
 	@Override
-	public IR_EXP_LITERAL createIR() {
-		return new IR_EXP_LITERAL(literal);
+	public IR_EXP_LITERAL IRGenerator() {
+		return null;
 	}
 
 	@Override

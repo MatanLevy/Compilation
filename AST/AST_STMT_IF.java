@@ -36,8 +36,8 @@ public class AST_STMT_IF extends AST_STMT
 	}
 
 	@Override
-	public IR_STMT_IF createIR() {
-		return new IR_STMT_IF(cond.createIR(),body.createIR(),
+	public IR_STMT_IF IRGenerator() {
+		return new IR_STMT_IF(cond.IRGenerator(),body.IRGenerator(),
 				new IR_LABEL(new LABEL("if")));
 	}
 

@@ -39,7 +39,7 @@ public class AST_EXP_VAR extends AST_EXP
 	}
 
 	@Override
-	public IR_EXP createIR() {
+	public IR_EXP IRGenerator() {
 		// TODO Auto-generated method stub
 		return null;
 	}

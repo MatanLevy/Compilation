@@ -1,5 +1,7 @@
 package AST;
 
+import IR.IR_CALL;
+
 public class AST_CALL extends AST_Node {
 	
 	AST_VIRTUALCALL virtualCall;
@@ -24,10 +26,16 @@ public class AST_CALL extends AST_Node {
 		return virtualCall.checkSemantic(table);
 	}
 
+
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenartor genartor) {
 		// TODO Auto-generated method stub
-		
+	}
+
+	public IR_CALL IRGenerator() {
+		// TODO Auto-generated method stub
+		return null;
+
 	}
 
 }
