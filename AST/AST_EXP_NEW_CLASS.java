@@ -40,8 +40,9 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
-	public TEMP calcAddress() {
+	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

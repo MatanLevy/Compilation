@@ -48,8 +48,9 @@ public class AST_EXP_PAREN extends AST_EXP {
 		
 	}
 
+
 	@Override
-	public TEMP calcAddress() {
+	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
