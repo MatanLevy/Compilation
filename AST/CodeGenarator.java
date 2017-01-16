@@ -62,4 +62,21 @@ public class CodeGenarator {
 		System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
 	}
 	
+	// j Jump to an address
+	public static void printJCommand(String offset) {
+		System.out.format("%s %s", MIPS_COMMANDS.J, offset);
+	}
+	// jr Jump to an address stored in a register
+	public static void printJRCommand(String rt) {
+		System.out.format("%s %s", MIPS_COMMANDS.JR, rt);
+	}
+	//  Branches if the quantities of two registers are equal.
+	public static void printBLECommand(/*String rt, String rs, int offset*/) {
+		//System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
+	}
+	// Branches if the quantities of two registers are NOT equal
+	public static void printBGTCommand(/*String rt, String rs, int offset*/) {
+		//System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
+	}
+	
 }
