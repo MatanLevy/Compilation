@@ -14,13 +14,11 @@ public class AST_LITERAL_INT extends AST_LITERAL {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

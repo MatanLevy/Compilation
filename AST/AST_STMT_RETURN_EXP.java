@@ -1,7 +1,5 @@
 package AST;
 
-import IR.IR_STMT_RETURN_EXP;
-
 public class AST_STMT_RETURN_EXP extends AST_STMT {
 
 	private AST_EXP exp;
@@ -33,11 +31,6 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 			+ " and not " + evlType.getName());
 		return true;
 			
-	}
-
-	@Override
-	public IR_STMT_RETURN_EXP IRGenerator() {
-		return new IR_STMT_RETURN_EXP(exp.IRGenerator());
 	}
 
 	@Override

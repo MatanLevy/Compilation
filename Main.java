@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import AST.AST_PROGRAM;
 import AST.SemanticChecker;
 import AST.SymbolTable;
-import IR.IR_Node;
 
 public class Main {
 	public static void main(String argv[]) {
@@ -38,7 +37,7 @@ public class Main {
 		}
 		if (syntexCheck) {
 			SemanticChecker.setProgram(program);
-			IR_Node IR_Tree = null;
+			//IR_Node IR_Tree = null;
 			SymbolTable table = new SymbolTable();
 			try {
 				semanticCheck = program.checkSemantic(table);

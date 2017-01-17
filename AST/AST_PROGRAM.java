@@ -36,6 +36,7 @@ public class AST_PROGRAM extends AST_Node{
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
+		genartor.printExit(); //creating exit label
 		class_dec_list.mipsTranslate(table, assemblyFileName, genartor);
 	}
 

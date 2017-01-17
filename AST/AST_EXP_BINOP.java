@@ -1,9 +1,6 @@
 package AST;
 
-import IR.BIN_OP;
-import IR.IR_EXP_BINOP;
 import IR.TEMP;
-import IR.IR_EXP;
 
 public class AST_EXP_BINOP extends AST_EXP
 {
@@ -27,13 +24,11 @@ public class AST_EXP_BINOP extends AST_EXP
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -64,22 +59,138 @@ public class AST_EXP_BINOP extends AST_EXP
 	}
 
 	@Override
-	public IR_EXP_BINOP IRGenerator() {
-		IR_EXP IR_left = left.IRGenerator();
-		IR_EXP IR_right = right.IRGenerator();
-		BIN_OP binOp = OP.createIR();
-		return new IR_EXP_BINOP(binOp, IR_left, IR_right);
-	}
-
-	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		// TODO Auto-generated method stub
+		if (OP.getOp() == "PLUS") {
+			return calcPlusOperator(table,genarator,fileName);
+		}
+		if (OP.getOp() == "MINUS") {
+			return calcMinusOpeartor(table,genarator,fileName);
+		}
+		if (OP.getOp() == "TIMES") {
+			return calcMultOpeartor(table,genarator,fileName);
+		}
+		if (OP.getOp() == "DIVIDE") {
+			return calcDivideOperator(table,genarator,fileName);
+		}
+		else {
+			return calcBinaryOperation(table,genarator,fileName);
+		}
+	}
+
+
+	private TEMP calcBinaryOperation(SymbolTable table, CodeGenarator genarator, String fileName) {
+		String cmd = "INITALVALUE";
+		TEMP leftA = left.calcAddress(table, genarator, fileName);
+		TEMP rightA = right.calcAddress(table, genarator, fileName);
+		TEMP result = new TEMP();
+		if (OP.getOp() == "GT") {
+			cmd = "sgt";
+		}
+		if (OP.getOp() == "GTOREQUAL") {
+			cmd = "sge";
+		}
+		if (OP.getOp() == "ST") {
+			cmd = "slt";
+		}
+		if (OP.getOp() == "STOREQUAL") {
+			cmd = "sle";
+		}
+		if (OP.getOp() == "EQUAL") {
+			cmd = "seq";
+		}
+		if (OP.getOp() == "NON EQUAL") {
+			cmd = "sne";
+		}
+		CodeGenarator.printSETCommand(cmd, result.name, leftA.name, rightA.name);
+		return result;
+	}
+
+	/**
+	 * 
+	 * ASSMEBLY CODE :
+	 * beq $right $zero exit_label
+	 * div $left $right
+	 * mflo $result
+	 */
+	private TEMP calcDivideOperator(SymbolTable table, CodeGenarator genarator, String fileName) {
+		TEMP leftA = left.calcAddress(table, genarator, fileName);
+		TEMP rightA = right.calcAddress(table, genarator, fileName);
+		TEMP result = new TEMP();
+		CodeGenarator.printBEQCommand(rightA.name,MIPS_COMMANDS.ZERO
+				,genarator.exitLabel.labelString);
+		CodeGenarator.printDIVCommand(leftA.name, rightA.name);
+		CodeGenarator.printMFLOCommand(result.name);
+		return result;
+	}
+
+	/**
+	 * 
+	 * ASSEMBLY CODE
+	 * mult $left $right
+	 * mflo $result
+	 */
+	private TEMP calcMultOpeartor(SymbolTable table, CodeGenarator genarator, String fileName) {
+		TEMP result = new TEMP();
+		TEMP leftAddress = left.calcAddress(table, genarator, fileName);
+		TEMP rightAddress = right.calcAddress(table, genarator, fileName);
+		CodeGenarator.printMULTCommand(leftAddress.name, rightAddress.name);
+		CodeGenarator.printMFLOCommand(result.name);
+		return result;
+	}
+
+	/**
+	 * CODE ASSEMBLY :
+	 * li $temp1 -1
+	 * mult $right $temp1
+	 * mflo $newright
+	 * add $result $left $newright
+	 * 
+	 * ref here : 
+	 * http://stackoverflow.com/questions/16050338/mips-integer-multiplication-and-division
+	 */
+	private TEMP calcMinusOpeartor(SymbolTable table, CodeGenarator genarator, String fileName) {
+		TEMP minusOne = new TEMP();
+		TEMP newright = new TEMP();
+		TEMP result = new TEMP();
+		TEMP leftAddress = left.calcAddress(table, genarator, fileName);
+		TEMP rightAddress = right.calcAddress(table, genarator, fileName);
+		CodeGenarator.printLICommand(minusOne.name, -1);
+		CodeGenarator.printMULTCommand(rightAddress.name, minusOne.name);
+		CodeGenarator.printMFLOCommand(newright.name);
+		CodeGenarator.printADDCommand(result.name, leftAddress.name, newright.name);
+		return result;
+	}
+
+	private TEMP calcPlusOperator(SymbolTable table, CodeGenarator genarator, String fileName) {
+		if (left.calcType(table) instanceof AST_TYPE_INT)
+			return calcPlusForIntegers(table,genarator,fileName);
+		else
+			return calcPlusForString(table,genarator,fileName);
+	}
+	/**
+	 * CODE ASMEBLY : 
+	 * add $result $left $right
+	 * @param table
+	 * @param genarator
+	 * @param fileName
+	 * @return address of $left+$right
+	 */
+	private TEMP calcPlusForIntegers(SymbolTable table, CodeGenarator genarator, String fileName) {
+		TEMP addressLeft = left.calcAddress(table, genarator, fileName);
+		TEMP addressRight = right.calcAddress(table, genarator, fileName);
+		TEMP addressResult = new TEMP();
+		CodeGenarator.printADDCommand(addressResult.name,addressLeft.name
+				,addressRight.name); 
+		return null;
+	}
+
+	private TEMP calcPlusForString(SymbolTable table, CodeGenarator genarator, String fileName) {
+		
 		return null;
 	}
 

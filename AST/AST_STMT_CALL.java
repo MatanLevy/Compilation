@@ -1,7 +1,5 @@
 package AST;
 
-import IR.IR_STMT_CALL;
-
 public class AST_STMT_CALL extends AST_STMT {
 
 	private AST_CALL call;
@@ -29,14 +27,6 @@ public class AST_STMT_CALL extends AST_STMT {
 	public boolean checkSemantic(SymbolTable table) {
 		return call.checkSemantic(table);
 	}
-
-
-	@Override
-	public IR_STMT_CALL IRGenerator() {
-		// TODO Auto-generated method stub
-		return new IR_STMT_CALL(call.IRGenerator());
-	}
-
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {

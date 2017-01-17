@@ -1,6 +1,5 @@
 package AST;
 
-import IR.IR_EXP_PAREN;
 import IR.TEMP;
 
 public class AST_EXP_PAREN extends AST_EXP {
@@ -18,13 +17,11 @@ public class AST_EXP_PAREN extends AST_EXP {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -38,21 +35,13 @@ public class AST_EXP_PAREN extends AST_EXP {
 	}
 
 	@Override
-	public IR_EXP_PAREN IRGenerator() {		
-		return new IR_EXP_PAREN(exp.IRGenerator());
-	}
-
-	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
-		
 	}
 
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+		return exp.calcAddress(table, genarator, fileName);
 	}
 
 }

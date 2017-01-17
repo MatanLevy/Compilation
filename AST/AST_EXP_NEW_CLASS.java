@@ -1,6 +1,5 @@
 package AST;
 
-import IR.IR_EXP_NEW_CLASS;
 import IR.TEMP;
 
 public class AST_EXP_NEW_CLASS extends AST_EXP {
@@ -31,20 +30,16 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 		}
 		return type;
 	}
-	@Override
-	public IR_EXP_NEW_CLASS IRGenerator() {
-		return new IR_EXP_NEW_CLASS(_className);
-	}
+	
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+		int size = 0; //TODO calc the size to allocate for the object on the heap
+		return genarator.AllocOnHeap(size);
 	}
 
 }

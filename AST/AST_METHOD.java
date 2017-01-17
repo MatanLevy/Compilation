@@ -48,8 +48,8 @@ public class AST_METHOD extends AST_Node {
 		if (!stmt_list.checkSemantic(table))
 			return false;
 		return true;
-
-	}
+ 
+	} 
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {

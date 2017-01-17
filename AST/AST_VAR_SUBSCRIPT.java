@@ -1,6 +1,5 @@
 package AST;
 
-import IR.IR_EXP_BINOP;
 import IR.TEMP;
 
 public class AST_VAR_SUBSCRIPT extends AST_VAR
@@ -44,12 +43,6 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 	}
 
 	@Override
-	public IR_EXP_BINOP IRGenerator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		// TODO Auto-generated method stub
 		
@@ -59,8 +52,6 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 	public TEMP calcAddress(SymbolTable table,CodeGenarator genarator,String fileName) {
 		TEMP arrayAddressTemp = var.calcAddress(table, genarator, fileName);
 		CodeGenarator.printLACommand(arrayAddressTemp.name, var.getName());
-	
-		//TODO if index isn't int it's an error!!!
 		//TODO check that the index is <= array length - 1
 		TEMP indexTemp = subscript.calcAddress(table, genarator, fileName);
 		int index = 0; //TODO calc index

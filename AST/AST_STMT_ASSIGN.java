@@ -1,8 +1,5 @@
 package AST;
 
-import IR.IR_EXP;
-import IR.IR_EXP_BINOP;
-import IR.IR_STMT_MOVE;
 import IR.TEMP;
 
 public class AST_STMT_ASSIGN extends AST_STMT
@@ -24,7 +21,6 @@ public class AST_STMT_ASSIGN extends AST_STMT
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -53,12 +49,6 @@ public class AST_STMT_ASSIGN extends AST_STMT
 //	lw $t2, 0($t0)   // load the data at location "base"
 //	sw $t2, 0($t1)   // store that data at location "count"
 	
-	@Override
-	public IR_STMT_MOVE IRGenerator() {
-		IR_EXP_BINOP dst = var.IRGenerator();
-		IR_EXP src = exp.IRGenerator();
-		return new IR_STMT_MOVE(dst, src);
-	}
 
 
 }

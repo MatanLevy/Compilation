@@ -5,12 +5,18 @@ public class CodeGenarator {
 	
 	
 	
+	//private static final String MIPS_COMMAND = null;
+
 	/**
 	 * address(heap address) of this pointer at this moment
 	 * (not sure yet if should be integer or something else
 	 */
 	public TEMP thisAddress;
 	
+	/**
+	 * exit label for runtime error such as divison by zero or array outofbounds
+	 */
+	public LABEL exitLabel = new LABEL("EXIT");
 	
 	/**
 	 * 
@@ -24,14 +30,111 @@ public class CodeGenarator {
 	public String TempVariableGenerate() {
 		return new TEMP().name;
 	}
+	/**
+	 * for array we allocate the $(size+1) on heap.so the first value in the heap will be the size
+	 * of the array
+	 * @param addressOfSize
+	 * @return
+	 */
+	public TEMP ArrayAlloc(TEMP addressOfSize) {
+		//cant allocating less than zero,if so we exit
+		CodeGenarator.printSETCommand(MIPS_COMMANDS.BLT, addressOfSize.name, 
+				MIPS_COMMANDS.ZERO, exitLabel.labelString);
+		
+		TEMP result = new TEMP();
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.A0, addressOfSize.name,0);
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.A0, MIPS_COMMANDS.A0, 1); //one more for size
+		CodeGenarator.printADDCommand(MIPS_COMMANDS.A0, MIPS_COMMANDS.A0, MIPS_COMMANDS.A0);
+		CodeGenarator.printADDCommand(MIPS_COMMANDS.A0, MIPS_COMMANDS.A0, MIPS_COMMANDS.A0);//MULT BY 4
+		
+		CodeGenarator.printLICommand(MIPS_COMMANDS.V0, MIPS_COMMANDS.alloc); //finally alloc 4*(size+1)
+		CodeGenarator.printSyscallCommand();
+		CodeGenarator.printADDICommand(result.name, MIPS_COMMANDS.V0, 0);
+		CodeGenarator.printADDICommand(result.name, addressOfSize.name, 0); //putting in the first place size of array
+		
+		//TODO here should come loop in mips that init all the elements to zero(or nullptr)
+		
+		return result;
+	}
+	/**
+	 * ASSEMBLY CODE :
+	 * li $a0 size
+	 * li $v0 9 //9 is for allocation syscall
+	 * syscall
+	 * addi $result $v0 0 //moving the adress from v0 to the result
+	 * 
+	 * @param size for the Object on the heap
+	 * @return temporary register with the address
+	 */
+	public TEMP AllocOnHeap(int size) {
+		TEMP result = new TEMP();
+		CodeGenarator.printLICommand(MIPS_COMMANDS.A0, size);
+		CodeGenarator.printLICommand(MIPS_COMMANDS.V0, MIPS_COMMANDS.alloc);
+		CodeGenarator.printSyscallCommand();
+		CodeGenarator.printADDICommand(result.name, MIPS_COMMANDS.V0, 0);
+		return result;
+	}
+	/**
+	 * in case of run time errors(such as NullPointer,DivideByZero,ArrayOutOfBounds)
+	 * we created exit label that exit the program immediately 
+	 */
+	public void printExit() {
+		printLBLCommand(exitLabel.labelString);
+		printLICommand(MIPS_COMMANDS.V0,MIPS_COMMANDS.exit);
+		printSyscallCommand();
+	}
+	/**
+	 * can only use for branch command.at this case,cmd is branch
+	 * result and r1 -> r1 and r2
+	 * r2 -> label to jump
+	 * 
+	 * 
+	 * @param cmd could be sgt,sge,slt,sle,sne,seq
+	 * @param r1
+	 * @param r2
+	 */
+	public static void printSETCommand(String cmd,String result,String r1,String r2) {
+		System.out.format("%s %s %s %s",cmd, result, r1, r2);
+	}
 	
-	
-	
+	public static void printLBLCommand(String labelString) {
+		System.out.format("%s : ", labelString);
+		
+	}
+	public static void printSyscallCommand() {
+		System.out.format("%s",MIPS_COMMANDS.SYSCALL);
+	}
 	/*
 	 * Methods that print the commands
 	 */
 	
-	
+	/**
+	 * div r1 r2
+	 * 
+	 * @param r1
+	 * @param r2
+	 */
+	public static void printDIVCommand(String r1, String r2){
+		System.out.format("%s %s %s",MIPS_COMMANDS.DIV,r1,r2);
+	}
+	/**
+	 * mult r1,r2
+	 * 
+	 * @param r1
+	 * @param r2
+	 */
+	public static void printMULTCommand(String r1, String r2){
+		System.out.format("%s %s %s",MIPS_COMMANDS.MULT,r1,r2);
+	}
+	/**
+	 * mflo r
+	 * 
+	 * @param r
+	 */
+	public static void printMFLOCommand(String r) {
+		System.out.format("%s %s",MIPS_COMMANDS.MFLO,r);
+	}
+
 	//Adds a register and a sign-extended immediate value and stores the result in a register
 	public static void printADDICommand(String rs, String rt, int immed){
 		System.out.format("%s %s %s %d ", MIPS_COMMANDS.ADDI, rt, rs, immed);
@@ -78,5 +181,9 @@ public class CodeGenarator {
 	public static void printBGTCommand(/*String rt, String rs, int offset*/) {
 		//System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
 	}
+	public static void printBEQCommand(String r1,String r2,String label) {
+		System.out.format("%s %s %s %s",MIPS_COMMANDS.BEQ,r1,r2,label);
+	}
+
 	
 }

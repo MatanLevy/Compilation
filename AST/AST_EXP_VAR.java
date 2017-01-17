@@ -1,6 +1,5 @@
 package AST;
 
-import IR.IR_EXP;
 import IR.TEMP;
 
 public class AST_EXP_VAR extends AST_EXP
@@ -19,13 +18,11 @@ public class AST_EXP_VAR extends AST_EXP
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -37,23 +34,13 @@ public class AST_EXP_VAR extends AST_EXP
 		}
 		return type;
 	}
-
 	@Override
-	public IR_EXP IRGenerator() {
-		// TODO Auto-generated method stub
-		return null;
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {	
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+	public TEMP calcAddress(SymbolTable table, CodeGenarator genrator, String fileName) {
+		return var.calcAddress(table, genrator, fileName);
 	}
 
 

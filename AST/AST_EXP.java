@@ -1,6 +1,5 @@
 package AST;
 
-import IR.IR_EXP;
 import IR.TEMP;
 
 public abstract class AST_EXP extends AST_Node
@@ -17,6 +16,4 @@ public abstract class AST_EXP extends AST_Node
 	 * @return
 	 */
 	public abstract TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName);
-
-	public abstract IR_EXP IRGenerator();
 }

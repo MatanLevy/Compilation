@@ -1,6 +1,5 @@
 package AST;
 
-import IR.IR_EXP_NEW_TYPE;
 import IR.TEMP;
 
 public class AST_EXP_NEW_TYPE extends AST_EXP {
@@ -41,23 +40,15 @@ public class AST_EXP_NEW_TYPE extends AST_EXP {
 		return false;
 	}
 
-	@Override
-	public IR_EXP_NEW_TYPE IRGenerator() {
-		return new IR_EXP_NEW_TYPE(exp.IRGenerator());
-	}
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
-		
 	}
-
-
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+		TEMP arraySize = exp.calcAddress(table, genarator, fileName);
+		return genarator.ArrayAlloc(arraySize);
 	}
 
 }

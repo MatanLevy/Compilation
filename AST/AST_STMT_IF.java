@@ -1,9 +1,5 @@
 package AST;
 
-import IR.IR_LABEL;
-import IR.IR_STMT_IF;
-import IR.LABEL;
-
 public class AST_STMT_IF extends AST_STMT
 {
 	public AST_EXP cond;
@@ -24,7 +20,6 @@ public class AST_STMT_IF extends AST_STMT
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -35,11 +30,6 @@ public class AST_STMT_IF extends AST_STMT
 		return body.checkSemantic(table);
 	}
 
-	@Override
-	public IR_STMT_IF IRGenerator() {
-		return new IR_STMT_IF(cond.IRGenerator(),body.IRGenerator(),
-				new IR_LABEL(new LABEL("if")));
-	}
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
