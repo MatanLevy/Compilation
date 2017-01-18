@@ -1,12 +1,17 @@
 package AST;
+import java.util.HashMap;
+import java.util.Map;
+
 import IR.*;
 public class CodeGenarator {
+	
+	/**
+	 * map method name to it's label
+	 */
 
+	public static Map <String, String> methodNameToLabelMap = new HashMap<String, String> ();
 	
 	
-	
-	//private static final String MIPS_COMMAND = null;
-
 	/**
 	 * address(heap address) of this pointer at this moment
 	 * (not sure yet if should be integer or something else
@@ -17,6 +22,24 @@ public class CodeGenarator {
 	 * exit label for runtime error such as divison by zero or array outofbounds
 	 */
 	public LABEL exitLabel = new LABEL("EXIT");
+	/**
+	 * Add methodName and label as a pair in the map
+	 * @param methodName
+	 * @param label
+	 */
+	public void insertMethodNameAndLabelToMap(String methodName, String label) {
+		methodNameToLabelMap.put(methodName, label);
+	}
+	/**
+	 * 
+	 * @param methodName
+	 * @return label of method or null if the methodName isn't in the map
+	 */
+	
+	public String getLabelOfMethod (String methodName) {
+		return methodNameToLabelMap.get(methodName);
+	}
+	
 	
 	/**
 	 * 
@@ -26,6 +49,11 @@ public class CodeGenarator {
 	public String LabelGenerate(String labelName) {
 		String label  = new LABEL(labelName).labelString;
 		return label + " : ";
+	}
+	
+	static public void printLabel (String label) {
+		System.out.format("%s %n",label);
+
 	}
 	public String TempVariableGenerate() {
 		return new TEMP().name;
@@ -186,6 +214,11 @@ public class CodeGenarator {
 	public static void printBEQCommand(String r1,String r2,String label) {
 		System.out.format("\t %s %s %s %s %n",MIPS_COMMANDS.BEQ,r1,r2,label);
 	}
+<<<<<<< HEAD
+	public static void printJALCommand(String label) {
+		System.out.format("\t %s %s %n",MIPS_COMMANDS.JAL, label);
+	}
+=======
 	public static void printBNQCommand(String r1,String r2,String label) {
 		System.out.format("\t %s %s %s %s %n",MIPS_COMMANDS.BNE,r1,r2,label);
 	}
@@ -193,6 +226,7 @@ public class CodeGenarator {
 		System.out.format("\t %s %s %n", MIPS_COMMANDS.J, label);
 	}
 	
+>>>>>>> 77f0154e61b2642caf7f8ed76acc5efd7281e6d0
 
 	
 }

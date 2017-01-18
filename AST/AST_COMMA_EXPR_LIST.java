@@ -1,5 +1,7 @@
 package AST;
 
+import IR.TEMP;
+
 public class AST_COMMA_EXPR_LIST extends AST_Node {
 	AST_EXP exp;
 	AST_COMMA_EXPR_LIST_STAR list;
@@ -27,10 +29,17 @@ public class AST_COMMA_EXPR_LIST extends AST_Node {
 		
 		return false;
 	}
+
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
-		
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genarator) {
+		if (exp != null) {
+			TEMP tempExp = exp.calcAddress(table, genarator, assemblyFileName);
+			CodeGenarator.printADDICommand(MIPS_COMMANDS.A0, tempExp.name, 0);
+
+		}
+		if (list != null) {
+			list.mipsTranslate(table, assemblyFileName, genarator);
+		}
 	}
 
 }

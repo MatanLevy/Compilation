@@ -54,8 +54,9 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		CodeGenarator.printLACommand(arrayAddressTemp.name, var.getName());
 		//TODO check that the index is <= array length - 1
 		TEMP indexTemp = subscript.calcAddress(table, genarator, fileName);
-		int index = 0; //TODO calc index
-		CodeGenarator.printLICommand(indexTemp.name, index);
+		//int index = 0; //TODO calc index
+		//CodeGenarator.printLICommand(indexTemp.name, index);
+		
 		//Double the index twice so we will get the address of the index*4. 
 		//This is the address of index*4
 		CodeGenarator.printADDCommand(indexTemp.name, indexTemp.name, indexTemp.name);
