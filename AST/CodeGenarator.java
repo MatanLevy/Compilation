@@ -178,7 +178,7 @@ public class CodeGenarator {
 	//  Branches if the quantities of two registers are equal.
 	public static void printBLECommand(/*String rt, String rs, int offset*/) {
 		//System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
-	}
+	}  
 	// Branches if the quantities of two registers are NOT equal
 	public static void printBGTCommand(/*String rt, String rs, int offset*/) {
 		//System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
