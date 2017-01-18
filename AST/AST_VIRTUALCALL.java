@@ -75,15 +75,13 @@ public class AST_VIRTUALCALL extends AST_Node {
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
-		
+		exp_list.mipsTranslate(table, assemblyFileName, genartor);
+		String label = genartor.getLabelOfMethod(_id);
+		CodeGenarator.printJALCommand(label);
 	}
+//jal procedure # call procedure
 
 
-	public IR_EXP_BINOP IRGenerator() {
-		return null;
-		
-	}
  
 
 }

@@ -1,5 +1,7 @@
 package AST;
 
+import IR.TEMP;
+
 public class AST_STMT_RETURN_EXP extends AST_STMT {
 
 	private AST_EXP exp;
@@ -34,9 +36,12 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 	}
 
 	@Override
-	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genarator) {
 		
+		TEMP tempExp = exp.calcAddress(table, genarator, assemblyFileName);
+		CodeGenarator.printLWCommand(MIPS_COMMANDS.V0, tempExp.name, 0);
+		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
+
 	}
 
 }

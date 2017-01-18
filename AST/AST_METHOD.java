@@ -53,12 +53,16 @@ public class AST_METHOD extends AST_Node {
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		System.out.println(genartor.LabelGenerate(_id));
+		String label = genartor.LabelGenerate(_id);
+		genartor.insertMethodNameAndLabelToMap(_id, label);
+		CodeGenarator.printLabel(label);
+		
 		formals.mipsTranslate(table, assemblyFileName, genartor);
 		stmt_list.mipsTranslate(table, assemblyFileName, genartor);
 		
-		//TODO here : if void method ends with no return what should we do?
-		
+		//jr $ra
+		if (!(_id.equals("main")))
+			CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
 	}
 
 }

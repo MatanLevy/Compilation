@@ -29,13 +29,9 @@ public class AST_CALL extends AST_Node {
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
+		 virtualCall.mipsTranslate(table, assemblyFileName, genartor);
 	}
 
-	public IR_CALL IRGenerator() {
-		// TODO Auto-generated method stub
-		return null;
 
-	}
 
 }

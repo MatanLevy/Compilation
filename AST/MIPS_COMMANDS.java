@@ -4,10 +4,14 @@ public class MIPS_COMMANDS {
 	//frame pointer
 	public static final String FRAME_PTR = "$fp";
 	
-	//Registers for syscall
+	//Registers
 	public static final String V0 = "$vo";
 	public static final String A0 = "$a0";
+	public static final String A1 = "$a1";
+	public static final String A2 = "$a2";
+	public static final String A3 = "$a3";
 	public static final String ZERO = "$zero";
+	public static final String RA = "$ra";
 	
 	//Possible values of v0 for syscall
 	public static int exit = 10;
@@ -35,6 +39,7 @@ public class MIPS_COMMANDS {
 	public static final String LW = "lw";
 	public static final String J = "j";
 	public static final String JR = "jr";
+	public static final String JAL = "jal";
 	public static final String BLE = "ble";
 	public static final String BGT = "bgt";
 	public static final String BLT = "blt";
