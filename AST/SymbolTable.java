@@ -234,8 +234,9 @@ public class SymbolTable {
 	}
 	
 	public boolean isSymbolInitalize (String id) {
-		SymbolEntry sym = find_symbol(id);
-		return sym.isInitalize();
+//		SymbolEntry sym = find_symbol(id);
+//		return sym.isInitalize();
+		return true;
 	}
 	
 
