@@ -1,5 +1,7 @@
 package AST;
 
+import IR.TEMP;
+
 public class AST_STMT_TYPE extends AST_STMT {
 
 	public AST_TYPE type;
@@ -17,11 +19,15 @@ public class AST_STMT_TYPE extends AST_STMT {
 		this.id = id;
 		this.exp = e;
 	}
+
 	public void print() {
 		System.out.println("type statement");
 		type.print();
 		System.out.println("id = " + id);
-		if (exp != null) exp.print(); else System.out.println("no exp");
+		if (exp != null)
+			exp.print();
+		else
+			System.out.println("no exp");
 	}
 
 	@Override
@@ -34,25 +40,28 @@ public class AST_STMT_TYPE extends AST_STMT {
 		if (type == null || (exp != null && exp.calcType(table) == null))
 			throw new RuntimeException("can't assign from/to void type");
 		if (!SemanticChecker.isTypeDefinedAlready(table, type))
-			throw new RuntimeException("class " + type.getName() + " hasn't "
-					+" been defined");
-		if (table.check_scope(id)) 
-			throw new RuntimeException("symbol " + id + "exist already in this"
-					+ " scope");
+			throw new RuntimeException("class " + type.getName() + " hasn't " + " been defined");
+		if (table.check_scope(id))
+			throw new RuntimeException("symbol " + id + "exist already in this" + " scope");
 		if (exp != null) {
-			if (! SemanticChecker.isBaseClassOf(type.getName(), 
-					exp.calcType(table).getName()))
+			if (!SemanticChecker.isBaseClassOf(type.getName(), exp.calcType(table).getName()))
 				throw new RuntimeException("in compitable type assign");
 		}
 		table.insertASTNode(this);
 		return true;
-		
+
 	}
+
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		
+		table.insertASTNode(this);
+		if (exp != null) {
+			TEMP rvalue = exp.calcAddress(table, genartor, assemblyFileName);
+			int varOffSet = table.find_symbol(id).offset * -4;
+			TEMP lvalue = new TEMP();
+			CodeGenarator.printADDICommand(lvalue.name, MIPS_COMMANDS.FRAME_PTR, varOffSet);
+			CodeGenarator.printSWCommand(lvalue.name, rvalue.name, 0);
+		}
 	}
-
-
 
 }

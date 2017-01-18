@@ -39,7 +39,8 @@ public class AST_STMT_ASSIGN extends AST_STMT
 		TEMP varTemp = var.calcAddress(table, genarator, fileName);
 		TEMP expTemp = exp.calcAddress(table, genarator, fileName);
 		TEMP temp = new TEMP();
-		CodeGenarator.printLWCommand(temp.name, expTemp.name, 0);
+		//CodeGenarator.printLWCommand(temp.name, expTemp.name, 0);
+		CodeGenarator.printADDICommand(temp.name, expTemp.name, 0);
 		CodeGenarator.printSWCommand(temp.name, varTemp.name, 0);
 		
 	}
