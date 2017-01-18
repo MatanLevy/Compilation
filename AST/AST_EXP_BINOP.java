@@ -89,22 +89,22 @@ public class AST_EXP_BINOP extends AST_EXP
 		TEMP rightA = right.calcAddress(table, genarator, fileName);
 		TEMP result = new TEMP();
 		if (OP.getOp() == "GT") {
-			cmd = "sgt";
+			cmd = MIPS_COMMANDS.SGT;
 		}
 		if (OP.getOp() == "GTOREQUAL") {
-			cmd = "sge";
+			cmd = MIPS_COMMANDS.SGE;		
 		}
 		if (OP.getOp() == "ST") {
-			cmd = "slt";
+			cmd = MIPS_COMMANDS.SLT;
 		}
 		if (OP.getOp() == "STOREQUAL") {
-			cmd = "sle";
+			cmd = MIPS_COMMANDS.SLE;
 		}
 		if (OP.getOp() == "EQUAL") {
-			cmd = "seq";
+			cmd = MIPS_COMMANDS.SEQ;
 		}
 		if (OP.getOp() == "NON EQUAL") {
-			cmd = "sne";
+			cmd = MIPS_COMMANDS.SNE;
 		}
 		CodeGenarator.printSETCommand(cmd, result.name, leftA.name, rightA.name);
 		return result;
@@ -155,14 +155,14 @@ public class AST_EXP_BINOP extends AST_EXP
 	 */
 	private TEMP calcMinusOpeartor(SymbolTable table, CodeGenarator genarator, String fileName) {
 		TEMP minusOne = new TEMP();
-		TEMP newright = new TEMP();
+		TEMP newRight = new TEMP();
 		TEMP result = new TEMP();
 		TEMP leftAddress = left.calcAddress(table, genarator, fileName);
 		TEMP rightAddress = right.calcAddress(table, genarator, fileName);
 		CodeGenarator.printLICommand(minusOne.name, -1);
 		CodeGenarator.printMULTCommand(rightAddress.name, minusOne.name);
-		CodeGenarator.printMFLOCommand(newright.name);
-		CodeGenarator.printADDCommand(result.name, leftAddress.name, newright.name);
+		CodeGenarator.printMFLOCommand(newRight.name);
+		CodeGenarator.printADDCommand(result.name, leftAddress.name, newRight.name);
 		return result;
 	}
 

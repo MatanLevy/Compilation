@@ -38,7 +38,7 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		int size = 0; //TODO calc the size to allocate for the object on the heap
+		int size = table.returnTheSizeOfTheObjectFromClassTypeOnTheHeap(_className); 
 		return genarator.AllocOnHeap(size);
 	}
 

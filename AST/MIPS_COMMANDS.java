@@ -3,9 +3,13 @@ package AST;
 public class MIPS_COMMANDS {
 	//frame pointer
 	public static final String FRAME_PTR = "$fp";
+	
+	//Registers for syscall
 	public static final String V0 = "$vo";
 	public static final String A0 = "$a0";
 	public static final String ZERO = "$zero";
+	
+	//Possible values of v0 for syscall
 	public static int exit = 10;
 	public static int alloc = 9;
 	
