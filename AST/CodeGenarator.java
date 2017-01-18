@@ -142,7 +142,7 @@ public class CodeGenarator {
 	}
 	//Adds two registers and stores the result in a register
 	public static void printADDCommand(String rs, String rt, String rd){
-		System.out.format("\t %s %s %s %d %n", MIPS_COMMANDS.ADD, rs, rt, rd);
+		System.out.format("\t %s %s %s %s %n", MIPS_COMMANDS.ADD, rs, rt, rd);
 	
 	}
 	
@@ -184,6 +184,13 @@ public class CodeGenarator {
 	public static void printBEQCommand(String r1,String r2,String label) {
 		System.out.format("\t %s %s %s %s %n",MIPS_COMMANDS.BEQ,r1,r2,label);
 	}
+	public static void printBNQCommand(String r1,String r2,String label) {
+		System.out.format("\t %s %s %s %s %n",MIPS_COMMANDS.BNE,r1,r2,label);
+	}
+	public static void printJUMPCommand(String label) {
+		System.out.format("\t %s %s %n", MIPS_COMMANDS.J, label);
+	}
+	
 
 	
 }

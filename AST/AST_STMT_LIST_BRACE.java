@@ -31,8 +31,10 @@ public class AST_STMT_LIST_BRACE extends AST_STMT {
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
-		
+		table.pushScope(false, null);
+		stmtList.mipsTranslate(table, assemblyFileName, genartor);
+		table.popScope();
+		table.decreaseOffsetOfLocalVars();
 	}
 
 }

@@ -1,5 +1,8 @@
 package AST;
 
+import IR.LABEL;
+import IR.TEMP;
+
 public class AST_STMT_IF extends AST_STMT
 {
 	public AST_EXP cond;
@@ -33,7 +36,16 @@ public class AST_STMT_IF extends AST_STMT
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
-		
+		LABEL ifLabel = new LABEL("if");
+		LABEL exitIfLabel = new LABEL("exit_if");
+		LABEL condLabel = new LABEL("condition_if");
+		CodeGenarator.printJUMPCommand(condLabel.labelString);
+		CodeGenarator.printLBLCommand(ifLabel.labelString);
+		body.mipsTranslate(table, assemblyFileName, genartor);
+		CodeGenarator.printJUMPCommand(exitIfLabel.labelString);
+		CodeGenarator.printLBLCommand(condLabel.labelString);
+		TEMP condAddress = cond.calcAddress(table, genartor, assemblyFileName);
+		CodeGenarator.printBNQCommand(condAddress.name, MIPS_COMMANDS.ZERO, ifLabel.labelString);
+		CodeGenarator.printLBLCommand(exitIfLabel.labelString);
 	}
 }

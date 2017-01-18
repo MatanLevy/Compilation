@@ -186,7 +186,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		TEMP addressResult = new TEMP();
 		CodeGenarator.printADDCommand(addressResult.name,addressLeft.name
 				,addressRight.name); 
-		return null;
+		return addressResult;
 	}
 
 	private TEMP calcPlusForString(SymbolTable table, CodeGenarator genarator, String fileName) {

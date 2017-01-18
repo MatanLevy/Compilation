@@ -55,7 +55,7 @@ public class AST_VAR_SIMPLE extends AST_VAR
 		
 		TEMP offsetAddress = new TEMP();
 		CodeGenarator.printADDICommand(offsetAddress.name, MIPS_COMMANDS.FRAME_PTR, offsetOfVar);
-		
+		//CodeGenarator.printLWCommand(offsetAddress.name, offsetAddress.name, 0);
 		return offsetAddress;
 	}
 }
