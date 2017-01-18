@@ -33,7 +33,7 @@ public class Main {
 		} finally {
 			if (p.isFileLegal()) 
 				syntexCheck = true;
-			else
+			else 
 				file_writer.write("FAIL");
 		}
 		if (syntexCheck) {

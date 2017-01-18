@@ -3,8 +3,6 @@ package AST;
 
 import java.util.List;
 
-import IR.IR_EXP_BINOP;
-
 public class AST_VIRTUALCALL extends AST_Node {
 	AST_EXP exp;
 	String _id;

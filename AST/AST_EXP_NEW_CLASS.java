@@ -9,7 +9,7 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 		this._className = className;
 		this.type = new AST_TYPE_CLASS(className);
 		this.typeUptoDate = true;
-	}
+	} 
 	public void print() {
 		System.out.println("exp new class : " + _className);
 	}

@@ -16,7 +16,7 @@ public class SymbolTable {
 
 	 
 	
-
+ 
 	
 	// The name of the class we in it's scope (If we aren't in a scope of a class, the value in "").
 

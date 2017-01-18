@@ -1,7 +1,5 @@
 package AST;
 
-import IR.IR_CALL;
-
 public class AST_CALL extends AST_Node {
 	
 	AST_VIRTUALCALL virtualCall;

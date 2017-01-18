@@ -3,8 +3,6 @@ package AST;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
-
 import IR.TEMP;
 
 public class AST_COMMA_EXPR_LIST_STAR extends AST_Node {
