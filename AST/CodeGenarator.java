@@ -123,6 +123,7 @@ public class CodeGenarator {
 	 * @param r1
 	 * @param r2
 	 */
+	//Multiplies $s by $t and stores the result in $LO.
 	public static void printMULTCommand(String r1, String r2){
 		System.out.format("\t %s %s %s%n",MIPS_COMMANDS.MULT,r1,r2);
 	}
@@ -131,6 +132,7 @@ public class CodeGenarator {
 	 * 
 	 * @param r
 	 */
+	//The contents of register LO are moved to the specified register.
 	public static void printMFLOCommand(String r) {
 		System.out.format("\t %s %s%n",MIPS_COMMANDS.MFLO,r);
 	}

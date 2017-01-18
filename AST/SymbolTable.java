@@ -475,7 +475,16 @@ public class SymbolTable {
 		}
 	}
 	
-	
+	public int returnTheSizeOfTheObjectFromClassTypeOnTheHeap (String className)
+	{
+		ScopeNode scopeOfClass = getClassScope(className);
+		int size = returnNumberOfFieldsDefinedInGivenClassScope(scopeOfClass);
+		
+		//place for virtual function address
+		size++;
+		
+		return size*4;
+	}
 	public void error (boolean multiDefine, boolean undefinded, String id) {
 		if (multiDefine)
 			throw new RuntimeException("multipile defintion of : " + id);
