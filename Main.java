@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 
 import AST.AST_PROGRAM;
+import AST.CodeGenarator;
 import AST.SemanticChecker;
 import AST.SymbolTable;
 
@@ -37,10 +38,12 @@ public class Main {
 		}
 		if (syntexCheck) {
 			SemanticChecker.setProgram(program);
-			//IR_Node IR_Tree = null;
 			SymbolTable table = new SymbolTable();
 			try {
 				semanticCheck = program.checkSemantic(table);
+				CodeGenarator genartor = new CodeGenarator();
+				SymbolTable table1 = new SymbolTable();
+				program.mipsTranslate(table1, "none", genartor);
 			} catch (RuntimeException e) {
 				System.out.println("Error : " + e.getMessage());
 				file_writer.write("FAIL");

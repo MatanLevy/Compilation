@@ -94,15 +94,15 @@ public class CodeGenarator {
 	 * @param r2
 	 */
 	public static void printSETCommand(String cmd,String result,String r1,String r2) {
-		System.out.format("%s %s %s %s",cmd, result, r1, r2);
+		System.out.format("\t %s %s %s %s%n",cmd, result, r1, r2);
 	}
 	
 	public static void printLBLCommand(String labelString) {
-		System.out.format("%s : ", labelString);
+		System.out.format("%s : %n", labelString);
 		
 	}
 	public static void printSyscallCommand() {
-		System.out.format("%s",MIPS_COMMANDS.SYSCALL);
+		System.out.format("\t %s%n",MIPS_COMMANDS.SYSCALL);
 	}
 	/*
 	 * Methods that print the commands
@@ -115,7 +115,7 @@ public class CodeGenarator {
 	 * @param r2
 	 */
 	public static void printDIVCommand(String r1, String r2){
-		System.out.format("%s %s %s",MIPS_COMMANDS.DIV,r1,r2);
+		System.out.format("\t %s %s %s%n",MIPS_COMMANDS.DIV,r1,r2);
 	}
 	/**
 	 * mult r1,r2
@@ -124,7 +124,7 @@ public class CodeGenarator {
 	 * @param r2
 	 */
 	public static void printMULTCommand(String r1, String r2){
-		System.out.format("%s %s %s",MIPS_COMMANDS.MULT,r1,r2);
+		System.out.format("\t %s %s %s%n",MIPS_COMMANDS.MULT,r1,r2);
 	}
 	/**
 	 * mflo r
@@ -132,46 +132,46 @@ public class CodeGenarator {
 	 * @param r
 	 */
 	public static void printMFLOCommand(String r) {
-		System.out.format("%s %s",MIPS_COMMANDS.MFLO,r);
+		System.out.format("\t %s %s%n",MIPS_COMMANDS.MFLO,r);
 	}
 
 	//Adds a register and a sign-extended immediate value and stores the result in a register
 	public static void printADDICommand(String rs, String rt, int immed){
-		System.out.format("%s %s %s %d ", MIPS_COMMANDS.ADDI, rt, rs, immed);
+		System.out.format("\t %s %s %s %d %n", MIPS_COMMANDS.ADDI, rs, rt, immed);
 	
 	}
 	//Adds two registers and stores the result in a register
 	public static void printADDCommand(String rs, String rt, String rd){
-		System.out.format("%s %s %s %d ", MIPS_COMMANDS.ADD, rs, rt, rd);
+		System.out.format("\t %s %s %s %d %n", MIPS_COMMANDS.ADD, rs, rt, rd);
 	
 	}
 	
 	//The li pseudo instruction loads an immediate value into a register.
 	public static void printLICommand(String rt, int immed) {
-		System.out.format("%s %s %d ", MIPS_COMMANDS.LI, rt, immed);
+		System.out.format("\t %s %s %d %n", MIPS_COMMANDS.LI, rt, immed);
 
 	}
 	//Load Address (la)
 	public static void printLACommand(String rt, String address) {
-		System.out.format("%s %s %s ", MIPS_COMMANDS.LA, rt, address);
+		System.out.format("\t %s %s %s %n", MIPS_COMMANDS.LA, rt, address);
 	}
 
 	// A word is loaded into a register from the specified address.
 	public static void printLWCommand(String rt, String rs, int offset) {
-		System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.LW, rt, offset, rs);
+		System.out.format("\t %s %s, %d(%s) %n", MIPS_COMMANDS.LW, rt, offset, rs);
 	}
 	// The contents of $t is stored at the specified address.
 	public static void printSWCommand(String rt, String rs, int offset) {
-		System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
+		System.out.format("\t %s %s, %d(%s) %n", MIPS_COMMANDS.SW, rt, offset, rs);
 	}
 	
 	// j Jump to an address
 	public static void printJCommand(String offset) {
-		System.out.format("%s %s", MIPS_COMMANDS.J, offset);
+		System.out.format("\t %s %s %n", MIPS_COMMANDS.J, offset);
 	}
 	// jr Jump to an address stored in a register
 	public static void printJRCommand(String rt) {
-		System.out.format("%s %s", MIPS_COMMANDS.JR, rt);
+		System.out.format("\t %s %s %n", MIPS_COMMANDS.JR, rt);
 	}
 	//  Branches if the quantities of two registers are equal.
 	public static void printBLECommand(/*String rt, String rs, int offset*/) {
@@ -182,7 +182,7 @@ public class CodeGenarator {
 		//System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
 	}
 	public static void printBEQCommand(String r1,String r2,String label) {
-		System.out.format("%s %s %s %s",MIPS_COMMANDS.BEQ,r1,r2,label);
+		System.out.format("\t %s %s %s %s %n",MIPS_COMMANDS.BEQ,r1,r2,label);
 	}
 
 	
