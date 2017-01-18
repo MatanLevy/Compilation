@@ -214,11 +214,9 @@ public class CodeGenarator {
 	public static void printBEQCommand(String r1,String r2,String label) {
 		System.out.format("\t %s %s %s %s %n",MIPS_COMMANDS.BEQ,r1,r2,label);
 	}
-<<<<<<< HEAD
 	public static void printJALCommand(String label) {
 		System.out.format("\t %s %s %n",MIPS_COMMANDS.JAL, label);
 	}
-=======
 	public static void printBNQCommand(String r1,String r2,String label) {
 		System.out.format("\t %s %s %s %s %n",MIPS_COMMANDS.BNE,r1,r2,label);
 	}
@@ -226,7 +224,6 @@ public class CodeGenarator {
 		System.out.format("\t %s %s %n", MIPS_COMMANDS.J, label);
 	}
 	
->>>>>>> 77f0154e61b2642caf7f8ed76acc5efd7281e6d0
 
 	
 }
