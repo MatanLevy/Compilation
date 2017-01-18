@@ -13,7 +13,6 @@ public class AST_STMT_RETURN extends AST_STMT {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -29,7 +28,6 @@ public class AST_STMT_RETURN extends AST_STMT {
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
-		
+		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
 	}
 }

@@ -1,5 +1,8 @@
 package AST;
 
+import IR.LABEL;
+import IR.TEMP;
+
 public class AST_STMT_WHILE extends AST_STMT {
 	public AST_EXP cond;
 	public AST_STMT body;
@@ -33,8 +36,17 @@ public class AST_STMT_WHILE extends AST_STMT {
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		// TODO Auto-generated method stub
-		
+		LABEL whileLabel = new LABEL("while_loop");
+		LABEL exitWhileLabel = new LABEL("exit_while_loop");
+		LABEL condLabel = new LABEL("condition_while");
+		CodeGenarator.printJUMPCommand(condLabel.labelString);
+		CodeGenarator.printLBLCommand(whileLabel.labelString);
+		body.mipsTranslate(table, assemblyFileName, genartor);
+		CodeGenarator.printJUMPCommand(condLabel.labelString);
+		CodeGenarator.printLBLCommand(condLabel.labelString);
+		TEMP condAddress = cond.calcAddress(table, genartor, assemblyFileName);
+		CodeGenarator.printBNQCommand(condAddress.name, MIPS_COMMANDS.ZERO, whileLabel.labelString);
+		CodeGenarator.printLBLCommand(exitWhileLabel.labelString);
 	}
 
 }

@@ -7,9 +7,13 @@ public class MIPS_COMMANDS {
 	//Registers
 	public static final String V0 = "$vo";
 	public static final String A0 = "$a0";
+<<<<<<< HEAD
 	public static final String A1 = "$a1";
 	public static final String A2 = "$a2";
 	public static final String A3 = "$a3";
+=======
+	public static final String RA = "$ra";
+>>>>>>> 77f0154e61b2642caf7f8ed76acc5efd7281e6d0
 	public static final String ZERO = "$zero";
 	public static final String RA = "$ra";
 	

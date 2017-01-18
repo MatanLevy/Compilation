@@ -60,7 +60,7 @@ public class AST_STMT_TYPE extends AST_STMT {
 			int varOffSet = table.find_symbol(id).offset * -4;
 			TEMP lvalue = new TEMP();
 			CodeGenarator.printADDICommand(lvalue.name, MIPS_COMMANDS.FRAME_PTR, varOffSet);
-			CodeGenarator.printSWCommand(lvalue.name, rvalue.name, 0);
+			CodeGenarator.printSWCommand(rvalue.name, lvalue.name, 0);
 		}
 	}
 
