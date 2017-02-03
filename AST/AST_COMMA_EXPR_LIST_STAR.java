@@ -41,7 +41,8 @@ public class AST_COMMA_EXPR_LIST_STAR extends AST_Node {
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genarator) {
-		int offset = -8;
+		int offset = CodeGenarator.getOffset();
+		CodeGenarator.changeOffset(4);
 		for (int i=0; i < expList.size(); i++) {
 			TEMP tempArg_i = expList.get(i).calcAddress(table, genarator, assemblyFileName);
 			CodeGenarator.printAndPrepareArgumentBeforeCall(offset, tempArg_i);

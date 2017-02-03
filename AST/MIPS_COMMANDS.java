@@ -9,9 +9,6 @@ public class MIPS_COMMANDS {
 	// Registers
 	public static final String V0 = "$v0";
 	public static final String A0 = "$a0";
-	public static final String A1 = "$a1";
-	public static final String A2 = "$a2";
-	public static final String A3 = "$a3";
 
 	public static final String ZERO = "$zero";
 	public static final String RA = "$ra";

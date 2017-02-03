@@ -18,6 +18,12 @@ public class CodeGenarator {
 	public static Map <String, STRING_LABEL> stringToStringLabelMap = new HashMap<String, STRING_LABEL>();
 	
 	/**
+	 * The offset from the start of the frame.
+	 * This is where the sp is.
+	 */
+	private static int offset;
+	
+	/**
 	 * address(heap address) of this pointer at this moment
 	 * (not sure yet if should be integer or something else
 	 */
@@ -62,6 +68,13 @@ public class CodeGenarator {
 	}
 	public String TempVariableGenerate() {
 		return new TEMP().name;
+	}
+	
+	public static int getOffset() {
+		return offset;
+	}
+	public static void changeOffset (int size) {
+		offset -= size;
 	}
 	/**
 	 * for array we allocate the $(size+1) on heap.so the first value in the heap will be the size
@@ -298,9 +311,9 @@ public class CodeGenarator {
 		printLICommand(offsetTemp.name, offset);
 		TEMP argumentAddressTemp = new TEMP();
 		printADDCommand(argumentAddressTemp.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
-		TEMP valueOfArgumentTemp = new TEMP();
+		//TEMP valueOfArgumentTemp = new TEMP();
 		//printLICommand(valueOfArgumentTemp.name, valueOfArgument);
-		printSWCommand(valueOfArgumentTemp.name, argumentAddressTemp.name, 0);
+		printSWCommand(valueOfArgument.name, argumentAddressTemp.name, 0);
 		
 		
 	}

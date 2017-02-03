@@ -56,10 +56,15 @@ public class AST_STMT_TYPE extends AST_STMT {
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		table.insertASTNode(this);
 		if (exp != null) {
+			int sizeToAllocateForThisStmt = 4;
+			CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
 			TEMP rvalue = exp.calcAddress(table, genartor, assemblyFileName);
-			int varOffSet = table.find_symbol(id).offset * -4;
+			//int varOffSet = table.find_symbol(id).offset * -4;
+			int varOffset = CodeGenarator.getOffset();
+			CodeGenarator.changeOffset(sizeToAllocateForThisStmt);
+
 			TEMP lvalue = new TEMP();
-			CodeGenarator.printADDICommand(lvalue.name, MIPS_COMMANDS.FRAME_PTR, varOffSet);
+			CodeGenarator.printADDICommand(lvalue.name, MIPS_COMMANDS.FRAME_PTR, varOffset);
 			CodeGenarator.printSWCommand(rvalue.name, lvalue.name, 0);
 		}
 	}
