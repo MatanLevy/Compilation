@@ -228,6 +228,13 @@ public class CodeGenarator {
 		System.out.format("\t %s %s, %s, %s %n",MIPS_COMMANDS.SUB,r1,r2,r3);
 	}
 	
+	/**
+	 * Example:
+	 * 	li Temp_13,4
+	 * 	sub Temp_12,$sp,Temp_13
+	 * 	addi $sp,Temp_12,0
+	 * @param sizeOfMemoryToAllocate
+	 */
 	public static void allocateMemory (int sizeOfMemoryToAllocate) {
 		TEMP temp1 = new TEMP();
 		printLICommand(temp1.name, sizeOfMemoryToAllocate);
@@ -235,13 +242,53 @@ public class CodeGenarator {
 		printSUBCommand(temp2.name, MIPS_COMMANDS.STACK_PTR, temp1.name);
 		printADDICommand(MIPS_COMMANDS.STACK_PTR, temp2.name, 0);
 	}
+
 	
-//	li Temp_13,4
-//
-//	sub Temp_12,$sp,Temp_13
-//
-//	addi $sp,Temp_12,0
 	
+	/**
+	 * if inside a function, it's use argument in given offset,
+	 * it's should print the following lines and return the temp it's saved in it the argument.
+	 * Example:
+	 * 	li Temp_26,8
+	 *	add Temp_25,$fp,Temp_26
+	 *	lw Temp_24,0(Temp_25)
+	 * 
+	 * @param offset
+	 * @return temp with the wanted argument
+	 */
+	public static TEMP printAndGetArgumentInsideMethod (int offset) {
+		TEMP offsetTemp = new TEMP();
+		printLICommand(offsetTemp.name, offset);
+		TEMP addressArgumentTEMP = new TEMP();
+		printADDCommand(addressArgumentTEMP.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
+		TEMP argumentTEMP = new TEMP();
+		printLWCommand(argumentTEMP.name, addressArgumentTEMP.name, 0);
+		
+		return argumentTEMP;
+	}
+	
+	/**
+	 * This function print all it's need to saving an argument that is int on the stack.
+	 * Example:
+	 * 	li Temp_17,-4
+	 * 	add Temp_16,$fp,Temp_17
+	 * 	li Temp_18,1
+	 * 	sw Temp_18,0(Temp_16)
+	 * @param offset
+	 */
+	public static void printAndPrepareArgumentBeforeCall (int offset, int valueOfArgument) {
+		TEMP offsetTemp = new TEMP();
+		printLICommand(offsetTemp.name, offset);
+		TEMP argumentAddressTemp = new TEMP();
+		printADDCommand(argumentAddressTemp.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
+		TEMP valueOfArgumentTemp = new TEMP();
+		printLICommand(valueOfArgumentTemp.name, valueOfArgument);
+		printSWCommand(valueOfArgumentTemp.name, argumentAddressTemp.name, 0);
+		
+		
+	}
+
+
 	
 	
 
