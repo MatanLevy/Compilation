@@ -13,6 +13,17 @@ public class CodeGenarator {
 	
 	
 	/**
+	 * map string to it's STRING_LABEL
+	 */
+	public static Map <String, STRING_LABEL> stringToStringLabelMap = new HashMap<String, STRING_LABEL>();
+	
+	/**
+	 * The offset from the start of the frame.
+	 * This is where the sp is.
+	 */
+	private static int offset;
+	
+	/**
 	 * address(heap address) of this pointer at this moment
 	 * (not sure yet if should be integer or something else
 	 */
@@ -57,6 +68,13 @@ public class CodeGenarator {
 	}
 	public String TempVariableGenerate() {
 		return new TEMP().name;
+	}
+	
+	public static int getOffset() {
+		return offset;
+	}
+	public static void changeOffset (int size) {
+		offset -= size;
 	}
 	/**
 	 * for array we allocate the $(size+1) on heap.so the first value in the heap will be the size
@@ -167,23 +185,23 @@ public class CodeGenarator {
 
 	//Adds a register and a sign-extended immediate value and stores the result in a register
 	public static void printADDICommand(String rs, String rt, int immed){
-		System.out.format("\t %s %s %s %d %n", MIPS_COMMANDS.ADDI, rs, rt, immed);
+		System.out.format("\t %s %s, %s, %d %n", MIPS_COMMANDS.ADDI, rs, rt, immed);
 	
 	}
 	//Adds two registers and stores the result in a register
 	public static void printADDCommand(String rs, String rt, String rd){
-		System.out.format("\t %s %s %s %s %n", MIPS_COMMANDS.ADD, rs, rt, rd);
+		System.out.format("\t %s %s, %s, %s %n", MIPS_COMMANDS.ADD, rs, rt, rd);
 	
 	}
 	
 	//The li pseudo instruction loads an immediate value into a register.
 	public static void printLICommand(String rt, int immed) {
-		System.out.format("\t %s %s %d %n", MIPS_COMMANDS.LI, rt, immed);
+		System.out.format("\t %s %s, %d %n", MIPS_COMMANDS.LI, rt, immed);
 
 	}
 	//Load Address (la)
 	public static void printLACommand(String rt, String address) {
-		System.out.format("\t %s %s %s %n", MIPS_COMMANDS.LA, rt, address);
+		System.out.format("\t %s %s, %s %n", MIPS_COMMANDS.LA, rt, address);
 	}
 
 	// A word is loaded into a register from the specified address.
@@ -223,6 +241,83 @@ public class CodeGenarator {
 	public static void printJUMPCommand(String label) {
 		System.out.format("\t %s %s %n", MIPS_COMMANDS.J, label);
 	}
+	//Subtracts two registers and stores the result in a register
+	public static void printSUBCommand(String r1, String r2, String r3) {
+		System.out.format("\t %s %s, %s, %s %n",MIPS_COMMANDS.SUB,r1,r2,r3);
+	}
+	
+	/**
+	 * Example:
+	 * 	li Temp_13,4
+	 * 	sub Temp_12,$sp,Temp_13
+	 * 	addi $sp,Temp_12,0
+	 * @param sizeOfMemoryToAllocate
+	 */
+	public static void allocateMemory (int sizeOfMemoryToAllocate) {
+		TEMP temp1 = new TEMP();
+		printLICommand(temp1.name, sizeOfMemoryToAllocate);
+		TEMP temp2 = new TEMP();
+		printSUBCommand(temp2.name, MIPS_COMMANDS.STACK_PTR, temp1.name);
+		printADDICommand(MIPS_COMMANDS.STACK_PTR, temp2.name, 0);
+	}
+
+	
+	
+	/**
+	 * if inside a function, it's use argument in given offset,
+	 * it's should print the following lines and return the temp it's saved in it the argument.
+	 * Example:
+	 * 	li Temp_26,8
+	 *	add Temp_25,$fp,Temp_26
+	 *	lw Temp_24,0(Temp_25)
+	 * 
+	 * @param offset
+	 * @return temp with the wanted argument
+	 */
+	public static TEMP printAndGetArgumentInsideMethod (int offset) {
+		TEMP offsetTemp = new TEMP();
+		printLICommand(offsetTemp.name, offset);
+		TEMP addressArgumentTEMP = new TEMP();
+		printADDCommand(addressArgumentTEMP.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
+		TEMP argumentTEMP = new TEMP();
+		printLWCommand(argumentTEMP.name, addressArgumentTEMP.name, 0);
+		
+		return argumentTEMP;
+	}
+	
+	/**
+	 * This function print all it's need to saving an argument that is int on the stack.
+	 * Example:
+	 * 	li Temp_17,-4
+	 * 	add Temp_16,$fp,Temp_17
+	 * 	li Temp_18,1
+	 * 	sw Temp_18,0(Temp_16)
+	 * @param offset
+	 */
+	public static void printAndPrepareArgumentBeforeCall (int offset, int valueOfArgument) {
+		TEMP offsetTemp = new TEMP();
+		printLICommand(offsetTemp.name, offset);
+		TEMP argumentAddressTemp = new TEMP();
+		printADDCommand(argumentAddressTemp.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
+		TEMP valueOfArgumentTemp = new TEMP();
+		printLICommand(valueOfArgumentTemp.name, valueOfArgument);
+		printSWCommand(valueOfArgumentTemp.name, argumentAddressTemp.name, 0);
+		
+		
+	}
+
+	public static void printAndPrepareArgumentBeforeCall (int offset, TEMP valueOfArgument) {
+		TEMP offsetTemp = new TEMP();
+		printLICommand(offsetTemp.name, offset);
+		TEMP argumentAddressTemp = new TEMP();
+		printADDCommand(argumentAddressTemp.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
+		//TEMP valueOfArgumentTemp = new TEMP();
+		//printLICommand(valueOfArgumentTemp.name, valueOfArgument);
+		printSWCommand(valueOfArgument.name, argumentAddressTemp.name, 0);
+		
+		
+	}
+	
 	
 
 	

@@ -41,9 +41,9 @@ public class AST_EXP_VAR extends AST_EXP
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genrator, String fileName) {
 		TEMP address = var.calcAddress(table, genrator, fileName);
-		TEMP value = new TEMP();
-		CodeGenarator.printLWCommand(value.name, address.name, 0);
-		return value;
+		//TEMP value = new TEMP();
+		//CodeGenarator.printLWCommand(value.name, address.name, 0);
+		return address;
 	}
 
 

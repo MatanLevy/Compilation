@@ -1,24 +1,23 @@
 package AST;
 
 public class MIPS_COMMANDS {
-	//frame pointer
+	// frame pointer
 	public static final String FRAME_PTR = "$fp";
-	
-	//Registers
-	public static final String V0 = "$vo";
+	//stack pointer
+	public static final String STACK_PTR = "$sp";
+
+	// Registers
+	public static final String V0 = "$v0";
 	public static final String A0 = "$a0";
-	public static final String A1 = "$a1";
-	public static final String A2 = "$a2";
-	public static final String A3 = "$a3";
 
 	public static final String ZERO = "$zero";
 	public static final String RA = "$ra";
-	
-	//Possible values of v0 for syscall
+
+	// Possible values of v0 for syscall
 	public static int exit = 10;
 	public static int alloc = 9;
-	
-	//commands
+
+	// commands
 	public static final String SEQ = "seq";
 	public static final String SNE = "sne";
 	public static final String SGE = "sge";
