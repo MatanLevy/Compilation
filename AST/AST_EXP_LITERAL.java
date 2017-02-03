@@ -52,6 +52,11 @@ public class AST_EXP_LITERAL extends AST_EXP {
 		if (literal instanceof AST_LITERAL_NULL) {
 			CodeGenarator.printLICommand(result.name, 0);  //null value
 		}
+		if (literal instanceof AST_LITERAL_STRING){
+			String str = ((AST_LITERAL_STRING)literal).str;
+			STRING_LABEL label = CodeGenarator.stringToStringLabelMap.get(str);
+			CodeGenarator.printLACommand(result.name, label.str_label);
+		}
 		return result;
 	}
 }

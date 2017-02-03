@@ -34,7 +34,8 @@ public class AST_COMMA_EXPR_LIST extends AST_Node {
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genarator) {
 		if (exp != null) {
 			TEMP tempExp = exp.calcAddress(table, genarator, assemblyFileName);
-			CodeGenarator.printADDICommand(MIPS_COMMANDS.A0, tempExp.name, 0);
+			CodeGenarator.printAndPrepareArgumentBeforeCall(-4, tempExp);
+			//CodeGenarator.printADDICommand(MIPS_COMMANDS.A0, tempExp.name, 0);
 
 		}
 		if (list != null) {

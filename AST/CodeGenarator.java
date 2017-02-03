@@ -13,6 +13,11 @@ public class CodeGenarator {
 	
 	
 	/**
+	 * map string to it's STRING_LABEL
+	 */
+	public static Map <String, STRING_LABEL> stringToStringLabelMap = new HashMap<String, STRING_LABEL>();
+	
+	/**
 	 * address(heap address) of this pointer at this moment
 	 * (not sure yet if should be integer or something else
 	 */
@@ -288,7 +293,17 @@ public class CodeGenarator {
 		
 	}
 
-
+	public static void printAndPrepareArgumentBeforeCall (int offset, TEMP valueOfArgument) {
+		TEMP offsetTemp = new TEMP();
+		printLICommand(offsetTemp.name, offset);
+		TEMP argumentAddressTemp = new TEMP();
+		printADDCommand(argumentAddressTemp.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
+		TEMP valueOfArgumentTemp = new TEMP();
+		//printLICommand(valueOfArgumentTemp.name, valueOfArgument);
+		printSWCommand(valueOfArgumentTemp.name, argumentAddressTemp.name, 0);
+		
+		
+	}
 	
 	
 
