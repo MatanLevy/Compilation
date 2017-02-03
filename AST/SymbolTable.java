@@ -476,15 +476,21 @@ public class SymbolTable {
 		}
 	}
 	
-	public int returnTheSizeOfTheObjectFromClassTypeOnTheHeap (String className)
-	{
-		ScopeNode scopeOfClass = getClassScope(className);
-		int size = returnNumberOfFieldsDefinedInGivenClassScope(scopeOfClass);
-		
-		//place for virtual function address
-		size++;
-		
-		return size*4;
+	public int returnTheSizeOfTheObjectFromClassTypeOnTheHeap(String className) {
+		if (!className.equals(_currentClass)) {
+			ScopeNode scopeOfClass = getClassScope(className);
+			int size = returnNumberOfFieldsDefinedInGivenClassScope(scopeOfClass);
+
+			// place for virtual function address
+			size++;
+
+			return size * 4;
+		}
+		else {
+			//TODO to fix it, it's not good because it's return the number of fields + methods that defined in this class. 
+			//***** But we want only the number of fields ? *****
+			return tableOfSymbols.size() * 4; 
+		}
 	}
 	public void error (boolean multiDefine, boolean undefinded, String id) {
 		if (multiDefine)
