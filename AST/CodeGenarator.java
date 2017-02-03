@@ -167,23 +167,23 @@ public class CodeGenarator {
 
 	//Adds a register and a sign-extended immediate value and stores the result in a register
 	public static void printADDICommand(String rs, String rt, int immed){
-		System.out.format("\t %s %s %s %d %n", MIPS_COMMANDS.ADDI, rs, rt, immed);
+		System.out.format("\t %s %s, %s, %d %n", MIPS_COMMANDS.ADDI, rs, rt, immed);
 	
 	}
 	//Adds two registers and stores the result in a register
 	public static void printADDCommand(String rs, String rt, String rd){
-		System.out.format("\t %s %s %s %s %n", MIPS_COMMANDS.ADD, rs, rt, rd);
+		System.out.format("\t %s %s, %s, %s %n", MIPS_COMMANDS.ADD, rs, rt, rd);
 	
 	}
 	
 	//The li pseudo instruction loads an immediate value into a register.
 	public static void printLICommand(String rt, int immed) {
-		System.out.format("\t %s %s %d %n", MIPS_COMMANDS.LI, rt, immed);
+		System.out.format("\t %s %s, %d %n", MIPS_COMMANDS.LI, rt, immed);
 
 	}
 	//Load Address (la)
 	public static void printLACommand(String rt, String address) {
-		System.out.format("\t %s %s %s %n", MIPS_COMMANDS.LA, rt, address);
+		System.out.format("\t %s %s, %s %n", MIPS_COMMANDS.LA, rt, address);
 	}
 
 	// A word is loaded into a register from the specified address.
@@ -223,6 +223,26 @@ public class CodeGenarator {
 	public static void printJUMPCommand(String label) {
 		System.out.format("\t %s %s %n", MIPS_COMMANDS.J, label);
 	}
+	//Subtracts two registers and stores the result in a register
+	public static void printSUBCommand(String r1, String r2, String r3) {
+		System.out.format("\t %s %s, %s, %s %n",MIPS_COMMANDS.SUB,r1,r2,r3);
+	}
+	
+	public static void allocateMemory (int sizeOfMemoryToAllocate) {
+		TEMP temp1 = new TEMP();
+		printLICommand(temp1.name, sizeOfMemoryToAllocate);
+		TEMP temp2 = new TEMP();
+		printSUBCommand(temp2.name, MIPS_COMMANDS.STACK_PTR, temp1.name);
+		printADDICommand(MIPS_COMMANDS.STACK_PTR, temp2.name, 0);
+	}
+	
+//	li Temp_13,4
+//
+//	sub Temp_12,$sp,Temp_13
+//
+//	addi $sp,Temp_12,0
+	
+	
 	
 
 	

@@ -1,5 +1,7 @@
 package AST;
 
+import IR.TEMP;
+
 public class AST_METHOD extends AST_Node {
 
 	
@@ -57,6 +59,9 @@ public class AST_METHOD extends AST_Node {
 		genartor.insertMethodNameAndLabelToMap(_id, label);
 		CodeGenarator.printLabel(label);
 		
+		if (!(_id.equals("main")))
+			printPrologOfMethod();
+		
 		formals.mipsTranslate(table, assemblyFileName, genartor);
 		stmt_list.mipsTranslate(table, assemblyFileName, genartor);
 		
@@ -64,5 +69,39 @@ public class AST_METHOD extends AST_Node {
 		if (!(_id.equals("main")))
 			CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
 	}
+	
+	public void printPrologOfMethod () {
+		CodeGenarator.allocateMemory(4);	
+		
+		//TODO if we use jal/jr (need to check) we don't need it ?
+		CodeGenarator.printSWCommand(MIPS_COMMANDS.RA, MIPS_COMMANDS.STACK_PTR, 0);
+		
+		CodeGenarator.allocateMemory(4);
+		CodeGenarator.printSWCommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
+		
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
+		
+		
+		
+	}
+//Example of prolog:	
+//	li Temp_11,4
+//
+//	sub Temp_10,$sp,Temp_11
+//
+//	addi $sp,Temp_10,0
+//
+//	sw $ra,0($sp)
+//
+//	li Temp_13,4
+//
+//	sub Temp_12,$sp,Temp_13
+//
+//	addi $sp,Temp_12,0
+//
+//	sw $fp,0($sp)
+//
+//	addi $fp,$sp,0
+
 
 }
