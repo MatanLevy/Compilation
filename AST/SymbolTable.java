@@ -14,7 +14,7 @@ public class SymbolTable {
 	
 	private Hashtable<String, LinkedList<SymbolEntry>> tableOfSymbols;
 
-	 
+	  
 	
  
 	

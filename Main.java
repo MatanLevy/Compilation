@@ -1,5 +1,8 @@
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 
 import AST.AST_PROGRAM;
@@ -17,6 +20,15 @@ public class Main {
 		PrintWriter file_writer = null;
 		String inputFilename = argv[0];
 		String outputFilename = argv[1];
+		
+		PrintStream out = null;
+		try {
+			out = new PrintStream(new FileOutputStream("output.txt"));
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		//System.setOut(out);
+		
 		try {
 			file_reader = new FileReader(inputFilename);
 			file_writer = new PrintWriter(outputFilename);
@@ -50,7 +62,7 @@ public class Main {
 				file_writer.write("FAIL");
 			}
 			if (semanticCheck)
-				System.out.println("OK");
+				//System.out.println("OK");
 				file_writer.write("OK");
 		}
 		file_writer.close();

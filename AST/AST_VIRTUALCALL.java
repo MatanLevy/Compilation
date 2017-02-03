@@ -79,7 +79,4 @@ public class AST_VIRTUALCALL extends AST_Node {
 	}
 //jal procedure # call procedure
 
-
- 
-
 }

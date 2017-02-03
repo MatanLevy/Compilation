@@ -37,7 +37,7 @@ public class SemanticChecker {
 	}
 
 	public static boolean isBaseClassOf(String base, String derived) {
-		System.out.println(base + "   " + derived);
+		//System.out.println(base + "   " + derived);
 		if (base.equals(derived))
 			return true;
 		if (derived.equals("NULL")) 
