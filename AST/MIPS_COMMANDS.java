@@ -5,7 +5,7 @@ public class MIPS_COMMANDS {
 	public static final String FRAME_PTR = "$fp";
 	
 	//Registers
-	public static final String V0 = "$vo";
+	public static final String V0 = "$v0";
 	public static final String A0 = "$a0";
 	public static final String A1 = "$a1";
 	public static final String A2 = "$a2";
