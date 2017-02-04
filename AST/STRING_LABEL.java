@@ -7,7 +7,7 @@ public class STRING_LABEL {
 
 
 	public STRING_LABEL(String str) {
-		this.str_label = "string_" + Integer.toString(counter);
+		this.str_label = "String_" + Integer.toString(counter);
 		this.str = str;
 		counter++;
 	}

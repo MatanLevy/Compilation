@@ -18,6 +18,13 @@ public class CodeGenarator {
 	public static Map <String, STRING_LABEL> stringToStringLabelMap = new HashMap<String, STRING_LABEL>();
 	 
 	/**
+	 * map to argument name and it's offset.
+	 * Example: if we in function that get 3 parameters (a, b, c)
+	 * So, <a,2>, <b,1>, <c,0>. Because argument c in $fp+0 , b in $fp+4 and c in $fp+8
+	 */
+	public static Map <String, Integer> argumentToOffsetMap = new HashMap<String, Integer>();
+	
+	/**
 	 * The offset from the start of the frame.
 	 * This is where the sp is.
 	 */
@@ -51,6 +58,24 @@ public class CodeGenarator {
 		return methodNameToLabelMap.get(methodName);
 	}
 	
+	public static void clearArgumentToOffsetMap() {
+		argumentToOffsetMap.clear();
+	}
+	public static void addPairToArgumentToOffsetMap (String arg, int offset) {
+		argumentToOffsetMap.put(arg, offset);
+	}
+	
+	/**
+	 * return -1 if there is no argument with such name.
+	 * @param arg
+	 * @return
+	 */
+	public static int getOffsetOfArgument(String arg) {
+		if (argumentToOffsetMap.get(arg)==null)
+			return -1;
+		else 
+			return argumentToOffsetMap.get(arg);
+	}
 	
 	/**
 	 * 
@@ -63,7 +88,7 @@ public class CodeGenarator {
 	}
 	
 	static public void printLabel (String label) {
-		System.out.format("%s %n",label);
+		System.out.format("%s%n",label);
 
 	}
 	public String TempVariableGenerate() {
@@ -140,7 +165,7 @@ public class CodeGenarator {
 	 * @param r2
 	 */
 	public static void printSETCommand(String cmd,String result,String r1,String r2) {
-		System.out.format("\t %s %s %s %s%n",cmd, result, r1, r2);
+		System.out.format("\t%s %s %s %s%n",cmd, result, r1, r2);
 	}
 	
 	public static void printLBLCommand(String labelString) {
@@ -148,7 +173,7 @@ public class CodeGenarator {
 		
 	}
 	public static void printSyscallCommand() {
-		System.out.format("\t %s%n",MIPS_COMMANDS.SYSCALL);
+		System.out.format("\t%s%n",MIPS_COMMANDS.SYSCALL);
 	}
 	/*
 	 * Methods that print the commands
@@ -161,7 +186,7 @@ public class CodeGenarator {
 	 * @param r2
 	 */
 	public static void printDIVCommand(String r1, String r2){
-		System.out.format("\t %s %s %s%n",MIPS_COMMANDS.DIV,r1,r2);
+		System.out.format("\t%s %s %s%n",MIPS_COMMANDS.DIV,r1,r2);
 	}
 	/**
 	 * mult r1,r2
@@ -171,7 +196,7 @@ public class CodeGenarator {
 	 */
 	//Multiplies $s by $t and stores the result in $LO.
 	public static void printMULTCommand(String r1, String r2){
-		System.out.format("\t %s %s %s%n",MIPS_COMMANDS.MULT,r1,r2);
+		System.out.format("\t%s %s %s%n",MIPS_COMMANDS.MULT,r1,r2);
 	}
 	/**
 	 * mflo r
@@ -180,46 +205,46 @@ public class CodeGenarator {
 	 */
 	//The contents of register LO are moved to the specified register.
 	public static void printMFLOCommand(String r) {
-		System.out.format("\t %s %s%n",MIPS_COMMANDS.MFLO,r);
+		System.out.format("\t%s %s%n",MIPS_COMMANDS.MFLO,r);
 	}
 
 	//Adds a register and a sign-extended immediate value and stores the result in a register
 	public static void printADDICommand(String rs, String rt, int immed){
-		System.out.format("\t %s %s, %s, %d %n", MIPS_COMMANDS.ADDI, rs, rt, immed);
+		System.out.format("\t%s %s, %s, %d%n", MIPS_COMMANDS.ADDI, rs, rt, immed);
 	
 	}
 	//Adds two registers and stores the result in a register
 	public static void printADDCommand(String rs, String rt, String rd){
-		System.out.format("\t %s %s, %s, %s %n", MIPS_COMMANDS.ADD, rs, rt, rd);
+		System.out.format("\t%s %s, %s, %s%n", MIPS_COMMANDS.ADD, rs, rt, rd);
 	
 	}
 	
 	//The li pseudo instruction loads an immediate value into a register.
 	public static void printLICommand(String rt, int immed) {
-		System.out.format("\t %s %s, %d %n", MIPS_COMMANDS.LI, rt, immed);
+		System.out.format("\t%s %s,%d%n", MIPS_COMMANDS.LI, rt, immed);
 
 	}
 	//Load Address (la)
 	public static void printLACommand(String rt, String address) {
-		System.out.format("\t %s %s, %s %n", MIPS_COMMANDS.LA, rt, address);
+		System.out.format("\t%s %s, %s%n", MIPS_COMMANDS.LA, rt, address);
 	}
 
 	// A word is loaded into a register from the specified address.
 	public static void printLWCommand(String rt, String rs, int offset) {
-		System.out.format("\t %s %s, %d(%s) %n", MIPS_COMMANDS.LW, rt, offset, rs);
+		System.out.format("\t%s %s, %d(%s)%n", MIPS_COMMANDS.LW, rt, offset, rs);
 	}
 	// The contents of $t is stored at the specified address.
 	public static void printSWCommand(String rt, String rs, int offset) {
-		System.out.format("\t %s %s, %d(%s) %n", MIPS_COMMANDS.SW, rt, offset, rs);
+		System.out.format("\t%s %s, %d(%s)%n", MIPS_COMMANDS.SW, rt, offset, rs);
 	}
 	
 	// j Jump to an address
 	public static void printJCommand(String offset) {
-		System.out.format("\t %s %s %n", MIPS_COMMANDS.J, offset);
+		System.out.format("\t%s %s%n", MIPS_COMMANDS.J, offset);
 	}
 	// jr Jump to an address stored in a register
 	public static void printJRCommand(String rt) {
-		System.out.format("\t %s %s %n", MIPS_COMMANDS.JR, rt);
+		System.out.format("\t%s %s%n", MIPS_COMMANDS.JR, rt);
 	}
 	//  Branches if the quantities of two registers are equal.
 	public static void printBLECommand(/*String rt, String rs, int offset*/) {
@@ -230,20 +255,20 @@ public class CodeGenarator {
 		//System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
 	}
 	public static void printBEQCommand(String r1,String r2,String label) {
-		System.out.format("\t %s %s %s %s %n",MIPS_COMMANDS.BEQ,r1,r2,label);
+		System.out.format("\t%s %s %s %s%n",MIPS_COMMANDS.BEQ,r1,r2,label);
 	}
 	public static void printJALCommand(String label) {
-		System.out.format("\t %s %s %n",MIPS_COMMANDS.JAL, label);
+		System.out.format("\t%s %s%n",MIPS_COMMANDS.JAL, label);
 	}
 	public static void printBNQCommand(String r1,String r2,String label) {
-		System.out.format("\t %s %s %s %s %n",MIPS_COMMANDS.BNE,r1,r2,label);
+		System.out.format("\t%s %s %s %s%n",MIPS_COMMANDS.BNE,r1,r2,label);
 	}
 	public static void printJUMPCommand(String label) {
-		System.out.format("\t %s %s %n", MIPS_COMMANDS.J, label);
+		System.out.format("\t%s %s%n", MIPS_COMMANDS.J, label);
 	}
 	//Subtracts two registers and stores the result in a register
 	public static void printSUBCommand(String r1, String r2, String r3) {
-		System.out.format("\t %s %s, %s, %s %n",MIPS_COMMANDS.SUB,r1,r2,r3);
+		System.out.format("\t%s %s, %s, %s%n",MIPS_COMMANDS.SUB,r1,r2,r3);
 	}
 	
 	/**
@@ -279,10 +304,10 @@ public class CodeGenarator {
 		printLICommand(offsetTemp.name, offset);
 		TEMP addressArgumentTEMP = new TEMP();
 		printADDCommand(addressArgumentTEMP.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
-		TEMP argumentTEMP = new TEMP();
-		printLWCommand(argumentTEMP.name, addressArgumentTEMP.name, 0);
+		//TEMP argumentTEMP = new TEMP();
+		//printLWCommand(argumentTEMP.name, addressArgumentTEMP.name, 0);
 		
-		return argumentTEMP;
+		return addressArgumentTEMP;
 	}
 	
 	/**
