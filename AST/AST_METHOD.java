@@ -1,7 +1,5 @@
 package AST;
 
-import IR.TEMP;
-
 public class AST_METHOD extends AST_Node {
 
 	
@@ -56,7 +54,7 @@ public class AST_METHOD extends AST_Node {
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		String label = genartor.LabelGenerate(_id);
-		genartor.insertMethodNameAndLabelToMap(_id, label);
+		genartor.insertMethodNameAndLabelToMap(_id, label.substring(0, label.length()-2));
 		CodeGenarator.printLabel(label);
 		
 		if (!(_id.equals("main")))
