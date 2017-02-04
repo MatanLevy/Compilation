@@ -53,6 +53,9 @@ public class AST_METHOD extends AST_Node {
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
+		//Initialize the offset of the frame of the method to be 0.
+		CodeGenarator.initOffset();
+		
 		String label = genartor.LabelGenerate(_id);
 		genartor.insertMethodNameAndLabelToMap(_id, label.substring(0, label.length()-2));
 		CodeGenarator.printLabel(label);

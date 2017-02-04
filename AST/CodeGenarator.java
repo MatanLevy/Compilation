@@ -57,7 +57,9 @@ public class CodeGenarator {
 	public String getLabelOfMethod (String methodName) {
 		return methodNameToLabelMap.get(methodName);
 	}
-	
+	public static void initOffset() {
+		offset=0;
+	}
 	public static void clearArgumentToOffsetMap() {
 		argumentToOffsetMap.clear();
 	}
