@@ -18,6 +18,10 @@ public class AST_FORMALS_LIST {
 		type_list.add(t);
 	}
 	
+	public int getSize() {
+		return formal_list.size();
+	}
+
 	public void print() {
 		System.out.println("formal list :");
 		for (int i = 0; i < formal_list.size(); i++) {
@@ -29,6 +33,16 @@ public class AST_FORMALS_LIST {
 	public boolean checkSemantic(SymbolTable table) {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
+		int diffToOffset = 0;
+		int size = getSize();
+		for (int j = 0; j < formal_list.size(); j++) {
+			CodeGenarator.addPairToArgumentToOffsetMap(formal_list.get(j), size - diffToOffset);
+			diffToOffset--;
+			if (diffToOffset < 0)
+				break;
+		}
 	}
 
 }

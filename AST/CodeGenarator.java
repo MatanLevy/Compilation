@@ -18,6 +18,13 @@ public class CodeGenarator {
 	public static Map <String, STRING_LABEL> stringToStringLabelMap = new HashMap<String, STRING_LABEL>();
 	
 	/**
+	 * map to argument name and it's offset.
+	 * Example: if we in function that get 3 parameters (a, b, c)
+	 * So, <a,2>, <b,1>, <c,0>. Because argument c in $fp+0 , b in $fp+4 and c in $fp+8
+	 */
+	public static Map <String, Integer> argumentToOffsetMap = new HashMap<String, Integer>();
+	
+	/**
 	 * The offset from the start of the frame.
 	 * This is where the sp is.
 	 */
@@ -51,6 +58,24 @@ public class CodeGenarator {
 		return methodNameToLabelMap.get(methodName);
 	}
 	
+	public static void clearArgumentToOffsetMap() {
+		argumentToOffsetMap.clear();
+	}
+	public static void addPairToArgumentToOffsetMap (String arg, int offset) {
+		argumentToOffsetMap.put(arg, offset);
+	}
+	
+	/**
+	 * return -1 if there is no argument with such name.
+	 * @param arg
+	 * @return
+	 */
+	public static int getOffsetOfArgument(String arg) {
+		if (argumentToOffsetMap.get(arg)==null)
+			return -1;
+		else 
+			return argumentToOffsetMap.get(arg);
+	}
 	
 	/**
 	 * 
@@ -279,10 +304,10 @@ public class CodeGenarator {
 		printLICommand(offsetTemp.name, offset);
 		TEMP addressArgumentTEMP = new TEMP();
 		printADDCommand(addressArgumentTEMP.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
-		TEMP argumentTEMP = new TEMP();
-		printLWCommand(argumentTEMP.name, addressArgumentTEMP.name, 0);
+		//TEMP argumentTEMP = new TEMP();
+		//printLWCommand(argumentTEMP.name, addressArgumentTEMP.name, 0);
 		
-		return argumentTEMP;
+		return addressArgumentTEMP;
 	}
 	
 	/**

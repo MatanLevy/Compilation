@@ -48,14 +48,20 @@ public class AST_VAR_SIMPLE extends AST_VAR
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		
-		//calculate the offset of the variable in the stack
-		SymbolEntry symbolEntryField = table.find_symbol(name);
-		int offsetOfVar = symbolEntryField.offset * (-4); 
-		
-		TEMP offsetAddress = new TEMP();
-		CodeGenarator.printADDICommand(offsetAddress.name, MIPS_COMMANDS.FRAME_PTR, offsetOfVar);
-		//CodeGenarator.printLWCommand(offsetAddress.name, offsetAddress.name, 0);
-		return offsetAddress;
+		int offsetArgument = CodeGenarator.getOffsetOfArgument(name);
+		if (offsetArgument != -1) {
+			return CodeGenarator.printAndGetArgumentInsideMethod((offsetArgument)*4);
+		} else {
+
+			// calculate the offset of the variable in the stack
+			SymbolEntry symbolEntryField = table.find_symbol(name);
+			int offsetOfVar = symbolEntryField.offset * (-4);
+
+			TEMP offsetAddress = new TEMP();
+			CodeGenarator.printADDICommand(offsetAddress.name, MIPS_COMMANDS.FRAME_PTR, offsetOfVar);
+			// CodeGenarator.printLWCommand(offsetAddress.name,
+			// offsetAddress.name, 0);
+			return offsetAddress;
+		}
 	}
 }
