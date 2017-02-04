@@ -51,17 +51,22 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 	@Override
 	public TEMP calcAddress(SymbolTable table,CodeGenarator genarator,String fileName) {
 		TEMP arrayAddressTemp = var.calcAddress(table, genarator, fileName);
-		CodeGenarator.printLACommand(arrayAddressTemp.name, var.getName());
-		//TODO check that the index is <= array length - 1
+		//CodeGenarator.printLACommand(arrayAddressTemp.name, var.getName());
 		TEMP indexTemp = subscript.calcAddress(table, genarator, fileName);
-		//int index = 0; //TODO calc index
-		//CodeGenarator.printLICommand(indexTemp.name, index);
-		
+		TEMP size = new TEMP();
+		CodeGenarator.printLWCommand(size.name, arrayAddressTemp.name, 0);
+		//if index lower than zero-exit
+		CodeGenarator.printSETCommand(MIPS_COMMANDS.BLT, MIPS_COMMANDS.ZERO, indexTemp.name,
+				genarator.exitLabel.labelString);
+		//if index greater than size-exit
+		CodeGenarator.printSETCommand(MIPS_COMMANDS.BGE,  indexTemp.name, size.name, 
+				genarator.exitLabel.labelString);
 		//Double the index twice so we will get the address of the index*4. 
 		//This is the address of index*4
 		CodeGenarator.printADDCommand(indexTemp.name, indexTemp.name, indexTemp.name);
 		CodeGenarator.printADDCommand(indexTemp.name, indexTemp.name, indexTemp.name);
-
+		//add another 4 because the first address is the size
+		CodeGenarator.printADDICommand(indexTemp.name, indexTemp.name, 4);
 		TEMP addressTemp = new TEMP();
 		// add the register of the array address with the register of the indexTemp.
 		// we get the address of list[index]

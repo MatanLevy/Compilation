@@ -14,9 +14,9 @@ public class CodeGenarator {
 	
 	/**
 	 * map string to it's STRING_LABEL
-	 */
+	 */ 
 	public static Map <String, STRING_LABEL> stringToStringLabelMap = new HashMap<String, STRING_LABEL>();
-	
+	 
 	/**
 	 * The offset from the start of the frame.
 	 * This is where the sp is.
@@ -96,7 +96,7 @@ public class CodeGenarator {
 		CodeGenarator.printLICommand(MIPS_COMMANDS.V0, MIPS_COMMANDS.alloc); //finally alloc 4*(size+1)
 		CodeGenarator.printSyscallCommand();
 		CodeGenarator.printADDICommand(result.name, MIPS_COMMANDS.V0, 0);
-		CodeGenarator.printADDICommand(result.name, addressOfSize.name, 0); //putting in the first place size of array
+		CodeGenarator.printSWCommand(addressOfSize.name,result.name,0); //putting in the first place size of array
 		
 		//TODO here should come loop in mips that init all the elements to zero(or nullptr)
 		

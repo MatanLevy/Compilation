@@ -67,6 +67,6 @@ public class AST_STMT_TYPE extends AST_STMT {
 			CodeGenarator.printADDICommand(lvalue.name, MIPS_COMMANDS.FRAME_PTR, varOffset);
 			CodeGenarator.printSWCommand(rvalue.name, lvalue.name, 0);
 		}
-	}
+	} 
 
 }

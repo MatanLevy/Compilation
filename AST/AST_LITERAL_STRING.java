@@ -29,6 +29,6 @@ public class AST_LITERAL_STRING extends AST_LITERAL {
 		STRING_LABEL label = new STRING_LABEL(str);
 		CodeGenarator.stringToStringLabelMap.put(str, label);
 		
-	}
+	} 
 
 }
