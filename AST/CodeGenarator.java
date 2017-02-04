@@ -223,7 +223,7 @@ public class CodeGenarator {
 	
 	//The li pseudo instruction loads an immediate value into a register.
 	public static void printLICommand(String rt, int immed) {
-		System.out.format("\t%s %s,%d%n", MIPS_COMMANDS.LI, rt, immed);
+		System.out.format("\t%s %s, %d%n", MIPS_COMMANDS.LI, rt, immed);
 
 	}
 	//Load Address (la)
