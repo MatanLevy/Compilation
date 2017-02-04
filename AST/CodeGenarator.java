@@ -25,10 +25,20 @@ public class CodeGenarator {
 	public static Map <String, Integer> argumentToOffsetMap = new HashMap<String, Integer>();
 	
 	/**
+	 * map class name to it's VFTable.
+	 */
+	public static Map <String, VFTable> classNameToItsVFTableMap = new HashMap<String, VFTable>();
+	
+	/**
 	 * The offset from the start of the frame.
 	 * This is where the sp is.
 	 */
 	private static int offset;
+	
+	/**
+	 * current class
+	 */
+	public static String currentClass;
 	
 	/**
 	 * address(heap address) of this pointer at this moment
@@ -78,6 +88,31 @@ public class CodeGenarator {
 		else 
 			return argumentToOffsetMap.get(arg);
 	}
+	
+	public static void createVFTableForClass (String className) {
+		VFTable vftable = new VFTable(className);
+		classNameToItsVFTableMap.put(className, vftable);
+		
+	}
+	
+	public static void addLabelToVFTable(String label) {
+		VFTable vftable = classNameToItsVFTableMap.get(currentClass);
+		if (vftable != null){
+			vftable.putLabelInMap(label);
+		}
+	}
+	/**
+	 * put all labels from father VFTable into son VFTtable
+	 * @param classFather
+	 * @param classSon
+	 */
+	public static void addAllMethodsInFatherClassToVFTableSon (String classFather, String classSon) {
+		VFTable vftableFather  = classNameToItsVFTableMap.get(classFather);
+		VFTable vftableSon = classNameToItsVFTableMap.get(classSon);
+		vftableSon.addAllPairsFromGivenVFTable(vftableFather);
+	}
+	
+	
 	
 	/**
 	 * 
@@ -343,6 +378,18 @@ public class CodeGenarator {
 		printSWCommand(valueOfArgument.name, argumentAddressTemp.name, 0);
 		
 		
+	}
+	
+	public static TEMP printAccsessToVFTable (VFTable vftable, int offset) {
+		TEMP vftableAddress = new TEMP();
+		printLACommand(vftableAddress.name, vftable.name);
+		TEMP offsetTemp = new TEMP();
+		printLICommand(offsetTemp.name, offset);
+		TEMP wantedMethodAddressInVF = new TEMP();
+		printADDCommand(wantedMethodAddressInVF.name, vftableAddress.name, offsetTemp.name);
+		TEMP wantedMethodAddress = new TEMP();
+		printLWCommand(wantedMethodAddress.name, wantedMethodAddressInVF.name, 0);
+		return wantedMethodAddress;
 	}
 	
 	

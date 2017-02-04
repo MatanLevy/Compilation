@@ -60,6 +60,7 @@ public class AST_METHOD extends AST_Node {
 		
 		String label = genartor.LabelGenerate(_id);
 		genartor.insertMethodNameAndLabelToMap(_id, label);
+		CodeGenarator.addLabelToVFTable(label);
 		CodeGenarator.printLabel(label);
 		
 		if (!(_id.equals("main")))
