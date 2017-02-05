@@ -56,7 +56,13 @@ public class AST_METHOD extends AST_Node {
 		//Initialize the offset of the frame of the method to be 0.
 		CodeGenarator.initOffset();
 		
+
 		String label = _id.equals("main") ?  CodeGenarator.mainLabel.labelString + " :" : genartor.LabelGenerate(_id);
+		
+
+		genartor.insertMethodNameAndLabelToMap(_id, label);
+		CodeGenarator.addLabelToVFTable(label);
+
 		genartor.insertMethodNameAndLabelToMap(_id, label.substring(0, label.length()-2));
 		CodeGenarator.printLabel(label);
 		
