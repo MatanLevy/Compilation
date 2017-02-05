@@ -45,7 +45,9 @@ public class AST_STMT_WHILE extends AST_STMT {
 		CodeGenarator.printJUMPCommand(condLabel.labelString);
 		CodeGenarator.printLBLCommand(condLabel.labelString);
 		TEMP condAddress = cond.calcAddress(table, genartor, assemblyFileName);
-		CodeGenarator.printBNQCommand(condAddress.name, MIPS_COMMANDS.ZERO, whileLabel.labelString);
+		TEMP zero = new TEMP();
+		CodeGenarator.printLICommand(zero.name, 0);
+		CodeGenarator.printBNQCommand(condAddress.name, zero.name, whileLabel.labelString);
 		CodeGenarator.printLBLCommand(exitWhileLabel.labelString);
 	}
 

@@ -56,7 +56,9 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		TEMP size = new TEMP();
 		CodeGenarator.printLWCommand(size.name, arrayAddressTemp.name, 0);
 		//if index lower than zero-exit
-		CodeGenarator.printSETCommand(MIPS_COMMANDS.BLT, MIPS_COMMANDS.ZERO, indexTemp.name,
+		TEMP zero = new TEMP();
+		CodeGenarator.printLICommand(zero.name, 0);
+		CodeGenarator.printSETCommand(MIPS_COMMANDS.BLT, zero.name, indexTemp.name,
 				genarator.exitLabel.labelString);
 		//if index greater than size-exit
 		CodeGenarator.printSETCommand(MIPS_COMMANDS.BGE,  indexTemp.name, size.name, 

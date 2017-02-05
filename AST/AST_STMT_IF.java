@@ -45,7 +45,9 @@ public class AST_STMT_IF extends AST_STMT
 		CodeGenarator.printJUMPCommand(exitIfLabel.labelString);
 		CodeGenarator.printLBLCommand(condLabel.labelString);
 		TEMP condAddress = cond.calcAddress(table, genartor, assemblyFileName);
-		CodeGenarator.printBNQCommand(condAddress.name, MIPS_COMMANDS.ZERO, ifLabel.labelString);
+		TEMP zero = new TEMP();
+		CodeGenarator.printLICommand(zero.name, 0);
+		CodeGenarator.printBNQCommand(condAddress.name, zero.name, ifLabel.labelString);
 		CodeGenarator.printLBLCommand(exitIfLabel.labelString);
 	}
 }

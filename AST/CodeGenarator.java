@@ -5,7 +5,9 @@ import java.util.Map;
 import IR.*;
 public class CodeGenarator {
 	
-	/**
+	
+	public static LABEL mainLabel = new LABEL("main");
+	/** 
 	 * map method name to it's label
 	 */
 
@@ -40,6 +42,7 @@ public class CodeGenarator {
 	 * exit label for runtime error such as divison by zero or array outofbounds
 	 */
 	public LABEL exitLabel = new LABEL("EXIT");
+	
 	/**
 	 * Add methodName and label as a pair in the map
 	 * @param methodName
@@ -111,8 +114,10 @@ public class CodeGenarator {
 	 */
 	public TEMP ArrayAlloc(TEMP addressOfSize) {
 		//cant allocating less than zero,if so we exit
+		TEMP zero = new TEMP();
+		CodeGenarator.printLICommand(zero.name, 0);
 		CodeGenarator.printSETCommand(MIPS_COMMANDS.BLT, addressOfSize.name, 
-				MIPS_COMMANDS.ZERO, exitLabel.labelString);
+				zero.name, exitLabel.labelString);
 		
 		TEMP result = new TEMP();
 		CodeGenarator.printADDICommand(MIPS_COMMANDS.A0, addressOfSize.name,0);
@@ -156,6 +161,7 @@ public class CodeGenarator {
 		printLICommand(MIPS_COMMANDS.V0,MIPS_COMMANDS.exit);
 		printSyscallCommand();
 	}
+
 	/**
 	 * can only use for branch command.at this case,cmd is branch
 	 * result and r1 -> r1 and r2
@@ -167,7 +173,7 @@ public class CodeGenarator {
 	 * @param r2
 	 */
 	public static void printSETCommand(String cmd,String result,String r1,String r2) {
-		System.out.format("\t%s %s %s %s%n",cmd, result, r1, r2);
+		System.out.format("\t%s %s, %s, %s%n",cmd, result, r1, r2);
 	}
 	
 	public static void printLBLCommand(String labelString) {
@@ -191,14 +197,15 @@ public class CodeGenarator {
 		System.out.format("\t%s %s %s%n",MIPS_COMMANDS.DIV,r1,r2);
 	}
 	/**
-	 * mult r1,r2
+	 * mul r1,r2
 	 * 
+	 * @param result
 	 * @param r1
 	 * @param r2
 	 */
 	//Multiplies $s by $t and stores the result in $LO.
-	public static void printMULTCommand(String r1, String r2){
-		System.out.format("\t%s %s %s%n",MIPS_COMMANDS.MULT,r1,r2);
+	public static void printMULCommand(String result,String r1, String r2){
+		System.out.format("\t%s %s, %s, %s%n",MIPS_COMMANDS.MUL,result,r1,r2);
 	}
 	/**
 	 * mflo r
@@ -206,9 +213,9 @@ public class CodeGenarator {
 	 * @param r
 	 */
 	//The contents of register LO are moved to the specified register.
-	public static void printMFLOCommand(String r) {
+	/*public static void printMFLOCommand(String r) {
 		System.out.format("\t%s %s%n",MIPS_COMMANDS.MFLO,r);
-	}
+	}*/
 
 	//Adds a register and a sign-extended immediate value and stores the result in a register
 	public static void printADDICommand(String rs, String rt, int immed){
@@ -257,13 +264,13 @@ public class CodeGenarator {
 		//System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
 	}
 	public static void printBEQCommand(String r1,String r2,String label) {
-		System.out.format("\t%s %s %s %s%n",MIPS_COMMANDS.BEQ,r1,r2,label);
+		System.out.format("\t%s %s, %s, %s%n",MIPS_COMMANDS.BEQ,r1,r2,label);
 	}
 	public static void printJALCommand(String label) {
 		System.out.format("\t%s %s%n",MIPS_COMMANDS.JAL, label);
 	}
 	public static void printBNQCommand(String r1,String r2,String label) {
-		System.out.format("\t%s %s %s %s%n",MIPS_COMMANDS.BNE,r1,r2,label);
+		System.out.format("\t%s %s, %s, %s%n",MIPS_COMMANDS.BNE,r1,r2,label);
 	}
 	public static void printJUMPCommand(String label) {
 		System.out.format("\t%s %s%n", MIPS_COMMANDS.J, label);
@@ -343,6 +350,12 @@ public class CodeGenarator {
 		printSWCommand(valueOfArgument.name, argumentAddressTemp.name, 0);
 		
 		
+	}
+	
+	public static void printInteger(String r1) {
+		printADDICommand(MIPS_COMMANDS.A0, r1, 0);
+		printLICommand(MIPS_COMMANDS.V0, 1);
+		printSyscallCommand();
 	}
 	
 	

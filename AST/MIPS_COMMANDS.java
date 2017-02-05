@@ -10,7 +10,7 @@ public class MIPS_COMMANDS {
 	public static final String V0 = "$v0";
 	public static final String A0 = "$a0";
 
-	public static final String ZERO = "$zero";
+	//public static final String ZERO = "$zero";
 	public static final String RA = "$ra";
 
 	// Possible values of v0 for syscall
@@ -18,18 +18,21 @@ public class MIPS_COMMANDS {
 	public static int alloc = 9;
 
 	// commands
-	public static final String SEQ = "seq";
+	
+	/*public static final String SEQ = "seq";
 	public static final String SNE = "sne";
 	public static final String SGE = "sge";
 	public static final String SGT = "sgt";
 	public static final String SLT = "slt";
 	public static final String SLE = "sle";
+	*/
 
 	public static final String BEQ = "beq";
 	public static final String BNE = "bne";
 	public static final String SYSCALL = "syscall";
-	public static final String MFLO = "mflo";
-	public static final String MULT = "mult";
+	//public static final String MFLO = "mflo";
+	//public static final String MULT = "mult";
+	public static final String MUL = "mul";
 	public static final String ADDI = "addi";
 	public static final String ADD = "add";
 	public static final String SUB = "sub";
