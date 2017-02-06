@@ -3,8 +3,6 @@ package AST;
 import java.util.HashMap;
 import java.util.Map;
 
-import IR.LABEL;
-
 public class VFTable {
 	String name;
 	public Map <String, Integer> labelMethodToOffsetMap;
