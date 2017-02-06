@@ -37,7 +37,7 @@ public class Main {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("CHECK IN GIT!!!");
+		System.out.println("CHECK IN GIT!!!") ;
 		AST_PROGRAM program = null;
 		try {
 			program = (AST_PROGRAM) p.parse().value;
