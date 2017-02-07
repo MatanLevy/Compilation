@@ -3,9 +3,6 @@ package AST;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Created by Emi on 07/02/2017.
- */
 public class VirtualTableManager {
 
     public static final String labelPrefix = "Label_0_";
@@ -37,10 +34,10 @@ public class VirtualTableManager {
         return getListOfActualFunctionsByName(className).stream().map(x -> getLabelNameForFunction(className,x)).
                 collect(Collectors.toList());
     }
-    public static List<String> getListOfLabelNamePerFunction(String functionName) {
+    /*public static List<String> getListOfLabelNamePerFunction(String functionName) {
         return SemanticChecker.getProgram().class_dec_list.class_decl_list.stream().map(x -> x.classId)
                 .map(x -> getLabelNameForFunction(x,functionName)).collect(Collectors.toList());
-    }
+    }*/
     public static void printAllFunctions(String className) {
         System.out.format("%n%s functions : ",className);
         getAllLabelsForClass(className).stream().map(x -> x + " ").forEach(System.out :: print);

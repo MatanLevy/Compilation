@@ -82,6 +82,9 @@ public class AST_VIRTUALCALL extends AST_Node {
 				}
 			}
 		}
+		//TEMP temp = exp.calcAddress(table,genartor,assemblyFileName);
+		//int offSet = 0;
+
 		exp_list.mipsTranslate(table, assemblyFileName, genartor);
 		String label = genartor.getLabelOfMethod(_id);
 		CodeGenarator.printJALCommand(label);
