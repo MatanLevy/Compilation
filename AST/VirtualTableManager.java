@@ -1,8 +1,6 @@
 package AST;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -13,13 +11,13 @@ public class VirtualTableManager {
     public static final String labelPrefix = "Label_0_";
 
     public static Set<String> getListOfActualFunctionsByName(String className) {
-        Set<String> actualFunctions = new HashSet<>();
+        List<String> actualFunctions = new ArrayList<>();
         AST_CLASSDECL classDecl = SemanticChecker.getClass(className);
-        actualFunctions.addAll(classDecl.fm_list.method_list.stream().map(x->x._id).collect(Collectors.toSet()));
         if (classDecl.baseId != null) {
             actualFunctions.addAll(getListOfActualFunctionsByName(classDecl.baseId));
         }
-        return actualFunctions;
+        actualFunctions.addAll(classDecl.fm_list.method_list.stream().map(x->x._id).collect(Collectors.toList()));
+        return new LinkedHashSet<>(actualFunctions);
     }
 
     public static String getLabelNameForFunction(String className,String functionName) {
