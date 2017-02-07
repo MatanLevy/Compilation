@@ -5,10 +5,7 @@ import java.io.FileReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-import AST.AST_PROGRAM;
-import AST.CodeGenarator;
-import AST.SemanticChecker;
-import AST.SymbolTable;
+import AST.*;
 
 public class Main {
 	public static void main(String argv[]) {
@@ -55,6 +52,7 @@ public class Main {
 				semanticCheck = program.checkSemantic(table);
 				CodeGenarator genartor = new CodeGenarator();
 				SymbolTable table1 = new SymbolTable();
+				VirtualTableManager.printAllClasses();
 				program.mipsTranslate(table1, "none", genartor);
 			} catch (RuntimeException e) {
 				//System.out.println("Error : " + e.getMessage());
