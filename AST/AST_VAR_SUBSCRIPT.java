@@ -58,7 +58,7 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 		//if index lower than zero-exit
 		TEMP zero = new TEMP();
 		CodeGenarator.printLICommand(zero.name, 0);
-		CodeGenarator.printSETCommand(MIPS_COMMANDS.BLT, zero.name, indexTemp.name,
+		CodeGenarator.printSETCommand(MIPS_COMMANDS.BLT, indexTemp.name, zero.name,
 				genarator.exitLabel.labelString);
 		//if index greater than size-exit
 		CodeGenarator.printSETCommand(MIPS_COMMANDS.BGE,  indexTemp.name, size.name, 

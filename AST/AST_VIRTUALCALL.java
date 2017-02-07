@@ -86,6 +86,11 @@ public class AST_VIRTUALCALL extends AST_Node {
 		String label = genartor.getLabelOfMethod(_id);
 		CodeGenarator.printJALCommand(label);
 	}
-	// jal procedure # call procedure
+
+    public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
+		//TODO add here body
+		return null;
+    }
+    // jal procedure # call procedure
 
 }

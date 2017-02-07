@@ -46,8 +46,7 @@ public class AST_EXP_CALL extends AST_EXP {
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+		return call.virtualCall.calcAddress(table,genarator,fileName);
 	}
 	
 

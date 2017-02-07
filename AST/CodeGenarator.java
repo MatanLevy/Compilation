@@ -193,6 +193,9 @@ public class CodeGenarator {
 	 */
 	public void printExit() {
 		printLBLCommand(exitLabel.labelString);
+		TEMP r1 = new TEMP();
+		printLICommand(r1.name,666);
+		printInteger(r1.name);
 		printLICommand(MIPS_COMMANDS.V0,MIPS_COMMANDS.exit);
 		printSyscallCommand();
 	}
