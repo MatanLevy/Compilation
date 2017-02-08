@@ -2,8 +2,10 @@ package AST;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedList; 
 import java.util.List;
+import java.util.Map.Entry;
 
 
 public class SymbolTable {
@@ -33,6 +35,8 @@ public class SymbolTable {
 	private boolean isMainDefined;  
 	
 	private int NumberOfSymbolEntryDefinedInCurrentScope;
+	
+	private int numberOfFieldInCurrentClass;
 	
 	/**
 	 * C'tor
@@ -136,7 +140,7 @@ public class SymbolTable {
 		return result;
 		
 	}
-	
+
 	
 	//return the amount of methods defined in specific class Scope.
 	public int returnNumberOfMethodsDefinedInGivenClassScope (ScopeNode classScope) {
@@ -344,6 +348,7 @@ public class SymbolTable {
 			error(true, false, field.getName());
 		// we don't need to initialize fields before we use them.
 		add_symbol(field._id, field._type, true, false, null).setOffsetField();
+		numberOfFieldInCurrentClass++;
 		if (! (field._comma_list.isEmpty())){
 			for (int i=0; i < field._comma_list.size(); i++) {
 				String fieldId = field._comma_list.get(i);
@@ -351,6 +356,7 @@ public class SymbolTable {
 				if (check_scope(fieldId))
 					error(true, false, fieldId);
 				add_symbol(fieldId, field._type, true, false, null).setOffsetField();
+				numberOfFieldInCurrentClass++;
 			}
 		}
 		
@@ -444,6 +450,7 @@ public class SymbolTable {
 
 	public void set_currentClass(String _currentClass) {
 		this._currentClass = _currentClass;
+		this.numberOfFieldInCurrentClass = 0;
 	}
 
 	
@@ -487,9 +494,8 @@ public class SymbolTable {
 			return size * 4;
 		}
 		else {
-			//TODO to fix it, it's not good because it's return the number of fields + methods that defined in this class. 
-			//***** But we want only the number of fields ? *****
-			return tableOfSymbols.size() * 4; 
+			// we want only the number of fields plus 1 for the VFTable.
+			return (numberOfFieldInCurrentClass + 1) * 4; 
 		}
 	}
 	public void error (boolean multiDefine, boolean undefinded, String id) {

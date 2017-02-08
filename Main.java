@@ -53,7 +53,7 @@ public class Main {
 				CodeGenarator genartor = new CodeGenarator();
 				SymbolTable table1 = new SymbolTable();
 				VirtualTableManager.printAllClasses();
-				//program.mipsTranslate(table1, "none", genartor);
+				program.mipsTranslate(table1, "none", genartor);
 			} catch (RuntimeException e) {
 				//System.out.println("Error : " + e.getMessage());
 				e.printStackTrace();
