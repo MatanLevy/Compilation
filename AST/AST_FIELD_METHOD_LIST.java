@@ -8,12 +8,25 @@ public class AST_FIELD_METHOD_LIST extends AST_Node {
 	
 	public List<AST_FIELD> field_list;
 	public List<AST_METHOD> method_list;
+	public String _className;
 	
 	
 	public AST_FIELD_METHOD_LIST() {
 		field_list = new ArrayList<>();
 		method_list = new ArrayList<>();
 	}
+	
+	
+	public String get_className() {
+		return _className;
+	}
+
+
+	public void set_className(String _className) {
+		this._className = _className;
+	}
+
+
 	public void addField(AST_FIELD f) {
 		field_list.add(f);
 	}
@@ -45,6 +58,7 @@ public class AST_FIELD_METHOD_LIST extends AST_Node {
 		}
 		for (AST_METHOD method : method_list) {
 			table.insertASTNode(method);
+			method.set_className(_className);
 //			table.pushScope(false, null, method._id);
 			if (!method.checkSemantic(table))
 				return false;

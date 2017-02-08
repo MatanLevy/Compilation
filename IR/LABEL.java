@@ -10,5 +10,10 @@ public class LABEL {
 		counter++;
 	}
 	
+	public LABEL(String labelString, int zero, String _className) {
+		this.labelString = "Label_" + Integer.toString(0) + "_" +_className +"_" +labelString;
+
+	}
+	
 
 }

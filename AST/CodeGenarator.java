@@ -122,8 +122,8 @@ public class CodeGenarator {
 	 * @param labelName
 	 * @return new asm-code for creating label
 	 */
-	public String LabelGenerate(String labelName) {
-		String label  = new LABEL(labelName).labelString;
+	public String LabelGenerate(String labelName, String className) {
+		String label  = new LABEL(labelName, 0, className).labelString;
 		return label + " : ";
 	}
 	
@@ -331,6 +331,10 @@ public class CodeGenarator {
 		TEMP temp2 = new TEMP();
 		printSUBCommand(temp2.name, MIPS_COMMANDS.STACK_PTR, temp1.name);
 		printADDICommand(MIPS_COMMANDS.STACK_PTR, temp2.name, 0);
+		
+		//change the offset of the frame ptr
+		changeOffset(sizeOfMemoryToAllocate);
+		
 	}
 
 	

@@ -1,7 +1,7 @@
 package AST;
 
-public class AST_CLASSDECL extends AST_Node{
 	
+public class AST_CLASSDECL extends AST_Node{
 	public String classId;
 	public AST_FIELD_METHOD_LIST fm_list;
 	public String baseId;
@@ -70,6 +70,7 @@ public class AST_CLASSDECL extends AST_Node{
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
+		fm_list.set_className(classId);
 		return fm_list.checkSemantic(table);
 	}
 	@Override

@@ -7,6 +7,7 @@ public class AST_METHOD extends AST_Node {
 	public AST_FORMALS formals;
 	public AST_STMT_LIST stmt_list;
 	public String _id;
+	public String _className;
 	
 	public AST_METHOD(String id, AST_FORMALS f, AST_STMT_LIST l) {
 		type = null;
@@ -21,6 +22,16 @@ public class AST_METHOD extends AST_Node {
 		stmt_list = l;
 		_id = id;
 	}
+	
+	
+	public String get_className() {
+		return _className;
+	}
+
+	public void set_className(String _className) {
+		this._className = _className;
+	}
+
 	public void print() {
 		System.out.println("method : ");
 		if (type != null) {
@@ -57,7 +68,7 @@ public class AST_METHOD extends AST_Node {
 		CodeGenarator.initOffset();
 		
 
-		String label = _id.equals("main") ?  CodeGenarator.mainLabel.labelString + " :" : genartor.LabelGenerate(_id);
+		String label =/* _id.equals("main") ?  CodeGenarator.mainLabel.labelString + " :" :*/ genartor.LabelGenerate(_id, _className);
 		
 
 		genartor.insertMethodNameAndLabelToMap(_id, label);
@@ -68,6 +79,11 @@ public class AST_METHOD extends AST_Node {
 		
 		if (!(_id.equals("main")))
 			printPrologOfMethod();
+		
+		else {
+			CodeGenarator.printADDICommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
+
+		}
 		
 		formals.mipsTranslate(table, assemblyFileName, genartor);
 		stmt_list.mipsTranslate(table, assemblyFileName, genartor);

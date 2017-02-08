@@ -309,6 +309,8 @@ public class SymbolTable {
 	}
 	
 	public boolean insertClassDecl (AST_CLASSDECL classDec) {
+		
+		numberOfFieldInCurrentClass = 0;
 		// if we defined object with the same id in the same scope. it's multiple define error
 		String classId = classDec.getClassId();
 		if (check_classScopes(classId)){

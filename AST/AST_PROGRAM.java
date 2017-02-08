@@ -36,8 +36,7 @@ public class AST_PROGRAM extends AST_Node{
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		System.out.println("main: ");
-		CodeGenarator.printJCommand(CodeGenarator.mainLabel.labelString);
+		CodeGenarator.printJCommand(VirtualTableManager.mainLabel);
 		ConditionHelper.printAllLabels();
 		genartor.printExit(); //creating exit label
 		
