@@ -20,13 +20,13 @@ public class AST_LITERAL_STRING extends AST_LITERAL {
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
+		STRING_LABEL dummy_label = new STRING_LABEL(str, true);
 		return false;
 	}
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		STRING_LABEL label = new STRING_LABEL(str);
+		STRING_LABEL label = STRING_LABEL.getSTRING_LABEL(str);
 		CodeGenarator.stringToStringLabelMap.put(str, label);
 		
 	} 

@@ -32,6 +32,7 @@ public class AST_EXP_LITERAL extends AST_EXP {
 			this.type = literal.type;
 			typeUptoDate = true;
 		}
+		boolean dummy_bool = literal.checkSemantic(table);
 		return type;
 	}
 

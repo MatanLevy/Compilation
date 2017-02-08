@@ -57,6 +57,10 @@ public class VirtualTableManager {
         SemanticChecker.getProgram().class_dec_list.class_decl_list.stream().map(x -> x.classId).
                 forEach(VirtualTableManager::printAllFunctions);
         System.out.println("\n");
+        
+        //print strings
+		STRING_LABEL.printStrings();
+
     }
     
 	public static int getOffsetForFunction(String className, String functionName) {

@@ -39,7 +39,7 @@ public class AST_PROGRAM extends AST_Node{
 		CodeGenarator.printJCommand(VirtualTableManager.mainLabel);
 		ConditionHelper.printAllLabels();
 		genartor.printExit(); //creating exit label
-		
+
 		class_dec_list.mipsTranslate(table, assemblyFileName, genartor);
 	}
 
