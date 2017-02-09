@@ -45,15 +45,7 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 
 	}
 
-	public void mipsTranslateReturn(SymbolTable table,String assemblyFileName,CodeGenarator genarator,int numberOfArguments) {
-		int numberOfAllocatedTotalInStack = 4*(2 + numberOfArguments);
-		CodeGenarator.printADDICommand(MIPS_COMMANDS.STACK_PTR,MIPS_COMMANDS.FRAME_PTR,numberOfAllocatedTotalInStack);
-		CodeGenarator.printLWCommand(MIPS_COMMANDS.FRAME_PTR,MIPS_COMMANDS.FRAME_PTR,4); //retrive fm
-		TEMP returnValue = exp.calcAddress(table,genarator,assemblyFileName);
-		CodeGenarator.printSWCommand(returnValue.name,MIPS_COMMANDS.STACK_PTR,0);
-		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
-		CodeGenarator.removeFrame();
-	}
+
 
 }
   

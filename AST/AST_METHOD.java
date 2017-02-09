@@ -76,16 +76,7 @@ public class AST_METHOD extends AST_Node {
 			CodeGenarator.printADDICommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
 		}
 		formals.mipsTranslate(table, assemblyFileName, genartor);
-		for (AST_STMT stmt : stmt_list.list) {
-			if ((stmt instanceof  AST_STMT_RETURN) || (stmt instanceof AST_STMT_RETURN_EXP)) {
-				if (stmt instanceof  AST_STMT_RETURN) {
-					((AST_STMT_RETURN) stmt).mipsTranslateReturn(table,assemblyFileName,genartor,formals.numberOfArgs());
-				}
-				else
-					((AST_STMT_RETURN_EXP)stmt).mipsTranslateReturn(table,assemblyFileName,genartor,formals.numberOfArgs());
-			}
-			else stmt.mipsTranslate(table,assemblyFileName,genartor);
-		}
+		stmt_list.mipsTranslate(table,assemblyFileName,genartor);
 		if (!(_id.equals("main"))) {
 			printEpilog();
 		}

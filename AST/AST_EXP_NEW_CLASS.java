@@ -38,12 +38,10 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-
 		int sizeToAllocOnHeap = table.returnTheSizeOfTheObjectFromClassTypeOnTheHeap(_className);
-		return genarator.AllocOnHeap(sizeToAllocOnHeap);
-
-		//CodeGenarator.printLACommand(returnAddress.name,"VFTable_" + _className);
-
+		TEMP returnAddress = genarator.AllocOnHeap(sizeToAllocOnHeap);
+		CodeGenarator.printLACommand(returnAddress.name,"VFTable_" + _className);
+		return returnAddress;
 	}
 
 }
