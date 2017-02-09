@@ -46,9 +46,14 @@ public class VirtualTableManager {
     }*/
 	public static void printAllFunctions(String className) {
 		//if class equal print, ignore it.
-		if (!(className.equals("PRINT")) && getAllLabelsForClass(className).size() > 0) {
+		if (/*!(className.equals("PRINT")) &&*/ getAllLabelsForClass(className).size() > 0) {
 			System.out.format("\n\tVFTable_%s : .word ", className);
-			getAllLabelsForClass(className).stream().map(x -> x + " ").forEach(System.out::print);
+			List<String> allLabelsFromClass = getAllLabelsForClass(className);
+			String lastLabel = getAllLabelsForClass(className).get(allLabelsFromClass.size()-1);
+			allLabelsFromClass.remove(allLabelsFromClass.size()-1);
+			allLabelsFromClass.stream().map(x -> x + ",").forEach(System.out::print);
+			System.out.printf("%s", lastLabel);
+			
 		}
 	}
 
