@@ -71,8 +71,12 @@ public class VirtualTableManager {
 	public static int getOffsetForFunction(String className, String functionName) {
 		Set<String> listOfFunctionsInClassSet = getListOfActualFunctionsByName(className);
 		List<String> listOfFunctionsInClassList = new ArrayList<String>(listOfFunctionsInClassSet);
+		System.out.println(listOfFunctionsInClassList);
 		return listOfFunctionsInClassList.indexOf(functionName);
-
 	}
+	/*public static void printoffSet() {
+	    SemanticChecker.getProgram().class_dec_list.class_decl_list.stream().map(x -> x.classId).
+                forEach(x -> getOffsetForFunction(x,"a"));
+    }*/
 
 }

@@ -33,13 +33,15 @@ public class AST_COMMA_EXPR_LIST extends AST_Node {
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genarator) {
 		if (exp != null) {
-			TEMP tempExp = exp.calcAddress(table, genarator, assemblyFileName);
-			//CodeGenarator.changeOffset(4);
-			int offset = CodeGenarator.getOffset();
-			CodeGenarator.changeOffset(4);
-			CodeGenarator.printAndPrepareArgumentBeforeCall(offset, tempExp);
-			//CodeGenarator.printADDICommand(MIPS_COMMANDS.A0, tempExp.name, 0);
-
+//			TEMP tempExp = exp.calcAddress(table, genarator, assemblyFileName);
+//			//CodeGenarator.changeOffset(4);
+//			int offset = CodeGenarator.getOffset();
+//			CodeGenarator.changeOffset(4);
+//			CodeGenarator.printAndPrepareArgumentBeforeCall(offset, tempExp);
+//			//CodeGenarator.printADDICommand(MIPS_COMMANDS.A0, tempExp.name, 0);
+			CodeGenarator.allocateMemory(4);
+			TEMP temp = exp.calcAddress(table,genarator,assemblyFileName);
+			CodeGenarator.printSWInFpPlusOffset(temp);
 		}
 		if (list != null) {
 			list.mipsTranslate(table, assemblyFileName, genarator);

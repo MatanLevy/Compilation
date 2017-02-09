@@ -54,12 +54,10 @@ public class Main {
 				SymbolTable table1 = new SymbolTable();
 				program.mipsTranslate(table1, "none", genartor);
 			} catch (RuntimeException e) {
-				//System.out.println("Error : " + e.getMessage());
 				e.printStackTrace();
 				file_writer.write("FAIL");
 			}
 			if (semanticCheck)
-				//System.out.println("OK");
 				file_writer.write("OK");
 		}
 		file_writer.close();

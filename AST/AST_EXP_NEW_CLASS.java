@@ -1,6 +1,7 @@
 package AST;
 
 import IR.TEMP;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 
 public class AST_EXP_NEW_CLASS extends AST_EXP {
 	
@@ -38,10 +39,12 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
+
 		int sizeToAllocOnHeap = table.returnTheSizeOfTheObjectFromClassTypeOnTheHeap(_className);
-//		int sizeToChangeTheSP = 4;
-//		CodeGenarator.allocateMemory(sizeToChangeTheSP);
 		return genarator.AllocOnHeap(sizeToAllocOnHeap);
+
+		//CodeGenarator.printLACommand(returnAddress.name,"VFTable_" + _className);
+
 	}
 
 }

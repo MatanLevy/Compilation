@@ -326,11 +326,7 @@ public class CodeGenarator {
 	 * @param sizeOfMemoryToAllocate
 	 */
 	public static void allocateMemory (int sizeOfMemoryToAllocate) {
-		TEMP temp1 = new TEMP();
-		printLICommand(temp1.name, sizeOfMemoryToAllocate);
-		TEMP temp2 = new TEMP();
-		printSUBCommand(temp2.name, MIPS_COMMANDS.STACK_PTR, temp1.name);
-		printADDICommand(MIPS_COMMANDS.STACK_PTR, temp2.name, 0);
+		printADDICommand(MIPS_COMMANDS.STACK_PTR, MIPS_COMMANDS.STACK_PTR, sizeOfMemoryToAllocate*-1);
 		
 		//change the offset of the frame ptr
 		changeOffset(sizeOfMemoryToAllocate);

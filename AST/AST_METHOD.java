@@ -87,26 +87,29 @@ public class AST_METHOD extends AST_Node {
 		
 		formals.mipsTranslate(table, assemblyFileName, genartor);
 		stmt_list.mipsTranslate(table, assemblyFileName, genartor);
-		
+
 		//jr $ra
-		if (!(_id.equals("main")))
+		if (!(_id.equals("main"))) {
+			CodeGenarator.printLWCommand(MIPS_COMMANDS.FRAME_PTR,MIPS_COMMANDS.FRAME_PTR,4); //retrive fm
+			int numberOfAllocatedTotalInStack = 4*(2 + formals.numberOfArgs());
+			CodeGenarator.printADDICommand(MIPS_COMMANDS.STACK_PTR,MIPS_COMMANDS.STACK_PTR,numberOfAllocatedTotalInStack);
 			CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
+		}
 	}
 	
 	public void printPrologOfMethod () {
-		CodeGenarator.allocateMemory(4);	
+		//CodeGenarator.allocateMemory(4);
 		
 		//TODO if we use jal/jr (need to check) we don't need it ?
-		CodeGenarator.printSWCommand(MIPS_COMMANDS.RA, MIPS_COMMANDS.STACK_PTR, 0);
+		//CodeGenarator.printSWCommand(MIPS_COMMANDS.RA, MIPS_COMMANDS.STACK_PTR, 0);
 		
 		CodeGenarator.allocateMemory(4);
 		CodeGenarator.printSWCommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
-		
+		CodeGenarator.allocateMemory(4);
 		CodeGenarator.printADDICommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
-		
-		
-		
 	}
+
+
 //Example of prolog:	
 //	li Temp_11,4
 //

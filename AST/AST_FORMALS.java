@@ -42,15 +42,39 @@ public class AST_FORMALS extends AST_Node {
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		CodeGenarator.clearArgumentToOffsetMap();
-		if (f_list!=null) {
-			int offset = f_list.getSize() + 1;
-			CodeGenarator.addPairToArgumentToOffsetMap(_id, offset);
-			f_list.mipsTranslate(table, assemblyFileName, genartor);
+//		if (f_list!=null) {
+//			int offset = f_list.getSize() + 1;
+//			CodeGenarator.addPairToArgumentToOffsetMap(_id, offset);
+//			f_list.mipsTranslate(table, assemblyFileName, genartor);
+//		}
+//		else {
+//			CodeGenarator.addPairToArgumentToOffsetMap(_id, 1);
+//		}
+		int numberOfArguments = numberOfArgs();
+		int offSet = 8;
+		if (f_list != null) {
+			for (int i = f_list.getSize() ; i > 0 ; i--) {
+				CodeGenarator.addPairToArgumentToOffsetMap(f_list.formal_list.get(i-1),offSet);
+				offSet += 4;
+			}
+		}
+		CodeGenarator.addPairToArgumentToOffsetMap(_id,offSet);
+	}
+
+	public int numberOfArgs() {
+		int numberOfArguments;
+		if (f_list == null) {
+			if (type == null) {
+				numberOfArguments = 0;
+			}
+			else {
+				numberOfArguments = 1;
+			}
 		}
 		else {
-			CodeGenarator.addPairToArgumentToOffsetMap(_id, 1);
+			numberOfArguments = f_list.getSize()+1;
 		}
-		
+		return numberOfArguments;
 	}
 
 }
