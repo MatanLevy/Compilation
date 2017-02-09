@@ -66,38 +66,40 @@ public class AST_METHOD extends AST_Node {
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		//Initialize the offset of the frame of the method to be 0.
 		CodeGenarator.createFrame();
-		
-
-		String label =/* _id.equals("main") ?  CodeGenarator.mainLabel.labelString + " :" :*/ genartor.LabelGenerate(_id, _className);
-		
-
+		String label = genartor.LabelGenerate(_id, _className);
 		genartor.insertMethodNameAndLabelToMap(_id, label);
-
 		genartor.insertMethodNameAndLabelToMap(_id, label.substring(0, label.length()-2));
 		CodeGenarator.printLabel(label);
-		
 		if (!(_id.equals("main")))
 			printPrologOfMethod();
-		
 		else {
 			CodeGenarator.printADDICommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
-
 		}
-		
 		formals.mipsTranslate(table, assemblyFileName, genartor);
-		stmt_list.mipsTranslate(table, assemblyFileName, genartor);
-
-		//jr $ra
-		if (!(_id.equals("main"))) {
-			int numberOfAllocatedTotalInStack = 4 * (2 + formals.numberOfArgs());
-			CodeGenarator.printADDICommand(MIPS_COMMANDS.STACK_PTR, MIPS_COMMANDS.FRAME_PTR,
-					numberOfAllocatedTotalInStack);
-			CodeGenarator.printLWCommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.FRAME_PTR, 4);
-			// Retrieve fm
-			CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
+		for (AST_STMT stmt : stmt_list.list) {
+			if ((stmt instanceof  AST_STMT_RETURN) || (stmt instanceof AST_STMT_RETURN_EXP)) {
+				if (stmt instanceof  AST_STMT_RETURN) {
+					((AST_STMT_RETURN) stmt).mipsTranslateReturn(table,assemblyFileName,genartor,formals.numberOfArgs());
+				}
+				else
+					((AST_STMT_RETURN_EXP)stmt).mipsTranslateReturn(table,assemblyFileName,genartor,formals.numberOfArgs());
+			}
+			else stmt.mipsTranslate(table,assemblyFileName,genartor);
 		}
-		
+		if (!(_id.equals("main"))) {
+			printEpilog();
+		}
 		CodeGenarator.removeFrame();
+	}
+
+
+
+
+	public void printEpilog() {
+		int numberOfAllocatedTotalInStack = 4*(2 + formals.numberOfArgs());
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.STACK_PTR,MIPS_COMMANDS.FRAME_PTR,numberOfAllocatedTotalInStack);
+		CodeGenarator.printLWCommand(MIPS_COMMANDS.FRAME_PTR,MIPS_COMMANDS.FRAME_PTR,4); //retrive fm
+		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
 	}
 	
 	public void printPrologOfMethod () {
