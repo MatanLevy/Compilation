@@ -1,5 +1,7 @@
 package AST;
 
+import IR.TEMP;
+
 public class AST_METHOD extends AST_Node {
 
 	
@@ -88,9 +90,10 @@ public class AST_METHOD extends AST_Node {
 		stmt_list.mipsTranslate(table, assemblyFileName, genartor);
 		
 		//jr $ra
-		if (!(_id.equals("main")))
+		if (!(_id.equals("main"))) {
+			printEpilogOfMethod();
 			CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
-	}
+	}}
 	
 	public void printPrologOfMethod () {
 		CodeGenarator.allocateMemory(4);	
@@ -106,6 +109,7 @@ public class AST_METHOD extends AST_Node {
 		
 		
 	}
+	
 //Example of prolog:	
 //	li Temp_11,4
 //
@@ -124,6 +128,14 @@ public class AST_METHOD extends AST_Node {
 //	sw $fp,0($sp)
 //
 //	addi $fp,$sp,0
+	
+	public void printEpilogOfMethod () {
+
+		int offsetToReturnPreviousSP = (formals.getSize() + 3) * 4;
+		CodeGenarator.printLWCommand(MIPS_COMMANDS.STACK_PTR,MIPS_COMMANDS.FRAME_PTR,offsetToReturnPreviousSP);
+		CodeGenarator.printLWCommand(MIPS_COMMANDS.FRAME_PTR,MIPS_COMMANDS.FRAME_PTR,4);
+
+	}
 
 
 }

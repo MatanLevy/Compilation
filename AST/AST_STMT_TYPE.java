@@ -61,13 +61,13 @@ public class AST_STMT_TYPE extends AST_STMT {
 			CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
 			
 			TEMP rvalue = exp.calcAddress(table, genartor, assemblyFileName);
-
-//			int varOffset = CodeGenarator.getOffset();
-//			TEMP lvalue = new TEMP();
-//			CodeGenarator.printADDICommand(lvalue.name, MIPS_COMMANDS.FRAME_PTR, varOffset);
-//			CodeGenarator.printSWCommand(rvalue.name, lvalue.name, 0);
 			
 			CodeGenarator.printSWInFpPlusOffset(rvalue);
+		}
+		else {
+			int sizeToAllocateForThisStmt = 4;
+			CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
+	
 		}
 	} 
 

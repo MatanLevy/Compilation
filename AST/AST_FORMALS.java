@@ -52,5 +52,9 @@ public class AST_FORMALS extends AST_Node {
 		}
 		
 	}
+	
+	public int getSize () {
+		return f_list.getSize()+1;
+	}
 
 }
