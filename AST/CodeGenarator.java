@@ -26,10 +26,6 @@ public class CodeGenarator {
 	 */
 	public static Map <String, Integer> argumentToOffsetMap = new HashMap<String, Integer>();
 	
-	/**
-	 * map class name to it's VFTable.
-	 */
-	public static Map <String, VFTable> classNameToItsVFTableMap = new HashMap<String, VFTable>();
 	
 	/**
 	 * The offset from the start of the frame.
@@ -92,28 +88,6 @@ public class CodeGenarator {
 			return argumentToOffsetMap.get(arg);
 	}
 	
-	public static void createVFTableForClass (String className) {
-		VFTable vftable = new VFTable(className);
-		classNameToItsVFTableMap.put(className, vftable);
-		
-	}
-	
-	public static void addLabelToVFTable(String label) {
-		VFTable vftable = classNameToItsVFTableMap.get(currentClass);
-		if (vftable != null){
-			vftable.putLabelInMap(label);
-		}
-	}
-	/**
-	 * put all labels from father VFTable into son VFTtable
-	 * @param classFather
-	 * @param classSon
-	 */
-	public static void addAllMethodsInFatherClassToVFTableSon (String classFather, String classSon) {
-		VFTable vftableFather  = classNameToItsVFTableMap.get(classFather);
-		VFTable vftableSon = classNameToItsVFTableMap.get(classSon);
-		vftableSon.addAllPairsFromGivenVFTable(vftableFather);
-	}
 	
 	
 	
@@ -293,14 +267,7 @@ public class CodeGenarator {
 	public static void printJRCommand(String rt) {
 		System.out.format("\t%s %s%n", MIPS_COMMANDS.JR, rt);
 	}
-	//  Branches if the quantities of two registers are equal.
-	public static void printBLECommand(/*String rt, String rs, int offset*/) {
-		//System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
-	}  
-	// Branches if the quantities of two registers are NOT equal
-	public static void printBGTCommand(/*String rt, String rs, int offset*/) {
-		//System.out.format("%s %s, %d(%s)", MIPS_COMMANDS.SW, rt, offset, rs);
-	}
+
 	public static void printBEQCommand(String r1,String r2,String label) {
 		System.out.format("\t%s %s, %s, %s%n",MIPS_COMMANDS.BEQ,r1,r2,label);
 	}
@@ -351,12 +318,13 @@ public class CodeGenarator {
 	 * @return temp with the wanted argument
 	 */
 	public static TEMP printAndGetArgumentInsideMethod (int offset) {
+		//create temp for the offset
 		TEMP offsetTemp = new TEMP();
 		printLICommand(offsetTemp.name, offset);
+		
+		//create temp for the address of the argument
 		TEMP addressArgumentTEMP = new TEMP();
 		printADDCommand(addressArgumentTEMP.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
-		//TEMP argumentTEMP = new TEMP();
-		//printLWCommand(argumentTEMP.name, addressArgumentTEMP.name, 0);
 		
 		return addressArgumentTEMP;
 	}
@@ -370,25 +338,22 @@ public class CodeGenarator {
 	 * 	sw Temp_18,0(Temp_16)
 	 * @param offset
 	 */
-	public static void printAndPrepareArgumentBeforeCall (int offset, int valueOfArgument) {
-		TEMP offsetTemp = new TEMP();
-		printLICommand(offsetTemp.name, offset);
-		TEMP argumentAddressTemp = new TEMP();
-		printADDCommand(argumentAddressTemp.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
-		TEMP valueOfArgumentTemp = new TEMP();
-		printLICommand(valueOfArgumentTemp.name, valueOfArgument);
-		printSWCommand(valueOfArgumentTemp.name, argumentAddressTemp.name, 0);
-		
-		
-	}
 
-	public static void printAndPrepareArgumentBeforeCall (int offset, TEMP valueOfArgument) {
+	//print the mips commands and prepare the argument in memory before virtual call.
+	public static void printAndPrepareArgumentBeforeCall (TEMP valueOfArgument) {
+		
+		//allocate memory for argument in stack. It's always need size 4.
+		allocateMemory(4);
+		
+		//create temp for loading the offset into it.
 		TEMP offsetTemp = new TEMP();
 		printLICommand(offsetTemp.name, offset);
+		
+		//create temp for get the address of fp+offset
 		TEMP argumentAddressTemp = new TEMP();
 		printADDCommand(argumentAddressTemp.name, MIPS_COMMANDS.FRAME_PTR, offsetTemp.name);
-		//TEMP valueOfArgumentTemp = new TEMP();
-		//printLICommand(valueOfArgumentTemp.name, valueOfArgument);
+		
+		//store the value of argument inside the address we wanted.
 		printSWCommand(valueOfArgument.name, argumentAddressTemp.name, 0);
 		
 		
@@ -401,18 +366,6 @@ public class CodeGenarator {
 		printSyscallCommand();
 	}
 
-	public static TEMP printAccsessToVFTable (VFTable vftable, int offset) {
-		TEMP vftableAddress = new TEMP();
-		printLACommand(vftableAddress.name, vftable.name);
-		TEMP offsetTemp = new TEMP();
-		printLICommand(offsetTemp.name, offset);
-		TEMP wantedMethodAddressInVF = new TEMP();
-		printADDCommand(wantedMethodAddressInVF.name, vftableAddress.name, offsetTemp.name);
-		TEMP wantedMethodAddress = new TEMP();
-		printLWCommand(wantedMethodAddress.name, wantedMethodAddressInVF.name, 0);
-		return wantedMethodAddress;
-
-	}
 
 	public static TEMP printSWInFpPlusOffset(TEMP rvalue) {
 		int varOffset = CodeGenarator.getOffset();

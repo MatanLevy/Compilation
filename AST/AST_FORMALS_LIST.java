@@ -36,12 +36,10 @@ public class AST_FORMALS_LIST {
 	}
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		int diffToOffset = 1;
-		int size = getSize() + 1;
+		int size = getSize() + 2;
 		for (int j = 0; j < formal_list.size(); j++) {
 			CodeGenarator.addPairToArgumentToOffsetMap(formal_list.get(j), size - diffToOffset);
 			diffToOffset++;
-//			if (diffToOffset < 0)
-//				break;
 		}
 	}
 

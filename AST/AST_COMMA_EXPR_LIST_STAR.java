@@ -27,24 +27,20 @@ public class AST_COMMA_EXPR_LIST_STAR extends AST_Node {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genarator) {
-		int offset = CodeGenarator.getOffset();
-		CodeGenarator.changeOffset(4);
+
 		for (int i=0; i < expList.size(); i++) {
 			TEMP tempArg_i = expList.get(i).calcAddress(table, genarator, assemblyFileName);
-			CodeGenarator.printAndPrepareArgumentBeforeCall(offset, tempArg_i);
-			offset -= 4;
+			CodeGenarator.printAndPrepareArgumentBeforeCall(tempArg_i);
 			
 		}
 	}

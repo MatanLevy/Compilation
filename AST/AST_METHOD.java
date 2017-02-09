@@ -68,11 +68,10 @@ public class AST_METHOD extends AST_Node {
 		CodeGenarator.initOffset();
 		
 
-		String label =/* _id.equals("main") ?  CodeGenarator.mainLabel.labelString + " :" :*/ genartor.LabelGenerate(_id, _className);
+		String label = genartor.LabelGenerate(_id, _className);
 		
 
 		genartor.insertMethodNameAndLabelToMap(_id, label);
-		CodeGenarator.addLabelToVFTable(label);
 
 		genartor.insertMethodNameAndLabelToMap(_id, label.substring(0, label.length()-2));
 		CodeGenarator.printLabel(label);
