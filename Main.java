@@ -52,7 +52,6 @@ public class Main {
 				semanticCheck = program.checkSemantic(table);
 				CodeGenarator genartor = new CodeGenarator();
 				SymbolTable table1 = new SymbolTable();
-				VirtualTableManager.printAllClasses();
 				program.mipsTranslate(table1, "none", genartor);
 			} catch (RuntimeException e) {
 				//System.out.println("Error : " + e.getMessage());

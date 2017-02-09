@@ -35,9 +35,10 @@ public class STRING_LABEL {
 	}
 	
 	public static void printStrings() {
-		System.out.println(".data\n");
-		stringsList.stream().map(x -> "\t" + x + "\n").forEach(System.out::print);
+		if (stringsList.size() > 0) {
+			System.out.println(".data\n");
+			stringsList.stream().map(x -> "\t" + x + "\n").forEach(System.out::print);
 
-		
+		}
 	}
 }
