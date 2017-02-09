@@ -55,11 +55,13 @@ public class AST_STMT_TYPE extends AST_STMT {
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		table.insertASTNode(this);
+
 		if (exp != null) {
 
 			int sizeToAllocateForThisStmt = 4;
 			CodeGenarator.allocateMemory(sizeToAllocateForThisStmt, true);
-			
+			table.updateOffsetOfSymbolEntry(id,CodeGenarator.getOffset());
+
 			TEMP rvalue = exp.calcAddress(table, genartor, assemblyFileName);
 
 //			int varOffset = CodeGenarator.getOffset();

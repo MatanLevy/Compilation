@@ -54,7 +54,7 @@ public class AST_VAR_SIMPLE extends AST_VAR
 		} else {
 			// calculate the offset of the variable in the stack
 			SymbolEntry symbolEntryField = table.find_symbol(name);
-			int offsetOfVar = (symbolEntryField.offset) * (-4);
+			int offsetOfVar = (symbolEntryField.offset);
 
 			TEMP offsetAddress = new TEMP();
 			CodeGenarator.printADDICommand(offsetAddress.name, MIPS_COMMANDS.FRAME_PTR, offsetOfVar);

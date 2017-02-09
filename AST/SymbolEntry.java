@@ -140,6 +140,10 @@ public class SymbolEntry {
 	public void setType(AST_TYPE type) {
 		this.type = type;
 	}
+	
+	public void setOffset (int offset) {
+		this.offset = offset;
+	}
 
 
 	

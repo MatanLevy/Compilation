@@ -513,6 +513,10 @@ public class SymbolTable {
 
 	}
 	
+	public void updateOffsetOfSymbolEntry(String id, int offset) {
+		find_symbol(id).setOffset(offset);
+	}
+	
 	
 	
 }
