@@ -1,5 +1,6 @@
 package AST;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import IR.*;
@@ -18,24 +19,13 @@ public class CodeGenarator {
 	 * map string to it's STRING_LABEL
 	 */ 
 	public static Map <String, STRING_LABEL> stringToStringLabelMap = new HashMap<String, STRING_LABEL>();
-	 
-	/**
-	 * map to argument name and it's offset.
-	 * Example: if we in function that get 3 parameters (a, b, c)
-	 * So, <a,2>, <b,1>, <c,0>. Because argument c in $fp+0 , b in $fp+4 and c in $fp+8
-	 */
-	public static Map <String, Integer> argumentToOffsetMap = new HashMap<String, Integer>();
 	
 	/**
-	 * map class name to it's VFTable.
+	 * Linked list of frames, when we are inside function it's new frame. 
+	 * When we finish method body, we remove the frame.
 	 */
-	public static Map <String, VFTable> classNameToItsVFTableMap = new HashMap<String, VFTable>();
-	
-	/**
-	 * The offset from the start of the frame.
-	 * This is where the sp is.
-	 */
-	private static int offset;
+	public static LinkedList<Frame> framedLinkedList = new LinkedList<Frame>();
+
 	
 	/**
 	 * current class
@@ -70,14 +60,10 @@ public class CodeGenarator {
 	public String getLabelOfMethod (String methodName) {
 		return methodNameToLabelMap.get(methodName);
 	}
-	public static void initOffset() {
-		offset=0;
-	}
-	public static void clearArgumentToOffsetMap() {
-		argumentToOffsetMap.clear();
-	}
+	
+	
 	public static void addPairToArgumentToOffsetMap (String arg, int offset) {
-		argumentToOffsetMap.put(arg, offset);
+		if (framedLinkedList.getFirst()!= null) framedLinkedList.getFirst().addPairToArgumentToOffsetMap(arg, offset);
 	}
 	
 	/**
@@ -86,35 +72,10 @@ public class CodeGenarator {
 	 * @return
 	 */
 	public static int getOffsetOfArgument(String arg) {
-		if (argumentToOffsetMap.get(arg)==null)
-			return -1;
-		else 
-			return argumentToOffsetMap.get(arg);
-	}
-	
-	public static void createVFTableForClass (String className) {
-		VFTable vftable = new VFTable(className);
-		classNameToItsVFTableMap.put(className, vftable);
 		
-	}
+		return (framedLinkedList.getFirst() == null) ? -1 : framedLinkedList.getFirst().getOffsetOfArgument(arg);
 	
-	public static void addLabelToVFTable(String label) {
-		VFTable vftable = classNameToItsVFTableMap.get(currentClass);
-		if (vftable != null){
-			vftable.putLabelInMap(label);
-		}
 	}
-	/**
-	 * put all labels from father VFTable into son VFTtable
-	 * @param classFather
-	 * @param classSon
-	 */
-	public static void addAllMethodsInFatherClassToVFTableSon (String classFather, String classSon) {
-		VFTable vftableFather  = classNameToItsVFTableMap.get(classFather);
-		VFTable vftableSon = classNameToItsVFTableMap.get(classSon);
-		vftableSon.addAllPairsFromGivenVFTable(vftableFather);
-	}
-	
 	
 	
 	/**
@@ -136,10 +97,19 @@ public class CodeGenarator {
 	}
 	
 	public static int getOffset() {
-		return offset;
+		return (framedLinkedList.getFirst()==null) ? -1 : framedLinkedList.getFirst().getOffset();
 	}
 	public static void changeOffset (int size) {
-		offset -= size;
+		if (framedLinkedList.getFirst()!= null) framedLinkedList.getFirst().changeOffset(size);
+	}
+	
+	public static void createFrame () {
+		Frame frame = new Frame();
+		framedLinkedList.add(frame);
+	}
+	
+	public static void removeFrame() {
+		framedLinkedList.removeFirst();
 	}
 	/**
 	 * for array we allocate the $(size+1) on heap.so the first value in the heap will be the size
@@ -325,12 +295,14 @@ public class CodeGenarator {
 	 * 	addi $sp,Temp_12,0
 	 * @param sizeOfMemoryToAllocate
 	 */
-	public static void allocateMemory (int sizeOfMemoryToAllocate) {
+	public static void allocateMemory (int sizeOfMemoryToAllocate, boolean changeOffset) {
 		printADDICommand(MIPS_COMMANDS.STACK_PTR, MIPS_COMMANDS.STACK_PTR, sizeOfMemoryToAllocate*-1);
 		
-		//change the offset of the frame ptr
-		changeOffset(sizeOfMemoryToAllocate);
 		
+		if (changeOffset){
+			//change the offset of the frame ptr
+			changeOffset(sizeOfMemoryToAllocate);
+		}
 	}
 
 	

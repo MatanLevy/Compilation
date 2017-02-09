@@ -75,11 +75,8 @@ public class AST_CLASSDECL extends AST_Node{
 	}
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		CodeGenarator.createVFTableForClass(classId);
 		CodeGenarator.currentClass = classId;
-		if (baseId != null) {
-			CodeGenarator.addAllMethodsInFatherClassToVFTableSon(baseId, classId);
-		}
+		
 		fm_list.mipsTranslate(table, assemblyFileName, genartor);
 
 	}

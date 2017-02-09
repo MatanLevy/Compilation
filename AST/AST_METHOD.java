@@ -65,14 +65,13 @@ public class AST_METHOD extends AST_Node {
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 		//Initialize the offset of the frame of the method to be 0.
-		CodeGenarator.initOffset();
+		CodeGenarator.createFrame();
 		
 
 		String label =/* _id.equals("main") ?  CodeGenarator.mainLabel.labelString + " :" :*/ genartor.LabelGenerate(_id, _className);
 		
 
 		genartor.insertMethodNameAndLabelToMap(_id, label);
-		CodeGenarator.addLabelToVFTable(label);
 
 		genartor.insertMethodNameAndLabelToMap(_id, label.substring(0, label.length()-2));
 		CodeGenarator.printLabel(label);
@@ -95,6 +94,8 @@ public class AST_METHOD extends AST_Node {
 			CodeGenarator.printADDICommand(MIPS_COMMANDS.STACK_PTR,MIPS_COMMANDS.STACK_PTR,numberOfAllocatedTotalInStack);
 			CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
 		}
+		
+		CodeGenarator.removeFrame();
 	}
 	
 	public void printPrologOfMethod () {
@@ -103,9 +104,9 @@ public class AST_METHOD extends AST_Node {
 		//TODO if we use jal/jr (need to check) we don't need it ?
 		//CodeGenarator.printSWCommand(MIPS_COMMANDS.RA, MIPS_COMMANDS.STACK_PTR, 0);
 		
-		CodeGenarator.allocateMemory(4);
+		CodeGenarator.allocateMemory(4, false);
 		CodeGenarator.printSWCommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
-		CodeGenarator.allocateMemory(4);
+		CodeGenarator.allocateMemory(4, false);
 		CodeGenarator.printADDICommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
 	}
 

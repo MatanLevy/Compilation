@@ -58,7 +58,7 @@ public class AST_STMT_TYPE extends AST_STMT {
 		if (exp != null) {
 
 			int sizeToAllocateForThisStmt = 4;
-			CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
+			CodeGenarator.allocateMemory(sizeToAllocateForThisStmt, true);
 			
 			TEMP rvalue = exp.calcAddress(table, genartor, assemblyFileName);
 

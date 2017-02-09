@@ -41,7 +41,6 @@ public class AST_FORMALS extends AST_Node {
 	}
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-		CodeGenarator.clearArgumentToOffsetMap();
 //		if (f_list!=null) {
 //			int offset = f_list.getSize() + 1;
 //			CodeGenarator.addPairToArgumentToOffsetMap(_id, offset);

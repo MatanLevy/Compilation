@@ -39,13 +39,18 @@ public class AST_COMMA_EXPR_LIST extends AST_Node {
 //			CodeGenarator.changeOffset(4);
 //			CodeGenarator.printAndPrepareArgumentBeforeCall(offset, tempExp);
 //			//CodeGenarator.printADDICommand(MIPS_COMMANDS.A0, tempExp.name, 0);
-			CodeGenarator.allocateMemory(4);
+			CodeGenarator.allocateMemory(4, true);
 			TEMP temp = exp.calcAddress(table,genarator,assemblyFileName);
 			CodeGenarator.printSWInFpPlusOffset(temp);
 		}
 		if (list != null) {
 			list.mipsTranslate(table, assemblyFileName, genarator);
 		}
+	}
+	
+	public int getSize () {
+		return ((exp==null) ? 0 : 1) + list.getSize();
+
 	}
 
 }

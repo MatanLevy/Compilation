@@ -46,10 +46,14 @@ public class AST_COMMA_EXPR_LIST_STAR extends AST_Node {
 //			CodeGenarator.printAndPrepareArgumentBeforeCall(offset, tempArg_i);
 //			offset -= 4;
 			for (AST_EXP exp : expList) {
-				CodeGenarator.allocateMemory(4);
+				CodeGenarator.allocateMemory(4, true);
 				TEMP temp = exp.calcAddress(table,genarator,assemblyFileName);
 				CodeGenarator.printSWInFpPlusOffset(temp);
 		}
+	}
+	
+	public int getSize() {
+		return expList.size();
 	}
 	
 	
