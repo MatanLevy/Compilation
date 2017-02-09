@@ -57,16 +57,17 @@ public class AST_STMT_TYPE extends AST_STMT {
 		table.insertASTNode(this);
 		if (exp != null) {
 
-//			int sizeToAllocateForThisStmt = 4;
-//			CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
+			int sizeToAllocateForThisStmt = 4;
+			CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
 			
 			TEMP rvalue = exp.calcAddress(table, genartor, assemblyFileName);
 
-			//CodeGenarator.changeOffset(sizeToAllocateForThisStmt);
-			int varOffset = CodeGenarator.getOffset();
-			TEMP lvalue = new TEMP();
-			CodeGenarator.printADDICommand(lvalue.name, MIPS_COMMANDS.FRAME_PTR, varOffset);
-			CodeGenarator.printSWCommand(rvalue.name, lvalue.name, 0);
+//			int varOffset = CodeGenarator.getOffset();
+//			TEMP lvalue = new TEMP();
+//			CodeGenarator.printADDICommand(lvalue.name, MIPS_COMMANDS.FRAME_PTR, varOffset);
+//			CodeGenarator.printSWCommand(rvalue.name, lvalue.name, 0);
+			
+			CodeGenarator.printSWInFpPlusOffset(rvalue);
 		}
 	} 
 

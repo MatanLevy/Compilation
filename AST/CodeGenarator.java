@@ -413,6 +413,15 @@ public class CodeGenarator {
 		return wantedMethodAddress;
 
 	}
+
+	public static TEMP printSWInFpPlusOffset(TEMP rvalue) {
+		int varOffset = CodeGenarator.getOffset();
+		TEMP lvalue = new TEMP();
+		CodeGenarator.printADDICommand(lvalue.name, MIPS_COMMANDS.FRAME_PTR, varOffset);
+		CodeGenarator.printSWCommand(rvalue.name, lvalue.name, 0);
+		
+		return lvalue;
+	}
 	
 	
 

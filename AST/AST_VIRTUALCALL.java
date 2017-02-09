@@ -82,7 +82,14 @@ public class AST_VIRTUALCALL extends AST_Node {
 				}
 			}
 		}
+		//allocate memory for exp as argument.
+		int sizeToAllocateForExpAsArgument = 4;
+		CodeGenarator.allocateMemory(sizeToAllocateForExpAsArgument);
+
 		TEMP temp = exp.calcAddress(table,genartor,assemblyFileName);
+		
+		CodeGenarator.printSWInFpPlusOffset(temp);
+
 		//int offSet = 0;
 		exp_list.mipsTranslate(table, assemblyFileName, genartor);
 		String label = genartor.getLabelOfMethod(_id);

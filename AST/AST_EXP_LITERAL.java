@@ -45,8 +45,8 @@ public class AST_EXP_LITERAL extends AST_EXP {
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		int sizeToAllocateForThisStmt = 4;
-		CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
+//		int sizeToAllocateForThisStmt = 4;
+//		CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
 		//CodeGenarator.changeOffset(sizeToAllocateForThisStmt);
 
 		TEMP result = new TEMP();

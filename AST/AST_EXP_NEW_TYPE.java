@@ -47,8 +47,8 @@ public class AST_EXP_NEW_TYPE extends AST_EXP {
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		int sizeToAllocateForThisStmt = 4;
-		CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
+//		int sizeToAllocateForThisStmt = 4;
+//		CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
 		//CodeGenarator.changeOffset(sizeToAllocateForThisStmt);
 		TEMP arraySize = exp.calcAddress(table, genarator, fileName);
 		return genarator.ArrayAlloc(arraySize);

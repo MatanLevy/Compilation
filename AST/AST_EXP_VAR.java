@@ -40,8 +40,8 @@ public class AST_EXP_VAR extends AST_EXP
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genrator, String fileName) {
-		int sizeToAllocateForThisStmt = 4;
-		CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
+//		int sizeToAllocateForThisStmt = 4;
+//		CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
 		//CodeGenarator.changeOffset(sizeToAllocateForThisStmt);
 		TEMP address = var.calcAddress(table, genrator, fileName);
 		//since this exp_var and not var we get the current value
