@@ -96,10 +96,10 @@ public class AST_METHOD extends AST_Node {
 	}}
 	
 	public void printPrologOfMethod () {
-		CodeGenarator.allocateMemory(4);	
+		//CodeGenarator.allocateMemory(4);	
 		
 		//TODO if we use jal/jr (need to check) we don't need it ?
-		CodeGenarator.printSWCommand(MIPS_COMMANDS.RA, MIPS_COMMANDS.STACK_PTR, 0);
+		//CodeGenarator.printSWCommand(MIPS_COMMANDS.RA, MIPS_COMMANDS.STACK_PTR, 0);
 		
 		CodeGenarator.allocateMemory(4);
 		CodeGenarator.printSWCommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
