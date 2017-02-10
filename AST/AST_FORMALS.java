@@ -50,7 +50,7 @@ public class AST_FORMALS extends AST_Node {
 //			CodeGenarator.addPairToArgumentToOffsetMap(_id, 1);
 //		}
 		int numberOfArguments = numberOfArgs();
-		int offSet = 8;
+		int offSet = 12;
 		if (f_list != null) {
 			for (int i = f_list.getSize() ; i > 0 ; i--) {
 				CodeGenarator.addPairToArgumentToOffsetMap(f_list.formal_list.get(i-1),offSet);
