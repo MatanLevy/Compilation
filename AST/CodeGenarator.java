@@ -406,7 +406,8 @@ public class CodeGenarator {
 	}
 	
 	public static void printEpilogInReturn () {
-		
+		CodeGenarator.printLWCommand(MIPS_COMMANDS.RA,MIPS_COMMANDS.FRAME_PTR,8); //retrive fm
+
 		CodeGenarator.printADDICommand(MIPS_COMMANDS.STACK_PTR,MIPS_COMMANDS.FRAME_PTR,numberOfMemoryStackPtrShouldOverrideInReturn);
 		CodeGenarator.printLWCommand(MIPS_COMMANDS.FRAME_PTR,MIPS_COMMANDS.FRAME_PTR,4); //retrive fm
 		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
