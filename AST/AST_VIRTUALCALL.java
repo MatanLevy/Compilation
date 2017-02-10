@@ -93,16 +93,14 @@ public class AST_VIRTUALCALL extends AST_Node {
 		//TODO it can be NULL!you should check it
 		exp_list.mipsTranslate(table, assemblyFileName, genartor);
 
-//		TEMP virtualFuncAddress = new TEMP();
-//		CodeGenarator.printLACommand(virtualFuncAddress.name,expAddress.name);
-//		String staticClassName = getNameOfClass(exp,table);
-//		int offSetofFunction = VirtualTableManager.getOffsetForFunction(staticClassName,_id);
-//		CodeGenarator.printADDICommand(virtualFuncAddress.name,virtualFuncAddress.name,offSetofFunction);
-//		CodeGenarator.printJALRCommand(virtualFuncAddress.name);
-
-
-		String label = genartor.getLabelOfMethod(_id);
-		CodeGenarator.printJALCommand(label);
+		TEMP virtualFuncAddress = new TEMP();
+		CodeGenarator.printLWCommand(virtualFuncAddress.name,expAddress.name,0);
+		String staticClassName = getNameOfClass(exp,table);
+		int offSetofFunction = VirtualTableManager.getOffsetForFunction(staticClassName,_id);
+		CodeGenarator.printADDICommand("$a1",virtualFuncAddress.name,offSetofFunction);
+		CodeGenarator.printJALRCommand("$a1");
+//		String label = genartor.getLabelOfMethod(_id);
+//		CodeGenarator.printJALCommand(label);
 		//go back with the fp to the memory before we started to allocate arguments.
 		//we don't need the memory of the arguments now.
 
