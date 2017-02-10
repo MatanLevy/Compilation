@@ -49,7 +49,7 @@ public class AST_COMMA_EXPR_LIST extends AST_Node {
 	}
 	
 	public int getSize () {
-		return ((exp==null) ? 0 : 1) + list.getSize();
+		return ((exp==null) ? 0 : 1) + (list==null ? 0 : list.getSize());
 
 	}
 
