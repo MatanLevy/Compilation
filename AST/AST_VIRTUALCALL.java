@@ -101,10 +101,11 @@ public class AST_VIRTUALCALL extends AST_Node {
 		exp_list.mipsTranslate(table, assemblyFileName, genartor);
 
 		TEMP virtualFuncAddress = new TEMP();
-		CodeGenarator.printLWCommand(virtualFuncAddress.name,expAddress.name,0);
+		CodeGenarator.printADDICommand(virtualFuncAddress.name,expAddress.name,0);
 		String staticClassName = getNameOfClass(exp,table);
 		int offSetofFunction = VirtualTableManager.getOffsetForFunction(staticClassName,_id);
 		CodeGenarator.printADDICommand("$a1",virtualFuncAddress.name,4*offSetofFunction);
+		CodeGenarator.printLWCommand("$a1","$a1",0);
 		CodeGenarator.printJALRCommand("$a1");
 //		String label = genartor.getLabelOfMethod(_id);
 //		CodeGenarator.printJALCommand(label);
