@@ -43,6 +43,7 @@ public class MIPS_COMMANDS {
 	public static final String J = "j";
 	public static final String JR = "jr";
 	public static final String JAL = "jal";
+	public static final String JALR = "jalr";
 	public static final String BLE = "ble";
 	public static final String BGT = "bgt";
 	public static final String BLT = "blt";

@@ -1,6 +1,7 @@
 package AST;
 
 import IR.TEMP;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 
 public class AST_EXP_BINOP extends AST_EXP
 {
@@ -111,6 +112,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		CodeGenarator.printADDICommand(result.name, ConditionHelper.result.name, 0);
 		return result;
 	}
+
 
 	/**
 	 * 

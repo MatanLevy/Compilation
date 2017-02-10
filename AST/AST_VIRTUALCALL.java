@@ -71,6 +71,8 @@ public class AST_VIRTUALCALL extends AST_Node {
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
+
+		TEMP expAddress = /*(exp == null) ?*/ exp.calcAddress(table, genartor, assemblyFileName); /*: CodeGenarator.thisAddress;*/
 		if (_id.equals("printInt") && exp != null && exp.calcType(table) instanceof AST_TYPE_CLASS) {
 			AST_TYPE_CLASS type = (AST_TYPE_CLASS) (exp.calcType(table));
 			String className = type.classId;
@@ -88,13 +90,33 @@ public class AST_VIRTUALCALL extends AST_Node {
 		TEMP temp = exp.calcAddress(table,genartor,assemblyFileName);
 		CodeGenarator.printSWInFpPlusOffset(temp);
 		//int offSet = 0;
+		//TODO it can be NULL!you should check it
 		exp_list.mipsTranslate(table, assemblyFileName, genartor);
+
+//		TEMP virtualFuncAddress = new TEMP();
+//		CodeGenarator.printLACommand(virtualFuncAddress.name,expAddress.name);
+//		String staticClassName = getNameOfClass(exp,table);
+//		int offSetofFunction = VirtualTableManager.getOffsetForFunction(staticClassName,_id);
+//		CodeGenarator.printADDICommand(virtualFuncAddress.name,virtualFuncAddress.name,offSetofFunction);
+//		CodeGenarator.printJALRCommand(virtualFuncAddress.name);
+
+
 		String label = genartor.getLabelOfMethod(_id);
 		CodeGenarator.printJALCommand(label);
 		//go back with the fp to the memory before we started to allocate arguments.
 		//we don't need the memory of the arguments now.
+
+		//TODO here also can be null
 		CodeGenarator.changeOffset(-4 * (exp_list.getSize() + 1));
 		
+	}
+
+	public String getNameOfClass(AST_EXP exp,SymbolTable table) {
+		if (exp.calcType(table) instanceof  AST_TYPE_CLASS) {
+			AST_TYPE_CLASS  typeClass= (AST_TYPE_CLASS) exp.calcType(table);
+			return typeClass.getName();
+		}
+		return null;
 	}
 
     public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
