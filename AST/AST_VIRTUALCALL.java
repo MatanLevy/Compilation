@@ -120,8 +120,9 @@ public class AST_VIRTUALCALL extends AST_Node {
 	}
 
     public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		//TODO add here body
-		return null;
+    	TEMP temp = new TEMP();
+    	CodeGenarator.printADDICommand(temp.name, MIPS_COMMANDS.V0, 0);
+		return temp;
     }
     // jal procedure # call procedure
 

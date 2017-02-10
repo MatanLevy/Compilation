@@ -46,6 +46,7 @@ public class AST_EXP_CALL extends AST_EXP {
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
+		call.virtualCall.mipsTranslate(table, fileName, genarator);
 		return call.virtualCall.calcAddress(table,genarator,fileName);
 	}
 	
