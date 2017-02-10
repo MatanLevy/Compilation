@@ -1,7 +1,6 @@
 package AST;
 
 import IR.TEMP;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 
 public class AST_STMT_RETURN_EXP extends AST_STMT {
 
@@ -41,7 +40,8 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 		
 		TEMP tempExp = exp.calcAddress(table, genarator, assemblyFileName);
 		CodeGenarator.printLWCommand(MIPS_COMMANDS.V0, tempExp.name, 0);
-		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
+		//CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
+		CodeGenarator.printEpilogInReturn();
 
 	}
 

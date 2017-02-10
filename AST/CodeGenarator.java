@@ -39,6 +39,13 @@ public class CodeGenarator {
 	public TEMP thisAddress;
 	
 	/**
+	 * this is the number of memory sp should go back in return.
+	 * This memory used to prepare arguments, in back from method we don't need this memory.
+	 */
+	
+	public static int numberOfMemoryStackPtrShouldOverrideInReturn = 0;
+	
+	/**
 	 * exit label for runtime error such as divison by zero or array outofbounds
 	 */
 	public LABEL exitLabel = new LABEL("EXIT");
@@ -396,6 +403,13 @@ public class CodeGenarator {
 		CodeGenarator.printSWCommand(rvalue.name, lvalue.name, 0);
 		
 		return lvalue;
+	}
+	
+	public static void printEpilogInReturn () {
+		
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.STACK_PTR,MIPS_COMMANDS.FRAME_PTR,numberOfMemoryStackPtrShouldOverrideInReturn);
+		CodeGenarator.printLWCommand(MIPS_COMMANDS.FRAME_PTR,MIPS_COMMANDS.FRAME_PTR,4); //retrive fm
+		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
 	}
 	
 	

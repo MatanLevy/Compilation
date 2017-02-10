@@ -88,6 +88,7 @@ public class AST_METHOD extends AST_Node {
 
 	public void printEpilog() {
 		int numberOfAllocatedTotalInStack = 4*(2 + formals.numberOfArgs());
+		CodeGenarator.numberOfMemoryStackPtrShouldOverrideInReturn = numberOfAllocatedTotalInStack;
 		CodeGenarator.printADDICommand(MIPS_COMMANDS.STACK_PTR,MIPS_COMMANDS.FRAME_PTR,numberOfAllocatedTotalInStack);
 		CodeGenarator.printLWCommand(MIPS_COMMANDS.FRAME_PTR,MIPS_COMMANDS.FRAME_PTR,4); //retrive fm
 		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
