@@ -72,7 +72,14 @@ public class AST_VIRTUALCALL extends AST_Node {
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 
-		TEMP expAddress = /*(exp == null) ?*/ exp.calcAddress(table, genartor, assemblyFileName); /*: CodeGenarator.thisAddress;*/
+		if (exp != null) {
+			AST_TYPE_CLASS type = (AST_TYPE_CLASS) exp.calcType(table);
+			CodeGenarator.currentClass  = type.getName();
+		}
+
+		TEMP expAddress = (exp != null) ? exp.calcAddress(table, genartor, assemblyFileName) : genartor.thisAddress;
+		genartor.thisAddress = expAddress;
+
 		if (_id.equals("printInt") && exp != null && exp.calcType(table) instanceof AST_TYPE_CLASS) {
 			AST_TYPE_CLASS type = (AST_TYPE_CLASS) (exp.calcType(table));
 			String className = type.classId;
@@ -97,7 +104,7 @@ public class AST_VIRTUALCALL extends AST_Node {
 		CodeGenarator.printLWCommand(virtualFuncAddress.name,expAddress.name,0);
 		String staticClassName = getNameOfClass(exp,table);
 		int offSetofFunction = VirtualTableManager.getOffsetForFunction(staticClassName,_id);
-		CodeGenarator.printADDICommand("$a1",virtualFuncAddress.name,offSetofFunction);
+		CodeGenarator.printADDICommand("$a1",virtualFuncAddress.name,4*offSetofFunction);
 		CodeGenarator.printJALRCommand("$a1");
 //		String label = genartor.getLabelOfMethod(_id);
 //		CodeGenarator.printJALCommand(label);

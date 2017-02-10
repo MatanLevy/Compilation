@@ -18,6 +18,21 @@ public class VirtualTableManager {
         actualFunctions.addAll(classDecl.fm_list.method_list.stream().map(x->x._id).collect(Collectors.toList()));
         return new LinkedHashSet<>(actualFunctions);
     }
+    public static List<String> getListOfActualFields(String className) {
+        List<String> actualFields = new ArrayList<>();
+        AST_CLASSDECL classDecl = SemanticChecker.getClass(className);
+        if (classDecl.baseId != null) {
+            actualFields.addAll(getListOfActualFields(classDecl.baseId));
+        }
+        actualFields.addAll(classDecl.fm_list.field_list.stream().map(x->x._id).collect(Collectors.toList()));
+        return actualFields;
+    }
+    public static void printFields() {
+        List<AST_CLASSDECL> lst = SemanticChecker.getProgram().class_dec_list.class_decl_list;
+        for (AST_CLASSDECL elem : lst) {
+            System.out.format("class %s : %s%n",elem.classId,getListOfActualFields(elem.classId));
+        }
+    }
 
     public static String getLabelNameForFunction(String className,String functionName) {
         String actualClassName = className;
@@ -40,10 +55,6 @@ public class VirtualTableManager {
         return getListOfActualFunctionsByName(className).stream().map(x -> getLabelNameForFunction(className,x)).
                 collect(Collectors.toList());
     }
-    /*public static List<String> getListOfLabelNamePerFunction(String functionName) {
-        return SemanticChecker.getProgram().class_dec_list.class_decl_list.stream().map(x -> x.classId)
-                .map(x -> getLabelNameForFunction(x,functionName)).collect(Collectors.toList());
-    }*/
 	public static void printAllFunctions(String className) {
 		//if class equal print, ignore it.
 		if (/*!(className.equals("PRINT")) &&*/ getAllLabelsForClass(className).size() > 0) {
@@ -73,9 +84,5 @@ public class VirtualTableManager {
 		List<String> listOfFunctionsInClassList = new ArrayList<String>(listOfFunctionsInClassSet);
 		return listOfFunctionsInClassList.indexOf(functionName);
 	}
-	/*public static void printoffSet() {
-	    SemanticChecker.getProgram().class_dec_list.class_decl_list.stream().map(x -> x.classId).
-                forEach(x -> getOffsetForFunction(x,"a"));
-    }*/
 
 }
