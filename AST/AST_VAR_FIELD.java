@@ -1,7 +1,6 @@
 package AST;
 
 import IR.TEMP;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 
 
 public class AST_VAR_FIELD extends AST_VAR
