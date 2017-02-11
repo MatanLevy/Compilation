@@ -59,6 +59,7 @@ public class AST_VAR_FIELD extends AST_VAR
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
 		TEMP objectAddress = (var == null) ? genarator.thisAddress : var.calcAddress(table, genarator, fileName);
+		genarator.checkNotNull(objectAddress);
 		String classStaticName = (var == null) ? CodeGenarator.currentClass : ((AST_TYPE_CLASS)(var.calcType(table))).getName();
 		int offsetOfFieldInHeap = (VirtualTableManager.getListOfActualFields(classStaticName).indexOf(fieldName)+1) * 4;
 		TEMP offsetAddress = new TEMP();

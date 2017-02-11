@@ -8,6 +8,12 @@ import IR.*;
 
 public class CodeGenarator {
 
+    public  void checkNotNull(TEMP temp) {
+        TEMP zero = new TEMP();
+        printLICommand(zero.name,0);
+        printBEQCommand(temp.name,zero.name,exitLabel.labelString);
+    }
+
 
     public static LABEL mainLabel = new LABEL("main");
     /**
