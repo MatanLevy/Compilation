@@ -74,6 +74,7 @@ public class AST_FIELD_METHOD_LIST extends AST_Node {
 			field.mipsTranslate(table, assemblyFileName, genartor);
 		}
 		for (AST_METHOD method : method_list) {
+			CodeGenarator.currentMethod  = method._id;
 			table.insertASTNode(method);
 			method.mipsTranslate(table, assemblyFileName, genartor);
 			table.popScope();

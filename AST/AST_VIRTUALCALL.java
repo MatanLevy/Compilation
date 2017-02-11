@@ -71,52 +71,58 @@ public class AST_VIRTUALCALL extends AST_Node {
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
-
-		if (exp != null) {
-			AST_TYPE_CLASS type = (AST_TYPE_CLASS) exp.calcType(table);
-			CodeGenarator.currentClass  = type.getName();
-		}
-
+        if (! CodeGenarator.currentMethod.equals("main")) genartor.thisAddress = CodeGenarator.getThis();
+        String staticClassName = (exp != null) ? getNameOfClass(exp,table) : CodeGenarator.currentClass;
 		TEMP expAddress = (exp != null) ? exp.calcAddress(table, genartor, assemblyFileName) : genartor.thisAddress;
-		genartor.thisAddress = expAddress;
 
-		if (_id.equals("printInt") && exp != null && exp.calcType(table) instanceof AST_TYPE_CLASS) {
-			AST_TYPE_CLASS type = (AST_TYPE_CLASS) (exp.calcType(table));
-			String className = type.classId;
-			if (className.equals("PRINT")) {
-				if (exp_list.exp != null && exp_list.exp.calcType(table) instanceof AST_TYPE_INT) {
-					TEMP number = exp_list.exp.calcAddress(table, genartor, assemblyFileName);
-					CodeGenarator.printInteger(number.name);
-					return;
-				}
-			}
-		}
-		//allocate memory for exp as argument.
-		int sizeToAllocateForExpAsArgument = 4;
-		CodeGenarator.allocateMemory(sizeToAllocateForExpAsArgument, true);
-		TEMP temp = exp.calcAddress(table,genartor,assemblyFileName);
-		CodeGenarator.printSWInFpPlusOffset(temp);
-		//int offSet = 0;
-		//TODO it can be NULL!you should check it
-		exp_list.mipsTranslate(table, assemblyFileName, genartor);
-
-		TEMP virtualFuncAddress = new TEMP();
-		CodeGenarator.printADDICommand(virtualFuncAddress.name,expAddress.name,0);
-		String staticClassName = getNameOfClass(exp,table);
-		int offSetofFunction = VirtualTableManager.getOffsetForFunction(staticClassName,_id);
-		CodeGenarator.printADDICommand("$a1",virtualFuncAddress.name,4*offSetofFunction);
-		CodeGenarator.printLWCommand("$a1","$a1",0);
-		CodeGenarator.printJALRCommand("$a1");
-//		String label = genartor.getLabelOfMethod(_id);
-//		CodeGenarator.printJALCommand(label);
-		//go back with the fp to the memory before we started to allocate arguments.
-		//we don't need the memory of the arguments now.
-
-		//TODO here also can be null
-		CodeGenarator.changeOffset(-4 * (exp_list.getSize() + 1));
-		
+        if (_id.equals("printInt") && exp != null && exp.calcType(table) instanceof AST_TYPE_CLASS) {
+            AST_TYPE_CLASS type = (AST_TYPE_CLASS) (exp.calcType(table));
+            String className = type.classId;
+            if (className.equals("PRINT")) {
+                if (exp_list.exp != null && exp_list.exp.calcType(table) instanceof AST_TYPE_INT) {
+                    TEMP number = exp_list.exp.calcAddress(table, genartor, assemblyFileName);
+                    CodeGenarator.printInteger(number.name);
+                    return;
+                }
+            }
+        }
+        prepareArguments(table,genartor,assemblyFileName,expAddress);
+        callToVirtualFunction(staticClassName,expAddress);
 	}
 
+
+
+	public void prepareArguments(SymbolTable table,CodeGenarator genartor,String assemblyFileName,TEMP expAddress) {
+        int sizeToAllocateForExpAsArgument = 4;
+        CodeGenarator.allocateMemory(sizeToAllocateForExpAsArgument, true);
+        CodeGenarator.printSWInFpPlusOffset(expAddress);
+        exp_list.mipsTranslate(table, assemblyFileName, genartor);
+    }
+
+	public void callToVirtualFunction(String staticClassName,TEMP expAddress) {
+        TEMP virtualFuncAddress = new TEMP();
+        CodeGenarator.printADDICommand(virtualFuncAddress.name,expAddress.name,0);
+        //System.out.format("current static class %s in call to %s%n",staticClassName,_id);
+        int offSetofFunction = VirtualTableManager.getOffsetForFunction(staticClassName,_id);
+        CodeGenarator.printADDICommand("$a1",virtualFuncAddress.name,4*offSetofFunction);
+        CodeGenarator.printLWCommand("$a1","$a1",0);
+        CodeGenarator.printJALRCommand("$a1");
+        CodeGenarator.changeOffset(-4 * (exp_list.getSize() + 1));
+    }
+
+	public void checkPrintIntCase(SymbolTable table,CodeGenarator genartor,String assemblyFileName) {
+        if (_id.equals("printInt") && exp != null && exp.calcType(table) instanceof AST_TYPE_CLASS) {
+            AST_TYPE_CLASS type = (AST_TYPE_CLASS) (exp.calcType(table));
+            String className = type.classId;
+            if (className.equals("PRINT")) {
+                if (exp_list.exp != null && exp_list.exp.calcType(table) instanceof AST_TYPE_INT) {
+                    TEMP number = exp_list.exp.calcAddress(table, genartor, assemblyFileName);
+                    CodeGenarator.printInteger(number.name);
+                    return;
+                }
+            }
+        }
+    }
 	public String getNameOfClass(AST_EXP exp,SymbolTable table) {
 		if (exp.calcType(table) instanceof  AST_TYPE_CLASS) {
 			AST_TYPE_CLASS  typeClass= (AST_TYPE_CLASS) exp.calcType(table);

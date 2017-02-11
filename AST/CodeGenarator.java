@@ -35,11 +35,20 @@ public class CodeGenarator {
      */
     public static String currentClass;
 
+
+    public static String currentMethod;
     /**
      * address(heap address) of this pointer at this moment
      * (not sure yet if should be integer or something else
      */
     public TEMP thisAddress;
+
+
+    public static TEMP getThis() {
+        TEMP temp = printAndGetArgumentInsideMethod(numberOfMemoryStackPtrShouldOverrideInReturn-4);
+        printLWCommand(temp.name,temp.name,0);
+        return temp;
+    }
 
     /**
      * this is the number of memory sp should go back in return.
