@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import IR.*;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 
 public class CodeGenarator {
 
