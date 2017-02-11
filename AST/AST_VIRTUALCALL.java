@@ -96,7 +96,7 @@ public class AST_VIRTUALCALL extends AST_Node {
 		TEMP virtualFuncAddress = new TEMP();
 		CodeGenarator.printLWCommand(virtualFuncAddress.name,expAddress.name,0);
 		String staticClassName = getNameOfClass(exp,table);
-		int offSetofFunction = VirtualTableManager.getOffsetForFunction(staticClassName,_id);
+		int offSetofFunction = (VirtualTableManager.getOffsetForFunction(staticClassName,_id))*4;
 		CodeGenarator.printADDICommand("$a1",virtualFuncAddress.name,offSetofFunction);
 		CodeGenarator.printJALRCommand("$a1");
 //		String label = genartor.getLabelOfMethod(_id);
