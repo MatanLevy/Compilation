@@ -1,6 +1,7 @@
 package AST;
 
 import IR.TEMP;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 
 
 public class AST_VAR_FIELD extends AST_VAR
@@ -58,12 +59,9 @@ public class AST_VAR_FIELD extends AST_VAR
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
-		
-		//calculate the offset of this field in heap
 		TEMP objectAddress = (var == null) ? genarator.thisAddress : var.calcAddress(table, genarator, fileName);
-		SymbolEntry symbolEntryField = table.find_symbol(fieldName);
-		
-		int offsetOfFieldInHeap = symbolEntryField.offset * 4; 
+		String classStaticName = (var == null) ? CodeGenarator.currentClass : ((AST_TYPE_CLASS)(var.calcType(table))).getName();
+		int offsetOfFieldInHeap = (VirtualTableManager.getListOfActualFields(classStaticName).indexOf(fieldName)+1) * 4;
 		TEMP offsetAddress = new TEMP();
 		CodeGenarator.printADDICommand(offsetAddress.name, objectAddress.name, offsetOfFieldInHeap);
 		return offsetAddress;
