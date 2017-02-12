@@ -97,17 +97,14 @@ public class AST_METHOD extends AST_Node {
 	}
 	
 	public void printPrologOfMethod () {
-		//CodeGenarator.allocateMemory(4);
-		
-		//TODO if we use jal/jr (need to check) we don't need it ?
-		//CodeGenarator.printSWCommand(MIPS_COMMANDS.RA, MIPS_COMMANDS.STACK_PTR, 0);
+
 		CodeGenarator.allocateMemory(4, false);
 		CodeGenarator.printSWCommand(MIPS_COMMANDS.RA, MIPS_COMMANDS.STACK_PTR, 0);
 		CodeGenarator.allocateMemory(4, false);
 		CodeGenarator.printSWCommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
 		CodeGenarator.allocateMemory(4, false);
 		CodeGenarator.printADDICommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.STACK_PTR, 0);
-		
+
 		//Remember this number for the return statement.
 		int numberOfAllocatedTotalInStack = 4*(2 + formals.numberOfArgs() + 2);
 		CodeGenarator.numberOfMemoryStackPtrShouldOverrideInReturn = numberOfAllocatedTotalInStack;

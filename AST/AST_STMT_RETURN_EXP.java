@@ -39,8 +39,7 @@ public class AST_STMT_RETURN_EXP extends AST_STMT {
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genarator) {
 		
 		TEMP tempExp = exp.calcAddress(table, genarator, assemblyFileName);
-		CodeGenarator.printADDICommand(MIPS_COMMANDS.V0, tempExp.name, 0);
-		//CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.T0, tempExp.name, 0);
 		CodeGenarator.printEpilogInReturn();
 
 	}
