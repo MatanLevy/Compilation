@@ -40,8 +40,11 @@ public class AST_EXP_NEW_CLASS extends AST_EXP {
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
 		int sizeToAllocOnHeap = table.returnTheSizeOfTheObjectFromClassTypeOnTheHeap(_className);
 		TEMP returnAddress = genarator.AllocOnHeap(sizeToAllocOnHeap);
-		if (VirtualTableManager.getListOfActualFunctionsByName(_className).size() != 0)
-			CodeGenarator.printLACommand(returnAddress.name,"VFTable_" + _className);
+		if (VirtualTableManager.getListOfActualFunctionsByName(_className).size() != 0) {
+			TEMP temp = new TEMP();
+			CodeGenarator.printLACommand(temp.name, "VFTable_" + _className);
+			CodeGenarator.printSWCommand(temp.name,returnAddress.name,0);
+		}
 		return returnAddress;
 	}
 

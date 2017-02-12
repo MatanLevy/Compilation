@@ -25,6 +25,14 @@ public class SemanticChecker {
 		return null;
 	}
 
+	public static boolean isFieldInClass(String fieldName,String className) {
+		AST_CLASSDECL decl = SemanticChecker.getClass(className);
+		for (AST_FIELD field : decl.fm_list.field_list)
+			if (field._id.equals(fieldName))
+				return true;
+		return false;
+	}
+
 
 
 	public static List<AST_EXP> generateExpList(AST_COMMA_EXPR_LIST explist) {

@@ -3,6 +3,7 @@ package AST;
 import java.util.List;
 
 import IR.TEMP;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 
 public class AST_VIRTUALCALL extends AST_Node {
     AST_EXP exp;
@@ -80,7 +81,7 @@ public class AST_VIRTUALCALL extends AST_Node {
         String staticClassName = (exp != null) ? getNameOfClass(exp, table) : CodeGenarator.currentClass;
         TEMP expAddress = (exp != null) ? exp.calcAddress(table, genartor, assemblyFileName) : genartor.thisAddress;
 
-        genartor.checkNotNull(expAddress);
+
 
         if (_id.equals("printInt") && exp != null && exp.calcType(table) instanceof AST_TYPE_CLASS) {
             AST_TYPE_CLASS type = (AST_TYPE_CLASS) (exp.calcType(table));
@@ -93,6 +94,9 @@ public class AST_VIRTUALCALL extends AST_Node {
                 }
             }
         }
+
+        genartor.checkNotNull(expAddress);
+
         prepareArguments(table, genartor, assemblyFileName, expAddress);
         callToVirtualFunction(staticClassName, expAddress);
     }
@@ -110,8 +114,9 @@ public class AST_VIRTUALCALL extends AST_Node {
         CodeGenarator.printADDICommand(virtualFuncAddress.name, expAddress.name, 0);
         //System.out.format("current static class %s in call to %s%n",staticClassName,_id);
         int offSetofFunction = VirtualTableManager.getOffsetForFunction(staticClassName, _id);
-        CodeGenarator.printADDICommand("$a1", virtualFuncAddress.name, 4 * offSetofFunction);
-        CodeGenarator.printLWCommand("$a1", "$a1", 0);
+        CodeGenarator.printLWCommand("$a1",virtualFuncAddress.name,0);
+        CodeGenarator.printADDICommand("$a1", "$a1", 4 * offSetofFunction);
+        CodeGenarator.printLWCommand("$a1","$a1",0);
         CodeGenarator.printJALRCommand("$a1");
         CodeGenarator.changeOffset(-4 * (exp_list.getSize() + 1));
     }

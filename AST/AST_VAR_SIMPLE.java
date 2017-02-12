@@ -48,6 +48,11 @@ public class AST_VAR_SIMPLE extends AST_VAR
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
+
+		//if this is a field,go to var field
+		if (SemanticChecker.isFieldInClass(name,CodeGenarator.currentClass))
+				return new AST_VAR_FIELD(null,name).calcAddress(table,genarator,fileName);
+
 		int offsetArgument = CodeGenarator.getOffsetOfArgument(name);
 		if (offsetArgument != -1) {
 			return CodeGenarator.printAndGetArgumentInsideMethod(offsetArgument);

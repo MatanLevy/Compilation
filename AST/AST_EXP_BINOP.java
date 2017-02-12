@@ -1,5 +1,6 @@
 package AST;
 
+import IR.LABEL;
 import IR.TEMP;
 
 public class AST_EXP_BINOP extends AST_EXP
@@ -103,7 +104,7 @@ public class AST_EXP_BINOP extends AST_EXP
 			CodeGenarator.printJALCommand(ConditionHelper.leqlabel.labelString);
 		}
 		if (OP.getOp() == "EQUAL") {
-			CodeGenarator.printJALCommand(ConditionHelper.eqlabel.labelString);
+				CodeGenarator.printJALCommand(ConditionHelper.eqlabel.labelString);
 		}
 		if (OP.getOp() == "NON EQUAL") {
 			CodeGenarator.printJALCommand(ConditionHelper.neqlabel.labelString);
@@ -195,7 +196,23 @@ public class AST_EXP_BINOP extends AST_EXP
 	}
 
 	private TEMP calcPlusForString(SymbolTable table, CodeGenarator genarator, String fileName) {
-		
+		TEMP addressLeft = left.calcAddress(table,genarator,fileName);
+		TEMP addressRight = right.calcAddress(table, genarator, fileName);
+		TEMP addressResult = new TEMP();
+        TEMP zero = new TEMP();
+        CodeGenarator.printLICommand(zero.name,0);
+		CodeGenarator.printLICommand("$t8",10);
+		LABEL sCopyFirst = new LABEL("sCopyFirst");
+		LABEL sCopySpace = new LABEL("sCopySpace");
+		CodeGenarator.printLBLCommand(sCopyFirst.labelString);
+		CodeGenarator.printLBCommand("$t0",addressLeft.name,0);
+		CodeGenarator.printBEQCommand("$t0",zero.name,sCopySpace.labelString);
+		CodeGenarator.printBEQCommand("$t0","$t8",sCopySpace.labelString);
+
+
+
+
+
 		return null;
 	}
 

@@ -185,12 +185,14 @@ public class CodeGenarator {
         CodeGenarator.printLICommand(MIPS_COMMANDS.V0, MIPS_COMMANDS.alloc);
         CodeGenarator.printSyscallCommand();
         CodeGenarator.printADDICommand(result.name, MIPS_COMMANDS.V0, 0);
-
+        TEMP fieldIterator = new TEMP();
+        CodeGenarator.printADDICommand(fieldIterator.name,result.name,0);
         //init all fields to zero
         TEMP zero = new TEMP();
         CodeGenarator.printLICommand(zero.name, 0);
         for (int i = 4; i < size; i += 4) {
-            CodeGenarator.printSWCommand(zero.name, result.name, i);
+            CodeGenarator.printADDICommand(fieldIterator.name,result.name,i);
+            CodeGenarator.printSWCommand(zero.name, fieldIterator.name, 0);
         }
         return result;
     }
@@ -286,6 +288,10 @@ public class CodeGenarator {
     //Load Address (la)
     public static void printLACommand(String rt, String address) {
         System.out.format("\t%s %s, %s%n", MIPS_COMMANDS.LA, rt, address);
+    }
+
+    public static void printLBCommand(String rt, String address,int offset) {
+        System.out.format("\t%s %s, %d(%s)%n", MIPS_COMMANDS.LB, rt, offset, address);
     }
 
     // A word is loaded into a register from the specified address.

@@ -58,6 +58,10 @@ public class AST_VAR_FIELD extends AST_VAR
 
 	@Override
 	public TEMP calcAddress(SymbolTable table, CodeGenarator genarator, String fileName) {
+
+		if (!CodeGenarator.currentMethod.equals("main"))
+			genarator.thisAddress = CodeGenarator.getThis();
+
 		TEMP objectAddress = (var == null) ? genarator.thisAddress : var.calcAddress(table, genarator, fileName);
 		genarator.checkNotNull(objectAddress);
 		String classStaticName = (var == null) ? CodeGenarator.currentClass : ((AST_TYPE_CLASS)(var.calcType(table))).getName();
