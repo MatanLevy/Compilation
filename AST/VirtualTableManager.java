@@ -25,6 +25,9 @@ public class VirtualTableManager {
             actualFields.addAll(getListOfActualFields(classDecl.baseId));
         }
         actualFields.addAll(classDecl.fm_list.field_list.stream().map(x->x._id).collect(Collectors.toList()));
+        for (int i=0; i<classDecl.fm_list.field_list.size();i++) {
+        	actualFields.addAll(classDecl.fm_list.field_list.get(i)._comma_list._id_list);
+        }
         return actualFields;
     }
     public static void printFields() {
