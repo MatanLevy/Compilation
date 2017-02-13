@@ -291,7 +291,10 @@ public class CodeGenarator {
     }
 
     public static void printLBCommand(String rt, String address,int offset) {
-        System.out.format("\t%s %s, %d(%s)%n", MIPS_COMMANDS.LB, rt, offset, address);
+        System.out.format("\t%s %s,(%s)%n", MIPS_COMMANDS.LB, rt, address);
+    }
+    public static void printSBCommand(String rt, String address,int offset) {
+        System.out.format("\t%s %s,(%s)%n", MIPS_COMMANDS.SB, rt, address);
     }
 
     // A word is loaded into a register from the specified address.
@@ -460,6 +463,8 @@ public class CodeGenarator {
         CodeGenarator.printLWCommand(MIPS_COMMANDS.FRAME_PTR, MIPS_COMMANDS.FRAME_PTR, 4); //retrive fm
         CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
     }
+    
+
 
 
 } 

@@ -10,6 +10,13 @@ public class MIPS_COMMANDS {
 	public static final String V0 = "$v0";
 	public static final String A0 = "$a0";
 	public static final String T0 = "$t0";
+	public static final String T1 = "$t1";
+	public static final String T2 = "$t2";
+	public static final String T3 = "$t3";
+	public static final String T4 = "$t4";
+	public static final String T5 = "$t5";
+
+
 
 	//public static final String ZERO = "$zero";
 	public static final String RA = "$ra";
@@ -39,6 +46,7 @@ public class MIPS_COMMANDS {
 	public static final String SUB = "sub";
 	public static final String LA = "la";
 	public static final String LB = "lb";
+	public static final String SB = "sb";
 	public static final String LI = "li";
 	public static final String SW = "sw";
 	public static final String LW = "lw";
