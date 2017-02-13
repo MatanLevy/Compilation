@@ -81,7 +81,11 @@ public class AST_EXP_BINOP extends AST_EXP
 				}
 				if (leftStr != null && rightStr!=null)
 				{
-					String concate = leftStr.concat(rightStr);
+					//delete unnecassary ""\"
+					leftStr = leftStr.replace("\"", "");
+					rightStr = rightStr.replace("\"", "");
+
+					String concate = "\"" + leftStr+rightStr + "\"";
 					STRING_LABEL dummy_label = new STRING_LABEL(concate, true);
 
 				}

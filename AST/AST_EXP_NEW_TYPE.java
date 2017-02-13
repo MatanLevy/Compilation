@@ -51,7 +51,27 @@ public class AST_EXP_NEW_TYPE extends AST_EXP {
 //		CodeGenarator.allocateMemory(sizeToAllocateForThisStmt);
 		//CodeGenarator.changeOffset(sizeToAllocateForThisStmt);
 		TEMP arraySize = exp.calcAddress(table, genarator, fileName);
-		return genarator.ArrayAlloc(arraySize);
+		TEMP result =  genarator.ArrayAlloc(arraySize);
+		
+		//init array with zeros.
+		if (exp instanceof AST_EXP_LITERAL) {
+			AST_EXP_LITERAL dummy_exp = (AST_EXP_LITERAL) exp;
+			AST_LITERAL dummy_literal = dummy_exp.literal;
+			if (dummy_literal instanceof AST_LITERAL_INT) {
+				AST_LITERAL_INT sizeLiteral = (AST_LITERAL_INT) dummy_literal;
+				int size = sizeLiteral._i * 4;
+				TEMP Iterator = new TEMP();
+		        CodeGenarator.printADDICommand(Iterator.name,result.name,0);
+		        TEMP zero = new TEMP();
+				 for (int i = 4; i < size; i += 4) {
+			            CodeGenarator.printADDICommand(Iterator.name,result.name,i);
+			            CodeGenarator.printSWCommand(zero.name, Iterator.name, 0);
+			        }
+			}
+			
+		}
+		
+		return result;
 	}
 
 }
