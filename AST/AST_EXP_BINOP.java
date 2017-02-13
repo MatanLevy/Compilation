@@ -30,6 +30,11 @@ public class AST_EXP_BINOP extends AST_EXP
 
 	@Override
 	public boolean checkSemantic(SymbolTable table) {
+//		AST_TYPE leftType = left.calcType(table); 
+//		AST_TYPE rightType = right.calcType(table);
+//		if (leftType instanceof AST_TYPE_STRING && rightType instanceof AST_TYPE_STRING && OP.getOp() == "PLUS") {
+//			
+//		}
 		
 		return false;
 	}
@@ -54,6 +59,33 @@ public class AST_EXP_BINOP extends AST_EXP
 		}
 		if (leftType instanceof AST_TYPE_STRING && rightType instanceof AST_TYPE_STRING) {
 			if (OP.getOp() == "PLUS") {
+				String leftStr=null;
+				String rightStr=null;
+				if (left instanceof AST_EXP_VAR) {
+					AST_EXP_VAR left_dummy = (AST_EXP_VAR) left;
+					leftStr = left_dummy.var.getName();
+				}
+				else if (left instanceof AST_EXP_LITERAL){
+					AST_EXP_LITERAL left_dummy = (AST_EXP_LITERAL) left;
+					leftStr = left_dummy.getName();
+					
+				}
+				if (right instanceof AST_EXP_VAR) {
+					AST_EXP_VAR right_dummy = (AST_EXP_VAR) right;
+					rightStr = right_dummy.var.getName();
+				}
+				else if (right instanceof AST_EXP_LITERAL){
+					AST_EXP_LITERAL right_dummy = (AST_EXP_LITERAL) right;
+					rightStr = right_dummy.getName();
+					
+				}
+				if (leftStr != null && rightStr!=null)
+				{
+					String concate = leftStr.concat(rightStr);
+					STRING_LABEL dummy_label = new STRING_LABEL(concate, true);
+
+				}
+				
 				return new AST_TYPE_STRING();
 			}
 		}

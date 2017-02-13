@@ -18,7 +18,7 @@ public class AST_EXP_LITERAL extends AST_EXP {
 
 	@Override
 	public String getName() {
-		return null;
+		return literal.getName();
 	}
 
 	@Override
