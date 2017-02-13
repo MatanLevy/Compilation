@@ -3,6 +3,7 @@ package AST;
 import java.util.List;
 
 public class SymbolEntry {
+	public boolean is_field;
 	String id;
 	AST_TYPE type;
 	boolean is_class;
@@ -24,6 +25,7 @@ public class SymbolEntry {
 		this.id = id;
 		this.type = type;
 		this.initalize = initalize;
+		this.is_field = false;
 		if (type instanceof AST_TYPE_CLASS) {
 			is_class = true;
 			inWhichClassDefined = "";
@@ -143,6 +145,10 @@ public class SymbolEntry {
 	
 	public void setOffset (int offset) {
 		this.offset = offset;
+	}
+	
+	public void setIsField(boolean isField) {
+		this.is_field = true;
 	}
 
 

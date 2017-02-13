@@ -80,6 +80,11 @@ public class AST_METHOD extends AST_Node {
 		if (!(_id.equals("main"))) {
 			printEpilog();
 		}
+		else {
+			
+			CodeGenarator.printLICommand(MIPS_COMMANDS.V0, MIPS_COMMANDS.exit);
+			CodeGenarator.printSyscallCommand();
+		}
 		CodeGenarator.removeFrame();
 	}
 

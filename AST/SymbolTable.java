@@ -349,7 +349,9 @@ public class SymbolTable {
 		if (check_scope(field.getName()))
 			error(true, false, field.getName());
 		// we don't need to initialize fields before we use them.
-		add_symbol(field._id, field._type, true, false, null).setOffsetField();
+		SymbolEntry sym = add_symbol(field._id, field._type, true, false, null);
+		sym.setOffsetField();
+		sym.setIsField(true);
 		numberOfFieldInCurrentClass++;
 		if (! (field._comma_list.isEmpty())){
 			for (int i=0; i < field._comma_list.size(); i++) {
@@ -357,7 +359,10 @@ public class SymbolTable {
 				// if we defined object with the same id in the same scope. it's multiple define error
 				if (check_scope(fieldId))
 					error(true, false, fieldId);
-				add_symbol(fieldId, field._type, true, false, null).setOffsetField();
+				sym = add_symbol(fieldId, field._type, true, false, null);
+				sym.setOffsetField();
+				sym.setIsField(true);
+
 				numberOfFieldInCurrentClass++;
 			}
 		}

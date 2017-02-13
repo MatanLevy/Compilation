@@ -10,7 +10,7 @@ import AST.*;
 public class Main {
 	public static void main(String argv[]) {
 
-		//for (int i = 300; i < 390; i++)
+		//for (int i = 300; i < 410; i++)
 		//	System.out.format("int*  Temp_%d  ; %n",i);
 		Lexer l;
 		parser p = null;
