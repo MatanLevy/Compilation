@@ -29,8 +29,13 @@ public class AST_STMT_RETURN extends AST_STMT {
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {
 
-		//CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
-		CodeGenarator.printEpilogInReturn();
+		if (!CodeGenarator.currentMethod.equals("main"))
+			CodeGenarator.printEpilogInReturn();
+		else {
+			//exit if it's main
+			CodeGenarator.printLICommand(MIPS_COMMANDS.V0, MIPS_COMMANDS.exit);
+			CodeGenarator.printSyscallCommand();
+		}
 	}
 
 }
