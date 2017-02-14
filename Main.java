@@ -16,21 +16,21 @@ public class Main {
 		boolean syntexCheck = false;
 		boolean semanticCheck = false;
 		FileReader file_reader = null;
-		PrintWriter file_writer = null;
 		String inputFilename = argv[0];
 		String outputFilename = argv[1];
 		
 		PrintStream out = null;
 		try {
-			out = new PrintStream(new FileOutputStream("output.txt"));
+			out = new PrintStream(new FileOutputStream(outputFilename));
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
-		//System.setOut(out);
+
+
+		System.setOut(out);
 		
 		try {
 			file_reader = new FileReader(inputFilename);
-			file_writer = new PrintWriter(outputFilename);
 			l = new Lexer(file_reader);
 			p = new parser(l);
 		} catch (Exception e) {
@@ -44,8 +44,6 @@ public class Main {
 		} finally {
 			if (p.isFileLegal()) 
 				syntexCheck = true;
-			else 
-				file_writer.write("FAIL");
 		}
 		if (syntexCheck) {
 			SemanticChecker.setProgram(program);
@@ -57,11 +55,7 @@ public class Main {
 				program.mipsTranslate(table1, "none", genartor);
 			} catch (RuntimeException e) {
 				e.printStackTrace();
-				file_writer.write("FAIL");
 			}
-			if (semanticCheck)
-				file_writer.write("OK");
 		}
-		file_writer.close();
 	}
 }
