@@ -51,6 +51,9 @@ public class AST_VAR_SUBSCRIPT extends AST_VAR
 	@Override
 	public TEMP calcAddress(SymbolTable table,CodeGenarator genarator,String fileName) {
 		TEMP arrayAddressTemp = var.calcAddress(table, genarator, fileName);
+
+		genarator.checkNotNull(arrayAddressTemp);
+
 		//CodeGenarator.printLACommand(arrayAddressTemp.name, var.getName());
 		TEMP indexTemp = subscript.calcAddress(table, genarator, fileName);
 		TEMP size = new TEMP();
