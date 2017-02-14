@@ -2,7 +2,7 @@ package AST;
 
 import java.util.List;
 
-import IR.TEMP;
+import COUNTERS.TEMP;
 
 public class AST_VIRTUALCALL extends AST_Node {
     AST_EXP exp;

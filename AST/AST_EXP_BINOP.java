@@ -1,7 +1,7 @@
 package AST;
 
-import IR.LABEL;
-import IR.TEMP;
+import COUNTERS.LABEL;
+import COUNTERS.TEMP;
 
 public class AST_EXP_BINOP extends AST_EXP
 {
@@ -59,7 +59,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		}
 		if (leftType instanceof AST_TYPE_STRING && rightType instanceof AST_TYPE_STRING) {
 			if (OP.getOp() == "PLUS") {
-				String leftStr=null;
+				/*String leftStr=null;
 				String rightStr=null;
 				if (left instanceof AST_EXP_VAR) {
 					AST_EXP_VAR left_dummy = (AST_EXP_VAR) left;
@@ -88,7 +88,7 @@ public class AST_EXP_BINOP extends AST_EXP
 					String concate = "\"" + leftStr+rightStr + "\"";
 					STRING_LABEL dummy_label = new STRING_LABEL(concate, true);
 
-				}
+				}*/
 				
 				return new AST_TYPE_STRING();
 			}

@@ -3,7 +3,7 @@ package AST;
 import java.util.ArrayList;
 import java.util.List;
 
-import IR.TEMP;
+import COUNTERS.TEMP;
 
 public class AST_COMMA_EXPR_LIST_STAR extends AST_Node {
 

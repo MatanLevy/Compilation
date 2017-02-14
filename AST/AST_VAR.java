@@ -1,6 +1,6 @@
 package AST;
 
-import IR.TEMP;
+import COUNTERS.TEMP;
 
 
 public abstract class AST_VAR extends AST_Node

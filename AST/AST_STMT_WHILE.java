@@ -1,7 +1,7 @@
 package AST;
 
-import IR.LABEL;
-import IR.TEMP;
+import COUNTERS.LABEL;
+import COUNTERS.TEMP;
 
 public class AST_STMT_WHILE extends AST_STMT {
 	public AST_EXP cond;

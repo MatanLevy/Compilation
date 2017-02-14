@@ -1,6 +1,6 @@
 package AST;
 
-import IR.TEMP;
+import COUNTERS.TEMP;
 
 public class AST_STMT_TYPE extends AST_STMT {
 

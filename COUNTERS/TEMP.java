@@ -1,4 +1,4 @@
-package IR;
+package COUNTERS;
 
 public class TEMP {
 	public int SerialNumber;

@@ -1,6 +1,6 @@
 package AST;
 
-import IR.TEMP;
+import COUNTERS.TEMP;
 
 public class AST_EXP_CALL extends AST_EXP {
 	AST_CALL call;

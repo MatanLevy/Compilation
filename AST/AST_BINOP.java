@@ -1,6 +1,5 @@
 package AST;
 
-import IR.BIN_OP;
 
 public class AST_BINOP extends AST_Node {
 	int op;
@@ -38,9 +37,7 @@ public class AST_BINOP extends AST_Node {
 		return false;
 	}
 
-	public BIN_OP createIR() {
-		return BIN_OP.valueOf(getOp());
-	}
+
 
 	@Override
 	public void mipsTranslate(SymbolTable table, String assemblyFileName, CodeGenarator genartor) {		
