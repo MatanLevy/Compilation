@@ -15,6 +15,10 @@ public class MIPS_COMMANDS {
 	public static final String T3 = "$t3";
 	public static final String T4 = "$t4";
 	public static final String T5 = "$t5";
+	public static final String T6 = "$t6";
+	public static final String T7 = "$t7";
+
+
 
 
 

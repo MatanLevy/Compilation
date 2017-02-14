@@ -233,94 +233,100 @@ public class AST_EXP_BINOP extends AST_EXP
 	}
 
 	private TEMP calcPlusForString(SymbolTable table, CodeGenarator genarator, String fileName) {
+		TEMP result = new TEMP();
 		TEMP addressLeft = left.calcAddress(table, genarator, fileName);
 		TEMP addressRight = right.calcAddress(table, genarator, fileName);
-		TEMP addressResult = new TEMP();
-		TEMP zero = new TEMP();
-		CodeGenarator.printLICommand(zero.name, 0);
-
-		// malloc address result
-		// find length of first string
-		LABEL lengthOfStringLabel = new LABEL("length_string");
-		LABEL lenghtOfStringLabelEnd = new LABEL("lenght_string_end");
-		/*CodeGenarator.printADDICommand(MIPS_COMMANDS.T2, addressLeft.name, 0);
-
-		CodeGenarator.printJALCommand(lengthOfStringLabel.labelString);
-		TEMP lengthOfFirstStr = new TEMP();
-		CodeGenarator.printSWCommand(MIPS_COMMANDS.T3, lengthOfFirstStr.name, 0);
-		// find length of second string
-		CodeGenarator.printADDICommand(MIPS_COMMANDS.T2, addressRight.name, 0);
-		CodeGenarator.printJALCommand(lengthOfStringLabel.labelString);
-		TEMP lengthOfSecondStr = new TEMP();
-		CodeGenarator.printSWCommand(MIPS_COMMANDS.T3, lengthOfSecondStr.name, 0);
-		TEMP lengthOfConcatString = new TEMP();
-		//find length of concat string
-		CodeGenarator.printADDCommand(lengthOfConcatString.name, lengthOfFirstStr.name, lengthOfSecondStr.name);*/
 		
-		//malloc
-		CodeGenarator.printLICommand(MIPS_COMMANDS.A0, 344);
-		CodeGenarator.printLICommand(MIPS_COMMANDS.V0, MIPS_COMMANDS.alloc);
-		CodeGenarator.printSyscallCommand();
-        CodeGenarator.printADDICommand(addressResult.name, MIPS_COMMANDS.V0, 0);
-
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.T3, addressLeft.name, 0);
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.T4, addressRight.name, 0);
+		CodeGenarator.printJALCommand(CodeGenarator.concat_strings.labelString);
 		
-
-		// store new line in $t5
-		CodeGenarator.printLICommand(MIPS_COMMANDS.T5, 10);
-		LABEL sCopyFirst = new LABEL("copy_first");
-		LABEL sCopySecond = new LABEL("copy_second");
-		LABEL sCopySpace = new LABEL("Copy_space");
-		LABEL sDone = new LABEL("s_done");
-		CodeGenarator.printJALCommand(sCopyFirst.labelString);
-		CodeGenarator.printJALCommand(sCopySecond.labelString);
-
-		// lengthOfString label
-		CodeGenarator.printLBLCommand(lengthOfStringLabel.labelString);
-		CodeGenarator.printLBCommand(MIPS_COMMANDS.T1, MIPS_COMMANDS.T2, 0);
-		CodeGenarator.printBEQCommand(MIPS_COMMANDS.T1, zero.name, lenghtOfStringLabelEnd.labelString);
-		CodeGenarator.printADDICommand(MIPS_COMMANDS.T3, MIPS_COMMANDS.T3, 1);
-		CodeGenarator.printADDICommand(MIPS_COMMANDS.T2, MIPS_COMMANDS.T2, 1);
-		CodeGenarator.printJUMPCommand(lengthOfStringLabel.labelString);
-
-		// lenghtOfStringEnd label
-		CodeGenarator.printLBLCommand(lenghtOfStringLabelEnd.labelString);
-		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
-
-		// sCopyFirst Labels
-		CodeGenarator.printLBLCommand(sCopyFirst.labelString);
-		CodeGenarator.printLBCommand(MIPS_COMMANDS.T1, addressLeft.name, 0);
-		CodeGenarator.printBEQCommand(MIPS_COMMANDS.T1, zero.name, sCopySpace.labelString);
-		CodeGenarator.printBEQCommand(MIPS_COMMANDS.T1, MIPS_COMMANDS.T5, sCopySpace.labelString);
-		CodeGenarator.printSBCommand(MIPS_COMMANDS.T1, addressResult.name, 0);
-		CodeGenarator.printADDICommand(addressLeft.name, addressLeft.name, 1);
-		CodeGenarator.printADDICommand(addressResult.name, addressResult.name, 1);
-		CodeGenarator.printJUMPCommand(sCopyFirst.labelString);
-
-		// sCopySpace label
-		CodeGenarator.printLBLCommand(sCopySpace.labelString);
-		CodeGenarator.printLICommand(MIPS_COMMANDS.T1, ' ');
-		CodeGenarator.printSBCommand(MIPS_COMMANDS.T1, addressResult.name, 0);
-		CodeGenarator.printADDICommand(addressResult.name, addressResult.name, 1);
-		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
-
-		// sCopySecond label
-		CodeGenarator.printLBLCommand(sCopySecond.labelString);
-		CodeGenarator.printLBCommand(MIPS_COMMANDS.T1, addressRight.name, 0);
-		CodeGenarator.printBEQCommand(MIPS_COMMANDS.T1, zero.name, sDone.labelString);
-		CodeGenarator.printBEQCommand(MIPS_COMMANDS.T1, MIPS_COMMANDS.T5, sDone.labelString);
-		CodeGenarator.printSBCommand(MIPS_COMMANDS.T1, addressResult.name, 0);
-		CodeGenarator.printADDICommand(addressRight.name, addressRight.name, 1);
-		CodeGenarator.printADDICommand(addressResult.name, addressResult.name, 1);
-		CodeGenarator.printJUMPCommand(sCopySecond.labelString);
-
-		// sDone label
-		CodeGenarator.printLBLCommand(sDone.labelString);
-		CodeGenarator.printSBCommand(zero.name, addressResult.name, 0);// null
-																		// terminate
-																		// string
-		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
-
-		return addressResult;
+		
+//		TEMP zero = new TEMP();
+//		CodeGenarator.printLICommand(zero.name, 0);
+//
+//		// malloc address result
+//		// find length of first string
+//		LABEL lengthOfStringLabel = new LABEL("length_string");
+//		LABEL lenghtOfStringLabelEnd = new LABEL("lenght_string_end");
+//		
+//		CodeGenarator.printADDICommand(MIPS_COMMANDS.T2, addressLeft.name, 0);
+//		CodeGenarator.printJALCommand(lengthOfStringLabel.labelString);
+//		TEMP lengthOfFirstStr = new TEMP();
+//		CodeGenarator.printADDICommand(lengthOfFirstStr.name, MIPS_COMMANDS.T3, 0);
+//		
+//		// find length of second string
+//		CodeGenarator.printADDICommand(MIPS_COMMANDS.T2, addressRight.name, 0);
+//		CodeGenarator.printJALCommand(lengthOfStringLabel.labelString);
+//		TEMP lengthOfSecondStr = new TEMP();
+//		CodeGenarator.printADDICommand(lengthOfSecondStr.name, MIPS_COMMANDS.T3, 0);
+//		
+//		
+//		//malloc
+//		CodeGenarator.printADDCommand(MIPS_COMMANDS.A0, lengthOfFirstStr.name, lengthOfSecondStr.name);
+//		
+//		CodeGenarator.printLICommand(MIPS_COMMANDS.V0, MIPS_COMMANDS.alloc);
+//		CodeGenarator.printSyscallCommand();
+//        CodeGenarator.printADDICommand(addressResult.name, MIPS_COMMANDS.V0, 0);
+//
+//		
+//
+//		// store new line in $t5
+//		CodeGenarator.printLICommand(MIPS_COMMANDS.T5, 10);
+//		LABEL sCopyFirst = new LABEL("copy_first");
+//		LABEL sCopySecond = new LABEL("copy_second");
+//		LABEL sCopySpace = new LABEL("Copy_space");
+//		LABEL sDone = new LABEL("s_done");
+//		CodeGenarator.printJALCommand(sCopyFirst.labelString);
+//		CodeGenarator.printJALCommand(sCopySecond.labelString);
+//
+//		// lengthOfString label
+//		CodeGenarator.printLBLCommand(lengthOfStringLabel.labelString);
+//		CodeGenarator.printLBCommand(MIPS_COMMANDS.T1, MIPS_COMMANDS.T2, 0);
+//		CodeGenarator.printBEQCommand(MIPS_COMMANDS.T1, zero.name, lenghtOfStringLabelEnd.labelString);
+//		CodeGenarator.printADDICommand(MIPS_COMMANDS.T3, MIPS_COMMANDS.T3, 1);
+//		CodeGenarator.printADDICommand(MIPS_COMMANDS.T2, MIPS_COMMANDS.T2, 1);
+//		CodeGenarator.printJUMPCommand(lengthOfStringLabel.labelString);
+//
+//		// lenghtOfStringEnd label
+//		CodeGenarator.printLBLCommand(lenghtOfStringLabelEnd.labelString);
+//		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
+//
+//		// sCopyFirst Labels
+//		CodeGenarator.printLBLCommand(sCopyFirst.labelString);
+//		CodeGenarator.printLBCommand(MIPS_COMMANDS.T1, addressLeft.name, 0);
+//		CodeGenarator.printBEQCommand(MIPS_COMMANDS.T1, zero.name, sCopySpace.labelString);
+//		CodeGenarator.printBEQCommand(MIPS_COMMANDS.T1, MIPS_COMMANDS.T5, sCopySpace.labelString);
+//		CodeGenarator.printSBCommand(MIPS_COMMANDS.T1, addressResult.name, 0);
+//		CodeGenarator.printADDICommand(addressLeft.name, addressLeft.name, 1);
+//		CodeGenarator.printADDICommand(addressResult.name, addressResult.name, 1);
+//		CodeGenarator.printJUMPCommand(sCopyFirst.labelString);
+//
+//		// sCopySpace label
+//		CodeGenarator.printLBLCommand(sCopySpace.labelString);
+//		CodeGenarator.printLICommand(MIPS_COMMANDS.T1, ' ');
+//		CodeGenarator.printSBCommand(MIPS_COMMANDS.T1, addressResult.name, 0);
+//		CodeGenarator.printADDICommand(addressResult.name, addressResult.name, 1);
+//		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
+//
+//		// sCopySecond label
+//		CodeGenarator.printLBLCommand(sCopySecond.labelString);
+//		CodeGenarator.printLBCommand(MIPS_COMMANDS.T1, addressRight.name, 0);
+//		CodeGenarator.printBEQCommand(MIPS_COMMANDS.T1, zero.name, sDone.labelString);
+//		CodeGenarator.printBEQCommand(MIPS_COMMANDS.T1, MIPS_COMMANDS.T5, sDone.labelString);
+//		CodeGenarator.printSBCommand(MIPS_COMMANDS.T1, addressResult.name, 0);
+//		CodeGenarator.printADDICommand(addressRight.name, addressRight.name, 1);
+//		CodeGenarator.printADDICommand(addressResult.name, addressResult.name, 1);
+//		CodeGenarator.printJUMPCommand(sCopySecond.labelString);
+//
+//		// sDone label
+//		CodeGenarator.printLBLCommand(sDone.labelString);
+//		CodeGenarator.printSBCommand(zero.name, addressResult.name, 0);// null
+//																		// terminate
+//																		// string
+//		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
+		CodeGenarator.printADDICommand(result.name, MIPS_COMMANDS.T5, 0);
+		return result;
 	}
 
 }
