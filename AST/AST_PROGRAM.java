@@ -43,6 +43,7 @@ public class AST_PROGRAM extends AST_Node{
 		ConditionHelper.printAllLabels();
 		genartor.printExit(); //creating exit label
 		CodeGenarator.printConcateStrings();
+		CodeGenarator.printInitArray();
 		class_dec_list.mipsTranslate(table, assemblyFileName, genartor);
 	}
 

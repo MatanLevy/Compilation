@@ -17,6 +17,8 @@ public class CodeGenarator {
 
     public static LABEL mainLabel = new LABEL("main");
     public static final LABEL concat_strings = new LABEL("concat_strings");
+    public static final LABEL initArray = new LABEL("init_array");
+
 	
     
     /**
@@ -564,6 +566,37 @@ public class CodeGenarator {
 																		// string
 		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
 		
+
+	}
+
+	// $b1 is the size and $b2 is the address of the array
+	public static void printInitArray() {
+		LABEL finishInitArray = new LABEL("finish_init_array");
+		LABEL initArrayHelper = new LABEL("init_array_helper");
+		TEMP zero = new TEMP();
+		TEMP Iterator = new TEMP();
+		TEMP Index = new TEMP();
+
+		//init array label
+		CodeGenarator.printLBLCommand(initArray.labelString);
+		CodeGenarator.printADDICommand(Index.name, Index.name, 4);
+		CodeGenarator.printJUMPCommand(initArrayHelper.labelString);
+
+
+		
+		//init array helper label
+		CodeGenarator.printLBLCommand(initArrayHelper.labelString);
+		CodeGenarator.printBEQCommand(MIPS_COMMANDS.B1, zero.name, finishInitArray.labelString);
+		CodeGenarator.printADDCommand(Iterator.name, MIPS_COMMANDS.B2, Index.name);
+		CodeGenarator.printSWCommand(zero.name, Iterator.name, 0);
+		CodeGenarator.printADDICommand(Index.name, Index.name, 4);
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.B1, MIPS_COMMANDS.B1, -1);
+		CodeGenarator.printJUMPCommand(initArrayHelper.labelString);
+
+
+		// finishInitArray label
+		CodeGenarator.printLBLCommand(finishInitArray.labelString);
+		CodeGenarator.printJRCommand(MIPS_COMMANDS.RA);
 
 	}
 

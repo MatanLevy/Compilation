@@ -53,8 +53,13 @@ public class AST_EXP_NEW_TYPE extends AST_EXP {
 		TEMP arraySize = exp.calcAddress(table, genarator, fileName);
 		TEMP result =  genarator.ArrayAlloc(arraySize);
 		
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.B1, arraySize.name, 0);
+		CodeGenarator.printADDICommand(MIPS_COMMANDS.B2, result.name, 0);
+		CodeGenarator.printJALCommand(CodeGenarator.initArray.labelString);
+
+		
 		//init array with zeros.
-		if (exp instanceof AST_EXP_LITERAL) {
+		/*if (exp instanceof AST_EXP_LITERAL) {
 			AST_EXP_LITERAL dummy_exp = (AST_EXP_LITERAL) exp;
 			AST_LITERAL dummy_literal = dummy_exp.literal;
 			if (dummy_literal instanceof AST_LITERAL_INT) {
@@ -69,7 +74,7 @@ public class AST_EXP_NEW_TYPE extends AST_EXP {
 			        }
 			}
 			
-		}
+		}*/
 		
 		return result;
 	}
