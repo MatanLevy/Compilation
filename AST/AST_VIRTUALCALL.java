@@ -25,7 +25,7 @@ public class AST_VIRTUALCALL extends AST_Node {
         if ((exp != null) && !(exp.calcType(table) instanceof AST_TYPE_CLASS))
             throw new RuntimeException("can't invoke method on not a class elem");
         String className = (exp == null) ? table.get_currentClass() : exp.calcType(table).getName();
-        SymbolEntry methodentry = (table.get_currentClass().equals(className)) ? table.find_symbol(_id)
+        SymbolEntry methodentry = (table.get_currentClass().equals(className)) ? table.find_symbol_method(_id)
                 : table.getClassScope(className).getSymbols().get(_id);
         if (methodentry == null)
             throw new RuntimeException("no such method : " + _id + "in class " + className);

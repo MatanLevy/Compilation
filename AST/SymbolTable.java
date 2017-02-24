@@ -213,6 +213,25 @@ public class SymbolTable {
 		return tableOfSymbols.get(id).getFirst();
 		
 	}
+
+	public SymbolEntry find_symbol_method(String id) {
+		SymbolEntry result = null;
+		if (tableOfSymbols.get(id) == null || tableOfSymbols.get(id).isEmpty()) {
+			return null;
+		}
+		LinkedList<SymbolEntry> list = tableOfSymbols.get(id);
+		for (int i = 0; i < list.size(); i++) {
+
+			if (list.get(i) instanceof SymbolEntryMethod) {
+				result = list.get(i);
+				break;
+			}
+
+		}
+
+		return result;
+
+	}
 	
 	public void remove_symbol (String id) {
 		tableOfSymbols.get(id).removeFirst();
@@ -445,7 +464,7 @@ public class SymbolTable {
 		if (method_name == null) {
 			throw new RuntimeException("We are not in method scope");
 		}
-		SymbolEntry symbolMethod = find_symbol(method_name); 
+		SymbolEntry symbolMethod = find_symbol_method(method_name); 
 		if (!(symbolMethod instanceof SymbolEntryMethod))
 			throw new RuntimeException(method_name + " is not a method");
 		return symbolMethod.getType();
